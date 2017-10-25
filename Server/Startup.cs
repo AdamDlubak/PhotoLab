@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,13 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Server.Models;
 using Server.Helpers;
 
@@ -27,7 +17,9 @@ namespace Server
 {
     public class Startup
     {
-
+      private const string SecretKey = "jwts-are-awesome";
+      private static readonly string issure = "dotnet_grocery_list";
+      private static readonly string audience = "http://localhost:57500/";
     public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -41,13 +33,9 @@ namespace Server
           services.AddDbContext<PhotoLabContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
-   
+          var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-
-
-
-
-            services.AddIdentity<User, IdentityRole>
+      services.AddIdentity<User, IdentityRole>
             (o =>
             {
               // configure identity options
@@ -60,7 +48,29 @@ namespace Server
             .AddEntityFrameworkStores<PhotoLabContext>()
             .AddDefaultTokenProviders();
 
-          services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+          var key = Encoding.ASCII.GetBytes("Myownsecretcanbeanystring");
+          services.AddAuthentication(x =>
+            {
+              x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+              x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+              x.RequireHttpsMetadata = false;
+              x.SaveToken = true;
+              x.TokenValidationParameters = new TokenValidationParameters
+              {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+              };
+            });
+
+
+
+      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
           services.AddAutoMapper();
     }
@@ -76,9 +86,11 @@ namespace Server
                 app.UseDeveloperExceptionPage();
             }
 
-          app.UseDefaultFiles();
-          app.UseStaticFiles();
-          app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+          app.UseAuthentication();
+
+      app.UseMvc();
     }
   }
 }
