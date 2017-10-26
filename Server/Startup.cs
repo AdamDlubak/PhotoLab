@@ -68,7 +68,17 @@ namespace Server
               };
             });
 
+          services.AddCors(options =>
+          {
+            options.AddPolicy("CorsDevPolicy", builder =>
+            {
+              builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+            });
 
+          });
 
       services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
@@ -85,9 +95,10 @@ namespace Server
             {
                 app.UseDeveloperExceptionPage();
             }
+          app.UseCors("CorsDevPolicy");
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+          app.UseDefaultFiles();
+          app.UseStaticFiles();
           app.UseAuthentication();
 
       app.UseMvc();

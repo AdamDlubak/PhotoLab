@@ -25,30 +25,52 @@ namespace Server.Controllers
 
     private readonly PhotoLabContext _context;
       private readonly UserManager<User> _userManager;
+      private readonly PasswordHasher<User> _passwordHasher;
       private readonly IMapper _mapper;
     public AuthController(UserManager<User> userManager, IMapper mapper, PhotoLabContext appDbContext)
       {
         _userManager = userManager;
         _mapper = mapper;
         _context = appDbContext;
+        _passwordHasher = new PasswordHasher<User>();
       }
+
+      // POST api/auth/register
+      [HttpPost("register")]
+      public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
+      {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var userIdentity = _mapper.Map<User>(model);
+        var result = await _userManager.CreateAsync(userIdentity, model.Password);
+
+
+
+        if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+
+        await _context.AdminUsers.AddAsync(new AdminUser() { IdentityId = userIdentity.Id, Level = model.Level });
+        await _context.SaveChangesAsync();
+
+        return new OkResult();
+      }
+
+
+    // Post api/auth/login
     [HttpPost("login")]
-      public async Task<IActionResult> Login([FromBody] RegistrationViewModel model)
+      public async Task<IActionResult> Post([FromBody] CredentialsViewModel credentials)
       {
         if (!ModelState.IsValid)
         {
           return BadRequest(ModelState);
         }
 
-        var userIdentity = _mapper.Map<User>(model);
-        var result = await _userManager.CreateAsync(userIdentity, model.Password);
-        if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+        var user = await _userManager.FindByNameAsync(credentials.UserName);
 
-        await _context.AdminUsers.AddAsync(new AdminUser() { IdentityId = userIdentity.Id, Level = model.Level });
-        await _context.SaveChangesAsync();
-      var user = await _userManager.FindByNameAsync(model.Email);
-   
-     
+        if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, credentials.Password) != PasswordVerificationResult.Success)
+        {
+          return BadRequest();
+        }
+
 
       var token = CreateJWTToken(user);
 
@@ -76,5 +98,8 @@ namespace Server.Controllers
           new Claim(JwtRegisteredClaimNames.NameId, user.Id)
         };
       }
+
+    
   }
+
 }

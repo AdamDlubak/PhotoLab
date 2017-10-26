@@ -1,18 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { HttpModule, XHRBackend } from '@angular/http';
+import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 
+import { routing } from './app.routing';
+
+/* App Root */
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './_components/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+
+/* Account Imports */
+import { AccountModule }  from './components/account/account.module';
+/* Dashboard Imports */
+import { DashboardModule }  from './components/dashboard/dashboard.module';
+
+import { ConfigService } from './shared/utils/config.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    AccountModule,
+    DashboardModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    routing
   ],
-  providers: [],
+  providers: [ConfigService, { 
+    provide: XHRBackend, 
+    useClass: AuthenticateXHRBackend
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
