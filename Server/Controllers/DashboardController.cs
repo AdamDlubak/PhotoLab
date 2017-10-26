@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DotNetGigs
+namespace Server.Controllers
 {
-
-  [Authorize]
+  [Authorize(Policy = "ApiUser")]
   [Route("api/[controller]")]
   public class DashboardController : Controller
   {
