@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Server.Controllers
+namespace DotNetGigs
 {
 
-  [Produces("application/json")]
-    [Route("api/Dashboard")]
-    public class DashboardController : Controller
+  [Authorize]
+  [Route("api/[controller]")]
+  public class DashboardController : Controller
+  {
+    public DashboardController()
     {
-    [Authorize]
-    [HttpGet]
-    public IActionResult Get()
-    {
-      Console.WriteLine("Protected datas");
-      return new OkResult();
 
+    }
+
+    // GET api/dashboard/home
+    [HttpGet("home")]
+    public IActionResult GetHome()
+    {
+      return new OkObjectResult(new { Message = "This is secure data!" });
     }
   }
 }

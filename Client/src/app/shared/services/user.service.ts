@@ -40,19 +40,19 @@ export class UserService extends BaseService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseUrl + "/auth/login", body, options)
+    return this.http.post(this.baseUrl + "/auth/register", body, options)
       .map(res => true)
       .catch(this.handleError);
   }  
 
-   login(userName, password) {
+   login(email, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this.http
       .post(
       this.baseUrl + '/auth/login',
-      JSON.stringify({ userName, password }),{ headers }
+      JSON.stringify({ email, password }),{ headers }
       )
       .map(res => res.json())
       .map(res => {

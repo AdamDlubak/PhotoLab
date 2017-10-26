@@ -64,7 +64,7 @@ namespace Server.Controllers
           return BadRequest(ModelState);
         }
 
-        var user = await _userManager.FindByNameAsync(credentials.UserName);
+        var user = await _userManager.FindByNameAsync(credentials.Email);
 
         if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, credentials.Password) != PasswordVerificationResult.Success)
         {
