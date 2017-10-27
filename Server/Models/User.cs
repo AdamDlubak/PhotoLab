@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using Microsoft.AspNetCore.Identity;
 
 namespace Server.Models
@@ -8,5 +9,6 @@ namespace Server.Models
     // Extended Properties
     public string FirstName { get; set; }
     public string LastName { get; set; }
+
   }
 }
