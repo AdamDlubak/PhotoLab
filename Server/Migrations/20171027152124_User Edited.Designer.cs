@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171027152124_User Edited")]
+    partial class UserEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

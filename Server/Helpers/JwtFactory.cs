@@ -3,8 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using Server.Models;
 using Microsoft.Extensions.Options;
+using Server.Helpers.Interfaces;
+using Server.Models;
 
 namespace Server.Helpers
 {
@@ -25,18 +26,18 @@ namespace Server.Helpers
         new Claim(JwtRegisteredClaimNames.Sub, email),
         new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
         new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-        identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol),
-        identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Id)
+        identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.Rol),
+        identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.Id)
       };
 
       // Create the JWT security token and encode it.
       var jwt = new JwtSecurityToken(
-        issuer: _jwtOptions.Issuer,
-        audience: _jwtOptions.Audience,
-        claims: claims,
-        notBefore: _jwtOptions.NotBefore,
-        expires: _jwtOptions.Expiration,
-        signingCredentials: _jwtOptions.SigningCredentials);
+        _jwtOptions.Issuer,
+        _jwtOptions.Audience,
+        claims,
+        _jwtOptions.NotBefore,
+        _jwtOptions.Expiration,
+        _jwtOptions.SigningCredentials);
 
       var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
@@ -47,12 +48,11 @@ namespace Server.Helpers
     {
       return new ClaimsIdentity(new GenericIdentity(email, "Token"), new[]
       {
-        new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
-        new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess)
+        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Id, id),
+        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess)
       });
     }
 
-    /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
     private static long ToUnixEpochDate(DateTime date)
       => (long)Math.Round((date.ToUniversalTime() -
                            new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))

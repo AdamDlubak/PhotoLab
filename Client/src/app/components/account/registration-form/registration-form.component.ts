@@ -28,8 +28,7 @@ export class RegistrationFormComponent implements OnInit {
           value.email,
           value.password,
           value.firstName,
-          value.lastName,
-          value.level
+          value.lastName
         )
         .finally(() => (this.isRequesting = false))
         .subscribe(result => {

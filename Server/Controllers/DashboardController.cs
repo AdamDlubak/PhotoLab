@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Server.Controllers
 {
-  [Authorize(Policy = "ApiUser")]
+  [Authorize(Policy = "Admin")]
   [Route("api/[controller]")]
   public class DashboardController : Controller
   {

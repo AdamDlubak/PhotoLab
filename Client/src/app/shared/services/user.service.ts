@@ -33,9 +33,8 @@ export class UserService extends BaseService {
     password: string,
     firstName: string,
     lastName: string,
-    level: string
   ): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName, level });
+    let body = JSON.stringify({ email, password, firstName, lastName });
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
 

@@ -1,9 +1,7 @@
-
-
 namespace Server.Helpers{
 
- public static class Constants
-    {
+ public static class JwtConstants
+ {
         public static class Strings
         {
             public static class JwtClaimIdentifiers

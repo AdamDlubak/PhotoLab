@@ -4,10 +4,10 @@ using Server.Models;
 
 namespace Server.Helpers
 {
-    public class PhotoLabContext : IdentityDbContext
+    public class PhotoLabContext : IdentityDbContext<User>
   {
         public PhotoLabContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<AdminUser> AdminUsers { get; set; }
+//        public DbSet<Name> Names { get; set; }
   }
 }

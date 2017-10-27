@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Server.Helpers;
+using Server.Helpers.Interfaces;
 using Server.Models;
 using Server.ViewModels;
 
@@ -23,8 +18,6 @@ namespace Server.Controllers
   [Route("api/Auth")]
   public class AuthController : Controller
   {
-
-
     private readonly PhotoLabContext _context;
     private readonly UserManager<User> _userManager;
     private readonly PasswordHasher<User> _passwordHasher;
@@ -62,7 +55,6 @@ namespace Server.Controllers
 
 
       if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
-      await _context.AdminUsers.AddAsync(new AdminUser() { IdentityId = userIdentity.Id, Level = model.Level });
       await _context.SaveChangesAsync();
 
       return new OkObjectResult("Account created");

@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace Server.Helpers
+namespace Server.Helpers.Interfaces
 {
   public interface IJwtFactory
   {

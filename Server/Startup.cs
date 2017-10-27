@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Server.Models;
 using Server.Helpers;
+using Server.Helpers.Interfaces;
 
 namespace Server
 {
@@ -55,7 +56,7 @@ namespace Server
 
       services.AddAuthorization(options =>
       {
-        options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+        options.AddPolicy("Admin", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess));
       });
 
       services.AddIdentity<User, IdentityRole>
