@@ -2,8 +2,8 @@ import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 
-import { Credentials } from "../../../shared/models/credentials.interface";
-import { UserService } from "../../../shared/services/user.service";
+import { Credentials } from "../../../../shared/models/credentials.interface";
+import { UserService } from "../../../../shared/services/user.service";
 
 @Component({
   selector: "app-login-form",
