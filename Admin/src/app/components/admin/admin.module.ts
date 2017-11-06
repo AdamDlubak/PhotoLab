@@ -10,7 +10,8 @@ import { AdminHeaderComponent } from "./_layout/elements/header/header.component
 import { AdminSidebarComponent } from "./_layout/elements/sidebar/sidebar.component";
 
 import { RegistrationFormComponent } from "./registration-form/registration-form.component";
-import { EditFormComponent } from "./edit-form/edit-form.component";
+import { UserEditComponent } from "./user-edit/user-edit.component";
+import { UsersComponent } from "./users/users.component";
 import { HomeComponent } from "./home/home.component";
 
 import { Routing } from "./admin.routing";
@@ -20,7 +21,8 @@ import { AuthGuard } from "../../auth.guard";
   imports: [CommonModule, FormsModule, Routing, SharedModule],
   declarations: [
     RegistrationFormComponent,
-    EditFormComponent,
+    UserEditComponent,
+    UsersComponent,
     HomeComponent,
     AdminLayoutComponent,
     AdminHeaderComponent,
@@ -29,8 +31,4 @@ import { AuthGuard } from "../../auth.guard";
   exports: [],
   providers: [AuthGuard, UserService]
 })
-export class AdminModule {
-  constructor() {
-    console.log("Admin Module:");
-  }
-}
+export class AdminModule {}

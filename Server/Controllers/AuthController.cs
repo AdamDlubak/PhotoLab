@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,6 +13,8 @@ using Server.Helpers;
 using Server.Helpers.Interfaces;
 using Server.Models;
 using Server.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -61,6 +65,49 @@ namespace Server.Controllers
     }
 
 
+    // Get api/auth/users
+    [HttpGet("users")]
+    [Produces(typeof(List<UsersViewModel>))]
+//    [Authorize("Admin")]
+    public async Task<IActionResult> GetUsers()
+    {
+//      var allCustomers = _context.Users.ToList();
+//      return Ok(Mapper.Map<IEnumerable<UsersViewModel>>(allCustomers));
+            return await GetUsers(-1, -1);
+    }
+
+    [HttpGet("users/{page:int}/{pageSize:int}")]
+    [Produces(typeof(List<UsersViewModel>))]
+//    [Authorize("Admin")]
+    public async Task<IActionResult> GetUsers(int page, int pageSize)
+    {
+      var usersAndRoles = await GetUsersAndRolesAsync(page, pageSize);
+
+      List<UsersViewModel> usersVM = new List<UsersViewModel>();
+
+      foreach (var item in usersAndRoles)
+      {
+        var userVM = Mapper.Map<UsersViewModel>(item);
+
+        usersVM.Add(userVM);
+      }
+
+      return Ok(usersVM);
+    }
+
+    public async Task<List<User>> GetUsersAndRolesAsync(int page, int pageSize)
+    {
+      IQueryable<User> usersQuery = _context.Users.OrderBy(u => u.UserName);
+
+      if (page != -1)
+        usersQuery = usersQuery.Skip((page - 1) * pageSize);
+
+      if (pageSize != -1)
+        usersQuery = usersQuery.Take(pageSize);
+
+      var users = await usersQuery.ToListAsync();
+      return users;
+    }
     // Post api/auth/login
     [HttpPost("login")]
     public async Task<IActionResult> Post([FromBody] CredentialsViewModel credentials)

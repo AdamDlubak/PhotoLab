@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
-
-  constructor() { }
+  today: number = Date.now();
+  constructor() { 
+  }
 
   ngOnInit() {
   }

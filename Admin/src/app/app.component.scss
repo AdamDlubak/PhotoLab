@@ -1,3 +1,63 @@
+
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i');
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+/*****************************************
+*       Background-image: cover mixin
+******************************************/
+
+@mixin bg-cover() {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/*****************************************
+*       Media Query Mixins
+******************************************/
+
+// Specified breakpoint
+@mixin media($name) {
+	@include media-breakpoint-only($name) {
+		@content;
+	};
+}
+
+// Larger than specified breakpoint
+@mixin media-up($name) {
+	@include media-breakpoint-up($name) {
+		@content;
+	};
+}
+
+// smaller than specified breakpoint
+@mixin media-down($name) {
+	@include media-breakpoint-down($name) {
+		@content;
+	};
+}
+
+// /******************************************
+// *           Placeholder
+// *******************************************/
+@mixin placeholder() {
+	&::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+		@content;
+	}
+	&:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		@content;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		@content;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		@content;
+	}
+}
+
 /*************************************************************
 *						App Variables
 **************************************************************/
@@ -7,7 +67,7 @@
 *					  Colors Definitions
 **************************************************************/
 
-$color-primary: #85CE36 !default;
+$color-primary: #0a660a !default;
 $color-primary-light: lighten($color-primary, 10%) !default; 
 $color-primary-lighter: lighten($color-primary-light, 6%) !default; 
 $color-primary-dark: darken($color-primary, 10%) !default;
@@ -53,13 +113,13 @@ $header-height: 70px !default;
 $header-height-xs: 50px !default;
 
 // Sidebar
-$sidebar-width: 230px !default;
+$sidebar-width: 270px !default;
 
 // Footer
 $footer-height: 50px !default;
 
-$sidebar-color-primary: darken(#4f5f6f, 10%) !default;
-$sidebar-color-secondary: darken($sidebar-color-primary, 6%) !default;
+$sidebar-color-primary: darken(#343434, 10%) !default;
+$sidebar-color-secondary: lighten($sidebar-color-primary, 5%) !default;
 
 $sidebar-color-text: fade-out($color-text-inverse, 0.5) !default;
 $sidebar-color-text-active: $color-text-inverse;

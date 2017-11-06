@@ -1,30 +1,13 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
-import { UserService } from "../../../shared/services/user.service";
-
+import { Component, OnInit } from "@angular/core";
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss']
+  styleUrls: ['./admin-layout.component.scss', '../../../app.component.scss'],
 })
-export class AdminLayoutComponent implements OnInit, OnDestroy {
-  status: boolean;
-  subscription: Subscription;
+export class AdminLayoutComponent implements OnInit {
 
-  constructor(private userService: UserService) {}
+  constructor() {}
 
-  logout() {
-    this.userService.logout();
-  }
+  ngOnInit() {  }
 
-  ngOnInit() {
-    this.subscription = this.userService.authNavStatus$.subscribe(
-      status => (this.status = status)
-    );
-  }
-
-  ngOnDestroy() {
-    // prevent memory leak when component is destroyed
-    this.subscription.unsubscribe();
-  }
 }

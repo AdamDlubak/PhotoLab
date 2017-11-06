@@ -14,8 +14,4 @@ import { HomeComponent } from "./home/home.component";
   exports: [],  
   providers: [UserService]
 })
-export class LabModule {
-constructor() {
-  console.log("Lab Module:");
-}
-}
+export class LabModule {}

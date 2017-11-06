@@ -1,239 +1,304 @@
-@import '../variables.scss';
+@import "../../../../../app.component.scss";
 .sidebar {
-	background-color: $sidebar-color-primary;
-	width: $sidebar-width;
-	padding-bottom: 60px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	transition: left 0.3s ease;
-	z-index: 20;
+  background-color: $sidebar-color-primary;
+  width: $sidebar-width;
+  padding-bottom: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: left 0.3s ease;
+  z-index: 20;
 
+  @include media-down(md) {
+    position: fixed;
+    left: -$sidebar-width;
+  }
 
-	@include media-down(md) {
-		position: fixed;
-		left: -$sidebar-width;
-	}
+  .sidebar-fixed & {
+    position: fixed;
+  }
 
-	.sidebar-fixed & {
-		position: fixed;
-	}
+  .sidebar-open & {
+    left: 0;
+  }
+.toggle-button {
+	margin-right: 17px;
+	margin-top: 12px;
+	float: right;
+	font-size: 16px;
+	color: $sidebar-color-text;
+	text-decoration: none;
+	display: block;
+}
+  .sidebar-container {
+    position: absolute;
+    top: 0;
+    bottom: 51px;
+    width: 100%;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-	.sidebar-open & {
-		left: 0;
-
-	}
-
-	.sidebar-container {
-		position: absolute;
-		top: 0;
-		bottom: 51px;
-		width: 100%;
-		left: 0;
-		overflow-y: auto;
-		overflow-x: hidden;
-
-		&::-webkit-scrollbar-track {
-			background-color: darken($sidebar-color-primary, 6.5%);
-		}
-	}
-    .sidebar-header {
-        .brand {
-            color: #fff;
-            text-align: left;
-            padding-left: 25px;
-            line-height: $header-height;
-            font-size: 16px;
-            
-            @include media-down(sm) {
-                line-height: $header-height-xs;
-                font-size: 16px;
-            }
-        }
+    &::-webkit-scrollbar-track {
+      background-color: darken($sidebar-color-primary, 6.5%);
     }
-	.sidebar-menu {
+  }
+  .sidebar-header {
+    .brand {
+      color: #fff;
+      text-align: left;
+      padding-left: 25px;
+      line-height: $header-height;
+      font-size: 16px;
+      margin-top: 30px;
+      background: url("../../../../../../assets/images/logo.png") no-repeat
+        center center;
+      height: 230px;
 
-		font-size: 14px;
-		list-style: none;
-		margin: 0;
-		padding: 0;
+      @include media-down(sm) {
+        line-height: $header-height-xs;
+        font-size: 16px;
+      }
+    }
+  }
+  .sidebar-menu {
+    font-size: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-		// Common styles
-		li {
-			a:focus,
-			.open & a:focus {
-				background-color: inherit;
-			}
-		}
+    // Common styles
+    li {
+      a:focus,
+      .open & a:focus {
+        background-color: inherit;
+      }
+    }
 
-		// Second + menu items
-		ul {
-			padding: 0;
-			height: 0px;
-			overflow: hidden;
+    // Second + menu items
+    ul {
+      padding: 0;
+      height: 0px;
+      overflow: hidden;
 
-			.loaded & {
-				height: auto;
-			}
-		}
+      .loaded & {
+        height: auto;
+      }
+    }
 
-		li.active ul {
-			height: auto;
-		}
+    li.active ul {
+      height: auto;
+    }
 
+    // All links which are not active
+    // have subdued color
+    li a {
+      color: $sidebar-color-text;
+      text-decoration: none;
+      display: block;
+      border-top: 1px solid $sidebar-color-secondary;
+    }
+    li:last-child a {
+      border-bottom: 1px solid $sidebar-color-secondary;
+    }
 
-		// All links which are not active
-		// have subdued color
-		li a {
-			color: $sidebar-color-text;
-			text-decoration: none;
-			display: block;
-		}
+    // All links which are not active
+    // On hover bg become darker
+    // Their color become lighter
+    li a:hover,
+    li.open > a,
+    li.open a:hover {
+      color: $sidebar-color-text-active;
+      background-color: $sidebar-color-secondary;
+    }
+    .arrow {
+      float: right;
+      font-size: 18px;
+      line-height: initial;
+      transition: all 0.3s ease;
+      margin-right: 0;
 
-		// All links which are not active
-		// On hover bg become darker
-		// Their color become lighter
-		li a:hover,
-		li.open > a,
-		li.open a:hover {
-			color: $sidebar-color-text-active;
-			background-color: $sidebar-color-secondary;
-		}
+      &:before {
+        content: "\f105" !important;
+      }
+    }
 
-		.arrow {
-			float: right;
-			font-size: 18px;
-			line-height: initial;
-			transition: all 0.3s ease;
-			margin-right: 0;
+    li.open > a {
+      .arrow {
+        transform: rotate(90deg);
+      }
+    }
 
-			&:before {
-				content: "\f105" !important;
-			}
-		}
+    // First level items
+    & > li {
+      // First level items links
+      & > a {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 20px;
+        padding-right: 15px;
+      }
 
-		li.open > a {
-			.arrow {
-				transform: rotate(90deg);
-			}
-		}
+      // First level active links have primary background
+      &.active > a,
+      &.active > a:hover {
+        background-color: $color-primary !important;
+        color: $color-text-inverse !important;
+      }
 
+      // First level active links have bit darker background
+      &.open > a {
+        background-color: darken($sidebar-color-primary, 3%);
+      }
 
-		// First level items
-		&> li {
+      // First level item links arrow
+      & > a {
+        i {
+          margin-right: 3px;
+          margin-top: 3px;
+          float: right;
+          font-size: 16px;
 
-			// First level items links
-			& > a {
-				padding-top: 15px;
-				padding-bottom: 15px;
-				padding-left: 20px;
-				padding-right: 15px;
-			}
+          &.arrow {
+            font-size: 20px;
+          }
+        }
+      }
+    }
 
-			// First level active links have primary background
-			&.active > a,
-			&.active > a:hover {
-				background-color: $color-primary !important;
-				color: $color-text-inverse !important;
-			}
+    // Second level items
+    & > li > .sidebar-nav > li {
+      // Second level and deeper items links
+      // Have bit darker background and more padding
+      // from left side
+      a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+        padding-right: 15px;
+        background-color: darken($sidebar-color-primary, 3%);
+      }
 
-			// First level active links have bit darker background
-			&.open > a {
-				background-color: darken($sidebar-color-primary, 3%);
-			}
+      // Second level active items links
+      // Have brighter color
+      &.active a {
+        color: $sidebar-color-text-active;
+      }
 
-			// First level item links arrow
-			& > a {
-				i {
-					margin-right: 5px;
-					font-size: 16px;
+      // Third level items
+      & > .sidebar-nav > li {
+        a {
+          padding-left: 60px;
+          padding-right: 15px;
+        }
 
-					&.arrow {
-						font-size: 20px;
-					}
-				}
-			}
-
-		}
-
-		// Second level items
-		& > li > .sidebar-nav> li {
-
-			// Second level and deeper items links
-			// Have bit darker background and more padding
-			// from left side
-			a {
-				padding-top: 10px;
-				padding-bottom: 10px;
-				padding-left: 50px;
-				padding-right: 15px;
-				background-color: darken($sidebar-color-primary, 3%);
-			}
-
-			// Second level active items links
-			// Have brighter color
-			&.active a {
-				color: $sidebar-color-text-active;
-			}
-
-			// Third level items
-			& > .sidebar-nav > li {
-				a {
-					padding-left: 60px;
-					padding-right: 15px;
-				}
-
-				& > .sidebar-nav > li {
-					a {
-						padding-left: 70px;
-					}
-				}
-			}
-		}
-	}
-
+        & > .sidebar-nav > li {
+          a {
+            padding-left: 70px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .sidebar-overlay {
-	position: absolute;
-	display: none;
-	left: 200vw;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	z-index: 5;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-	z-index: 15;
+  position: absolute;
+  display: none;
+  left: 200vw;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 15;
 
-	@include media-down(md) {
-		display: block;
-	}
+  @include media-down(md) {
+    display: block;
+  }
 
-	@include media-down(sm) {
-		background-color: fade-out(#000, 0.3);
-	}
+  @include media-down(sm) {
+    background-color: fade-out(#000, 0.3);
+  }
 
-
-	.sidebar-open & {
-		@include media-down(md) {
-			left: 0;
-			opacity: 1;
-		}
-	}
+  .sidebar-open & {
+    @include media-down(md) {
+      left: 0;
+      opacity: 1;
+    }
+  }
 }
 
 .sidebar-mobile-menu-handle {
-	display: none;
-	position: absolute;
-	top: $header-height-xs;
-	background-color: transparent;
-	width: 30px;
-	bottom: 0;
-	z-index: 10;
+  display: none;
+  position: absolute;
+  top: $header-height-xs;
+  background-color: transparent;
+  width: 30px;
+  bottom: 0;
+  z-index: 10;
 
-	@include media-down(md) {
-		display: block;
+  @include media-down(md) {
+    display: block;
+  }
+}
+
+.customize {
+  // height: 200px;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 5px 15px;
+  text-align: center;
+
+  .customize-header {
+    margin-bottom: 10px;
+  }
+}
+
+#customize-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: $sidebar-width;
+
+  @include media-down(sm) {
+  }
+
+  .sidebar-open & {
+    @include media-down(md) {
+      left: 0;
+    }
+  }
+
+  @include media-down(md) {
+    // position: absolute;
+    transition: left 0.3s ease;
+    left: -$sidebar-width;
+  }
+
+  & > li {
+    & > a {
+      background-color: $sidebar-color-primary;
+      border-top: 1px solid fade-out($sidebar-color-secondary, 0.5);
 	}
+	
+
+    & > a:hover,
+    &.open > a {
+      background-color: $sidebar-color-secondary;
+    }
+  }
+
+}
+
+.footer {
+	font-size: 12px;
+	color: #9e9e9e;
+
+}
+.footer p {
+	text-align: center;
+	padding-top: 16px;
 }

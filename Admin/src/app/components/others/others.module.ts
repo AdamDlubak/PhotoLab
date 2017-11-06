@@ -17,8 +17,4 @@ import { Routing } from "./others.routing";
   exports: [],
   providers: [UserService]
 })
-export class OthersModule {
-  constructor() {
-    console.log("Others Module:");
-  }
-}
+export class OthersModule {}
