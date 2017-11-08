@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171108125403_Added Photo Table")]
+    partial class AddedPhotoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,31 +127,6 @@ namespace Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Server.Models.Photo", b =>
-                {
-                    b.Property<int>("PhotoId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FileName")
-                        .IsRequired();
-
-                    b.Property<int>("FileSize");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired();
-
-                    b.Property<int>("ProjectId");
-
-                    b.Property<int>("SectionId");
-
-                    b.Property<string>("ThumbPath")
-                        .IsRequired();
-
-                    b.HasKey("PhotoId");
-
-                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Server.Models.User", b =>

@@ -8,6 +8,6 @@ namespace Server.Helpers
   {
         public PhotoLabContext(DbContextOptions options) : base(options) { }
 
-//        public DbSet<Name> Names { get; set; }
+        public DbSet<Photo> Photos { get; set; }
   }
 }

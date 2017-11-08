@@ -99,9 +99,38 @@
 
      <!-- Page Content -->
      <div class="container">
-            
+            <!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <app-file-upload 
+      projectId="100" 
+      sectionId="107" 
+      maxFiles="4"
+      maxSize="2"
+      fileExt="JPG, GIF, PNG"
+      (uploadStatus)="refreshImages($event)" >
+    </app-file-upload>
+  </div>
+</div>
+<br>
+
+<div class="well">
+      <img *ngFor="let img of images"
+           [src]="'http://localhost:33699' + img.thumbPath"
+          class="img-thumbnail"
+          alt="">
+  </div>
+
                   <h1 class="my-4">Welcome to Modern Business</h1>
-            
+                    <div class="row">
+                      <router-outlet></router-outlet>
+                    </div>
                   <!-- Marketing Icons Section -->
                   <div class="row">
                     <div class="col-lg-4 mb-4">

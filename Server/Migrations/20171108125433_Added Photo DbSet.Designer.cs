@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171108125433_Added Photo DbSet")]
+    partial class AddedPhotoDbSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
