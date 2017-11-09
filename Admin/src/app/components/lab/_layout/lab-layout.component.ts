@@ -13,21 +13,6 @@ export class LabLayoutComponent implements OnInit {
 
   constructor(private fileService: FileService) { }
 
-  ngOnInit(){
-    this.getImageData();
-  }
-  getImageData(){
-    this.fileService.getImages().subscribe(
-      
-      data =>{ this.images = data.result},
-      error => this.errorMessage = error
-    )
-  }
+  ngOnInit() { }
 
-  refreshImages(status){
-        if (status == true){
-          console.log( "Uploaded successfully!");
-          this.getImageData();
-        }
-}
 }

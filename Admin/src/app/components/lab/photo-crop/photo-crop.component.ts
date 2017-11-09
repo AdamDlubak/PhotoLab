@@ -1,12 +1,66 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import {FileService} from '../services/file.service';
+
+import { Http, Headers, RequestOptions } from '@angular/http';
+
 @Component({
   selector: "app-file-upload",
   templateUrl: "./photo-crop.component.html",
   styleUrls: ["./photo-crop.component.scss"],
 })
 
+
 export class PhotoCropComponent implements OnInit {
+  @ViewChild("fileInput") fileInput;
+
+  constructor(private fileService: FileService) { }
+
+  addFile(): void {
+    let fi = this.fileInput.nativeElement;
+    if (fi.files && fi.files[0]) {
+        let fileToUpload = fi.files;
+        this.fileService
+            .upload(fileToUpload)
+            .subscribe(res => {
+                console.log(res);
+            });
+    }
+
+
+    
+}
+
+
+// saveFiles(files){
+//   this.errors = []; // Clear error
+//   // Validate file size and allowed extensions
+//   if (files.length > 0 && (!this.isValidFiles(files))) {
+//       this.uploadStatus.emit(false);
+//       return;
+//   }       
+//   if (files.length > 0) {
+//         let formData: FormData = new FormData();
+//         for (var j = 0; j < files.length; j++) {
+//             formData.append("file[]", files[j], files[j].name);
+//         }
+//         var parameters = {
+//             projectId: this.projectId,
+//             sectionId: this.sectionId
+//         }
+//         this.fileService.upload2(formData, parameters)
+//             .subscribe(
+//             success => {
+//               this.uploadStatus.emit(true);
+//               console.log(success)
+//             },
+//             error => {
+//                 this.uploadStatus.emit(true);
+//                 this.errors.push(error.ExceptionMessage);
+//             }) 
+//     } 
+// }
+
+
 
   errors: Array<string> =[];
   dragAreaClass: string = 'dragarea';
@@ -17,14 +71,18 @@ export class PhotoCropComponent implements OnInit {
   @Input() maxSize: number = 5; // 5MB
   @Output() uploadStatus = new EventEmitter();
 
-  constructor(private fileService: FileService) { }
-  ngOnInit(){  }
+
+  ngOnInit(){ }
+    
+  
+  
+
 
 
 
   onFileChange(event){
     let files = event.target.files; 
-    this.saveFiles(files);
+    // this.saveFiles(files);
  }
 
  @HostListener('dragover', ['$event']) onDragOver(event) {
@@ -52,37 +110,10 @@ export class PhotoCropComponent implements OnInit {
   event.preventDefault();
   event.stopPropagation();
   var files = event.dataTransfer.files;
-  this.saveFiles(files);
+  // this.saveFiles(files);
 }
 
-saveFiles(files){
-  this.errors = []; // Clear error
-  // Validate file size and allowed extensions
-  if (files.length > 0 && (!this.isValidFiles(files))) {
-      this.uploadStatus.emit(false);
-      return;
-  }       
-  if (files.length > 0) {
-        let formData: FormData = new FormData();
-        for (var j = 0; j < files.length; j++) {
-            formData.append("file[]", files[j], files[j].name);
-        }
-        var parameters = {
-            projectId: this.projectId,
-            sectionId: this.sectionId
-        }
-        this.fileService.upload(formData, parameters)
-            .subscribe(
-            success => {
-              this.uploadStatus.emit(true);
-              console.log(success)
-            },
-            error => {
-                this.uploadStatus.emit(true);
-                this.errors.push(error.ExceptionMessage);
-            }) 
-    } 
-}
+
 
 private isValidFiles(files){
   // Check Number of files

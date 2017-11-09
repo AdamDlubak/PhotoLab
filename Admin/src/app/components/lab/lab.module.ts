@@ -10,10 +10,13 @@ import { LabLayoutComponent } from "./_layout/lab-layout.component";
 import { HomeComponent } from "./home/home.component";
 import { PhotoCropComponent } from "./photo-crop/photo-crop.component";
 
+import { AngularCropperjsModule } from 'angular-cropperjs';
+import { FileUploadModule  } from 'ng2-file-upload';
+
 
 @NgModule({
-  imports: [CommonModule, FormsModule, SharedModule, Routing],
-  declarations: [LabLayoutComponent, HomeComponent, PhotoCropComponent],
+  imports: [CommonModule, FormsModule, SharedModule, Routing, AngularCropperjsModule, FileUploadModule ],
+  declarations: [LabLayoutComponent, HomeComponent, PhotoCropComponent ],
   exports: [],  
   providers: [UserService, FileService]
 })
