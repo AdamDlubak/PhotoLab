@@ -1,3 +1,4 @@
+import { Cart } from './../models/cart.class';
 import { Format } from './../models/format.class';
 import { Paper } from './../models/paper.class';
 import { FileItemDetails } from "./../models/file-item-details.class";

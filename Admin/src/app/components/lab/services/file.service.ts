@@ -69,7 +69,8 @@ export class FileService extends BaseService {
           for (var i: number = 0; i < item.prints.length; i++) {
             if (item.prints[i].format == data.format) {
               cart.amount += item.prints[i].amount;
-              cart.price += Math.round(item.prints[i].amount * this.getFormatPrice(formats, data.format)  * 100) / 100;
+              cart.price += item.prints[i].amount * this.getFormatPrice(formats, data.format);
+              cart.price = Math.round(cart.price*100)/100;
             }
           }
         }
@@ -86,8 +87,8 @@ export class FileService extends BaseService {
         for (var i: number = 0; i < item.prints.length; i++) {
           if(cart.formatId == item.prints[i].format){
             cart.amount -= item.prints[i].amount;
-            cart.price -= Math.round(item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format)  * 100) / 100;
-            
+            cart.price -= item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format);
+            cart.price = Math.round(cart.price*100)/100;
           }
         }
       }
@@ -110,7 +111,8 @@ export class FileService extends BaseService {
           if (defaults.format == item.prints[i].format) {
             
             cart.amount += item.prints[i].amount;
-            cart.price += Math.round(item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format)  * 100) / 100;
+            cart.price += item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format);
+            cart.price = Math.round(cart.price*100)/100;
           }
         }
       }
@@ -123,7 +125,7 @@ export class FileService extends BaseService {
     for (let cart of carts) {
       result += cart.price;
     }
-    return result;
+    return Math.round(result*100)/100;
   }
   invokeEvent: Subject<any> = new Subject();
   invokeEvent2: Subject<any> = new Subject();

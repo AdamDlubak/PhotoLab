@@ -31,7 +31,9 @@ export class CartComponent implements OnInit {
       });
     }
   }
-
+  pokaz(){
+    console.log(this.carts);
+  }
   getFormatName(formatId: number) {
     for (let format of this.formats) {
       if (formatId == format.id) return format.name;
