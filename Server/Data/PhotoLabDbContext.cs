@@ -9,5 +9,8 @@ namespace Server.Helpers
         public PhotoLabContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Format> Formats { get; set; }
+        public DbSet<Paper> Papers { get; set; }
+        public DbSet<OrderDefaultParam> OrderDefaultParams { get; set; }
   }
 }

@@ -128,9 +128,61 @@ namespace Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Server.Models.Format", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Height");
+
+                    b.Property<string>("Name");
+
+                    b.Property<float>("Price");
+
+                    b.Property<int>("Width");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Formats");
+                });
+
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("FormatId");
+
+                    b.Property<int>("PaperId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId")
+                        .IsUnique();
+
+                    b.HasIndex("PaperId")
+                        .IsUnique();
+
+                    b.ToTable("OrderDefaultParams");
+                });
+
+            modelBuilder.Entity("Server.Models.Paper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Papers");
+                });
+
             modelBuilder.Entity("Server.Models.Photo", b =>
                 {
-                    b.Property<int>("PhotoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("FileName")
@@ -148,7 +200,7 @@ namespace Server.Migrations
                     b.Property<string>("ThumbPath")
                         .IsRequired();
 
-                    b.HasKey("PhotoId");
+                    b.HasKey("Id");
 
                     b.ToTable("Photos");
                 });
@@ -280,6 +332,19 @@ namespace Server.Migrations
                     b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
+                {
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "PaperId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

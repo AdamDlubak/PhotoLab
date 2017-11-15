@@ -13,6 +13,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
 using Server.Models;
 using Server.Helpers;
 using Server.Helpers.Interfaces;
@@ -47,7 +48,6 @@ namespace Server
 
       services.AddSingleton<IJwtFactory, JwtFactory>();
       services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
-
 
       var jwtAppSettingOptions = Configuration["JWT:Issuer"];
       // Configure JwtIssuerOptions
@@ -117,7 +117,8 @@ namespace Server
             .AllowCredentials();
         });
       });
-      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+        .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore); ;
       services.AddAutoMapper();
     }
 

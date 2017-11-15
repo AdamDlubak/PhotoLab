@@ -9,8 +9,8 @@ namespace Server.Models
   public class Photo
   {
     [Required]
-    public int PhotoId { get; set; }
-    
+    public int Id { get; set; }
+
     [Required]
     public string FileName { get; set; }
 

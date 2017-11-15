@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using System;
 using Server.Helpers;
+using System;
 
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    [Migration("20171021115926_Init Database")]
-    partial class InitDatabase
+    [Migration("20171115035011_Edited Decimal on float at price in format model")]
+    partial class EditedDecimalonfloatatpriceinformatmodel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,62 +62,6 @@ namespace Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -186,33 +129,166 @@ namespace Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Server.Models.AdminUser", b =>
+            modelBuilder.Entity("Server.Models.Format", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("IdentityId");
+                    b.Property<int>("Height");
 
-                    b.Property<string>("Level");
+                    b.Property<string>("Name");
+
+                    b.Property<float>("Price");
+
+                    b.Property<int>("Width");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityId");
+                    b.ToTable("Formats");
+                });
 
-                    b.ToTable("AdminUsers");
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("FormatId");
+
+                    b.Property<int>("PaperId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId")
+                        .IsUnique();
+
+                    b.HasIndex("PaperId")
+                        .IsUnique();
+
+                    b.ToTable("OrderDefaultParams");
+                });
+
+            modelBuilder.Entity("Server.Models.Paper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Papers");
+                });
+
+            modelBuilder.Entity("Server.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FileName")
+                        .IsRequired();
+
+                    b.Property<int>("FileSize");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired();
+
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int>("SectionId");
+
+                    b.Property<string>("ThumbPath")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Server.Models.User", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Avatar");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("DeliveryAddress");
+
+                    b.Property<string>("DeliveryCity");
+
+                    b.Property<string>("DeliveryFirstName");
+
+                    b.Property<string>("DeliveryLastName");
+
+                    b.Property<string>("DeliveryPostCode");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
 
+                    b.Property<string>("InvoiceAddress");
+
+                    b.Property<string>("InvoiceCity");
+
+                    b.Property<string>("InvoiceCompany");
+
+                    b.Property<string>("InvoiceFirstName");
+
+                    b.Property<string>("InvoiceLastName");
+
+                    b.Property<string>("InvoiceNip");
+
+                    b.Property<string>("InvoicePostCode");
+
+                    b.Property<bool>("InvoiceType");
+
                     b.Property<string>("LastName");
 
-                    b.ToTable("User");
+                    b.Property<bool>("LockoutEnabled");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("Phone");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -225,7 +301,7 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -233,7 +309,7 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -246,7 +322,7 @@ namespace Server.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -254,17 +330,23 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Server.Models.AdminUser", b =>
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
                 {
-                    b.HasOne("Server.Models.User", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "PaperId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

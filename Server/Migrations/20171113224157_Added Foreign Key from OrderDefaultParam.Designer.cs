@@ -11,8 +11,8 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    [Migration("20171108125403_Added Photo Table")]
-    partial class AddedPhotoTable
+    [Migration("20171113224157_Added Foreign Key from OrderDefaultParam")]
+    partial class AddedForeignKeyfromOrderDefaultParam
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,6 +127,83 @@ namespace Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Server.Models.Format", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Height");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Width");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Formats");
+                });
+
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("FormatId");
+
+                    b.Property<int>("PaperId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId")
+                        .IsUnique();
+
+                    b.HasIndex("PaperId")
+                        .IsUnique();
+
+                    b.ToTable("OrderDefaultParams");
+                });
+
+            modelBuilder.Entity("Server.Models.Paper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Papers");
+                });
+
+            modelBuilder.Entity("Server.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FileName")
+                        .IsRequired();
+
+                    b.Property<int>("FileSize");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired();
+
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int>("SectionId");
+
+                    b.Property<string>("ThumbPath")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Server.Models.User", b =>
@@ -256,6 +333,19 @@ namespace Server.Migrations
                     b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.Models.OrderDefaultParam", b =>
+                {
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithOne("OrderDefaultParam")
+                        .HasForeignKey("Server.Models.OrderDefaultParam", "PaperId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

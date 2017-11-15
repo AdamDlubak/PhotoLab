@@ -44,3 +44,6 @@ Server/obj
 
 # Uploaded files by Client
 Server/wwwroot/uploads
+
+#Visual Studio files
+Server/.vs/Server/v15

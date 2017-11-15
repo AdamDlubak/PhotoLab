@@ -1,130 +1,156 @@
-	<input #fileInput type="file" enctype="multipart/form-data" multiple/>
-	<button (click)="addFile()">Add</button>
-
-
-
-
-
-
-
-<h3>Inny sposob przesyłania</h3>
-
-
 <div class="container">
-		
-			 <div class="navbar navbar-default">
-					 <div class="navbar-header">
-							 <a class="navbar-brand" href>Angular2 File Upload</a>
-					 </div>
-			 </div>
-		
-			 <div class="row">
-		
-					 <div class="col-md-3">
-		
-							 <h3>Select files</h3>
-		
-							 <div ng2FileDrop
-										[ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-										(fileOver)="fileOverBase($event)"
-										[uploader]="uploader"
-										class="well my-drop-zone">
-									 Base drop zone
-							 </div>
-		
-							 <div ng2FileDrop
-										[ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-										(fileOver)="fileOverAnother($event)"
-										[uploader]="uploader"
-										class="well my-drop-zone">
-									 Another drop zone
-							 </div>
-		
-							 Multiple
-							 <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
-		
-							 Single
-							 <input type="file" ng2FileSelect [uploader]="uploader" />
-					 </div>
-		
-					 <div class="col-md-9" style="margin-bottom: 40px">
-		
-							 <h3>Upload queue</h3>
-							 <p>Queue length: {{ uploader?.queue?.length }}</p>
-							 <div *ngFor="let item of uploader.queue" class="media">
-									<div class="media-left">
-									</div>
-									<div class="media-body">
-											<p>{{ item?.file?.name }}</p>
-									</div>
+
+	
+
+
+	<div class="row all-photos-info">
+		<div class="col-sm-10">
+			Nadaj ogolne ustawienia dla wszystkich zdjęć.
+			<br /> Zdefiniuj początkowe ustawienia dla wszystkich zdjęć, by następnie dostosowywać je do poszczegolnych odbitek!
+			<div class="row">
+				<div class="col-3">
+					<select *ngIf="formats" style="width: 170px;" class="custom-select d-block" name="selectFormat" [(ngModel)]="defaults.format">
+							<option disabled>Wybierz format</option>
+						<option *ngFor="let format of formats" [ngValue]="format.id">{{format.name}}</option>
+					</select>
+				</div>
+				<div class="col-3">
+					<select *ngIf="papers" style="width: 170px;" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaults.paper">
+						<option disabled>Wybierz papier</option>
+						<option *ngFor="let paper of papers" [ngValue]="paper.id">{{paper.name}}</option>
+					</select>
+				</div>
+				<div class="col-3">
+					<input style="width: 170px;" type="number" min="1" max="999" step="1" [(ngModel)]="defaults.amount" class="form-control"
+					 id="inlineFormInputGroup">
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<p>Liczba wgranych zdjęć: {{ uploader?.queue?.length }}</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div [ngClass]="displayText">
+				<div ng2FileDrop class="show-class" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone">
+					Przeciągnij i upuść zdjęcia ktore chcesz wgrać lub po prostu kliknij tutaj!
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="container" *ngIf="formats" >
+
+	<div class="row">
+		<div class="col-9" style="margin-bottom: 40px">
+
+
+			<div *ngFor="let item of uploader.queue" class="media">
+				<div class="media-left">
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Zdjęcie</th>
+						<th>Wybór formatu i papieru</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of uploader.queue">
+						<td style="width: 300px">
+							<strong>{{ item?.file?.name }}</strong>
+							<div style="width: 210px; height: 150px; border: 1px solid #000; display: flex; align-items: center; align-content: center; ">
+								<img src="" imgPreview [image]="item?._file" class="media-object" id="image3" style="width: 100%" />
 							</div>
-							 <table class="table">
-									 <thead>
-									 <tr>
-											 <th width="50%">Name</th>
-											 <th>Size</th>
-											 <th>Progress</th>
-											 <th>Status</th>
-											 <th>Actions</th>
-									 </tr>
-									 </thead>
-									 <tbody>
-									 <tr *ngFor="let item of uploader.queue">
-											
-											<td><img src="" imgPreview [image]="item?._file" class="media-object" style="width: 100px" /></td>
-											 <td><strong>{{ item?.file?.name }}</strong></td>
-											 <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-											 <td *ngIf="uploader.isHTML5">
-													 <div class="progress" style="margin-bottom: 0;">
-															 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-													 </div>
-											 </td>
-											 <td class="text-center">
-													 <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-													 <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-													 <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-											 </td>
-											 <td nowrap>
-													 <button type="button" class="btn btn-success btn-xs"
-																	 (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-															 <span class="glyphicon glyphicon-upload"></span> Upload
-													 </button>
-													 <button type="button" class="btn btn-warning btn-xs"
-																	 (click)="item.cancel()" [disabled]="!item.isUploading">
-															 <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-													 </button>
-													 <button type="button" class="btn btn-danger btn-xs"
-																	 (click)="item.remove()">
-															 <span class="glyphicon glyphicon-trash"></span> Remove
-													 </button>
-											 </td>
-									 </tr>
-									 </tbody>
-							 </table>
-		
-							 <div>
-									 <div>
-											 Queue progress:
-											 <div class="progress" style="">
-													 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-											 </div>
-									 </div>
-									 <button type="button" class="btn btn-success btn-s"
-													 (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-											 <span class="glyphicon glyphicon-upload"></span> Upload all
-									 </button>
-									 <button type="button" class="btn btn-warning btn-s"
-													 (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-											 <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-									 </button>
-									 <button type="button" class="btn btn-danger btn-s"
-													 (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
-											 <span class="glyphicon glyphicon-trash"></span> Remove all
-									 </button>
-							 </div>
-		
-					 </div>
-		
-			 </div>
-		
-	 </div>
+
+
+							<div class="btn-group" class="radio">
+									<label class="btn btn-secondary">
+										<input type="radio"
+											   value="true"
+											   [checked]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop == true"
+											   id="point1"
+											   (change)="onProfitSelectionChange(item, true)"
+											   name="ProfitCode"><small>Docięcie</small>
+									</label>
+								</div>
+								<div class="radio">
+									<label class="btn btn-secondary">
+										<input type="radio"
+											   value="false"
+											   [checked]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop == false"
+											   id="point2"
+											   (change)="onProfitSelectionChange(item, false)"
+											   name="ProfitCode"><small>Białe paski</small>
+									</label>
+								</div>
+
+
+							<button class="btn btn-xs btn-outline-primary" (click)="open(content, item);">Podgląd</button>
+							<button type="button" class="btn btn-danger btn-xs" (click)="removeElement(getFileItemDetails(item), item); item.remove()">Usuń</button>
+							<!-- Modal -->
+							<ng-template #content let-c="close" let-d="dismiss">
+								<div class="modal-header">
+									<h4 class="modal-title">Modal title</h4>
+									<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>One fine body&hellip;</p>
+
+
+
+									<td>
+										<img src="" imgPreview [image]="item?._file" class="media-object" id="image" style="width: 700px" />
+										<div id="result"></div>
+										<button class="btn btn-lg btn-outline-primary" (click)="cropper(item)">Crop</button>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+								</div>
+							</ng-template>
+							<!-- Koniec Modal -->
+							</td>
+
+							<td>
+								<div class="container">
+
+									<app-print-type [item]="item" (myEvent)="cart.licz($event)" [itemDetail]="getFileItemDetails(item)" [defaultParams]="defaultParams" [formats]="formats" [papers]="papers"></app-print-type>
+								</div>
+							</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div>
+				<div>
+					Queue progress:
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<div class="col-3" >
+			<app-cart #cart [uploader]="uploader" [itemDetails]="fileItemDetails" [formats]="formats"></app-cart>
+		</div>
+	</div>
+
+</div>

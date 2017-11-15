@@ -1,170 +1,136 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
-import {FileService} from '../services/file.service';
-
-import { Http, Headers, RequestOptions } from '@angular/http';
-
-
-import { FileUploader } from 'ng2-file-upload';
-const URL = 'http://localhost:57500/api/photo/upload';
-
+import { Format } from './models/format.class';
+import { PrintTypeComponent } from "./print-type/print-type.component";
+import { CartComponent } from "./cart/cart.component";
+import { FileItemDetails } from "./models/file-item-details.class";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef
+} from "@angular/core";
+import { FileService } from "../services/file.service";
+import { Http, Headers, RequestOptions } from "@angular/http";
+import { AngularCropperjsComponent } from "angular-cropperjs";
+import { FileUploader, FileItem } from "ng2-file-upload";
+import { ConfigService } from "../../../shared/utils/config.service";
+import { ViewChild } from "@angular/core";
+import { DefaultParam } from './../photo-crop/models/default-param.class';
+import { Paper } from "./models/paper.class";
 @Component({
   selector: "app-file-upload",
   templateUrl: "./photo-crop.component.html",
-  styleUrls: ["./photo-crop.component.scss"],
+  styleUrls: ["./photo-crop.component.scss"]
 })
 
 
+
 export class PhotoCropComponent implements OnInit {
-  
-  public uploader:FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver:boolean = false;
-  public hasAnotherDropZoneOver:boolean = false;
-  
-
-  public fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
+  formats: Format[];
+  papers: Paper[];
+  @ViewChild('cart') child:CartComponent;
+  dropBoxActivated: boolean = false;
+  baseUrl: string;
+  public uploader: FileUploader;
+  public hasBaseDropZoneOver: boolean = false;
+  fileItemDetails: Array<FileItemDetails>;
+  errorMessage: any;
+  defaultParam : DefaultParam;
+  defaults = {
+    format: "Wybierz format",
+    paper: "Wybierz papier",
+    amount: 1
   }
- 
-  public fileOverAnother(e:any):void {
-    this.hasAnotherDropZoneOver = e;
+
+  constructor(private fileService: FileService, private configService: ConfigService) {
+    this.baseUrl = configService.getApiURI();
+    this.uploader = new FileUploader({ url: this.baseUrl + "/photo/upload" });
+    
+
+    this.fileItemDetails = [];
+    this.fileService.getDatas(this.uploader, this.fileItemDetails);
   }
-
-  @ViewChild("fileInput") fileInput;
-
-  constructor(private fileService: FileService) { }
-
-  addFile(): void {
-    let fi = this.fileInput.nativeElement;
-    if (fi.files && fi.files[0]) {
-        let fileToUpload = fi.files;
-        this.fileService
-            .upload(fileToUpload)
-            .subscribe(res => {
-                console.log(res);
-            });
-    }
-
-
-    
-}
-
-
-// saveFiles(files){
-//   this.errors = []; // Clear error
-//   // Validate file size and allowed extensions
-//   if (files.length > 0 && (!this.isValidFiles(files))) {
-//       this.uploadStatus.emit(false);
-//       return;
-//   }       
-//   if (files.length > 0) {
-//         let formData: FormData = new FormData();
-//         for (var j = 0; j < files.length; j++) {
-//             formData.append("file[]", files[j], files[j].name);
-//         }
-//         var parameters = {
-//             projectId: this.projectId,
-//             sectionId: this.sectionId
-//         }
-//         this.fileService.upload2(formData, parameters)
-//             .subscribe(
-//             success => {
-//               this.uploadStatus.emit(true);
-//               console.log(success)
-//             },
-//             error => {
-//                 this.uploadStatus.emit(true);
-//                 this.errors.push(error.ExceptionMessage);
-//             }) 
-//     } 
-// }
-
-
-
-  errors: Array<string> =[];
-  dragAreaClass: string = 'dragarea';
-  @Input() projectId: number = 0;
-  @Input() sectionId: number = 0;
-  @Input() fileExt: string = "JPG, GIF, PNG";
-  @Input() maxFiles: number = 5;
-  @Input() maxSize: number = 5; // 5MB
-  @Output() uploadStatus = new EventEmitter();
-
-
-  ngOnInit(){ }
-    
-  
-  
-
-
-
-
-  onFileChange(event){
-    let files = event.target.files; 
-    // this.saveFiles(files);
- }
-
- @HostListener('dragover', ['$event']) onDragOver(event) {
-  this.dragAreaClass = "droparea";
-  event.preventDefault();
-}
-
-@HostListener('dragenter', ['$event']) onDragEnter(event) {
-  this.dragAreaClass = "droparea";
-  event.preventDefault();
-}
-
-@HostListener('dragend', ['$event']) onDragEnd(event) {
-  this.dragAreaClass = "dragarea";
-  event.preventDefault();
-}
-
-@HostListener('dragleave', ['$event']) onDragLeave(event) {
-  this.dragAreaClass = "dragarea";
-  event.preventDefault();
-}
-
-@HostListener('drop', ['$event']) onDrop(event) {   
-  this.dragAreaClass = "dragarea";           
-  event.preventDefault();
-  event.stopPropagation();
-  var files = event.dataTransfer.files;
-  // this.saveFiles(files);
-}
-
-
-
-private isValidFiles(files){
-  // Check Number of files
-   if (files.length > this.maxFiles) {
-       this.errors.push("Error: At a time you can upload only " + this.maxFiles + " files");
-       return;
-   }        
-   this.isValidFileExtension(files);
-   return this.errors.length === 0;
-}
-
-private isValidFileExtension(files){
-  // Make array of file extensions
-  var extensions = (this.fileExt.split(','))
-                  .map(function (x) { return x.toLocaleUpperCase().trim() });
-  for (var i = 0; i < files.length; i++) {
-      // Get file extension
-      var ext = files[i].name.toUpperCase().split('.').pop() || files[i].name;
-      // Check the extension exists
-      var exists = extensions.includes(ext);
-      if (!exists) {
-          this.errors.push("Error (Extension): " + files[i].name);
+  ngOnInit() {
+    this.getFormats();
+    this.getPapers();
+    this.getDefaults();
+  }
+  private prepareUploader(formData) {
+    this.uploader.onBuildItemForm = (item, form) => {
+      for (let key in formData) {
+        form.append(key, formData[key]);
       }
-      // Check file size
-      this.isValidFileSize(files[i]);
+    }
   }
-}
 
-private isValidFileSize(file) {
-  var fileSizeinMB = file.size / (1024 * 1000);
-  var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
-  if (size > this.maxSize)
-      this.errors.push("Error (File Size): " + file.name + ": exceed file size limit of " + this.maxSize + "MB ( " + size + "MB )");
-}
+  getFileItemDetails(item : FileItem) : FileItemDetails{
+    return this.fileItemDetails[this.uploader.getIndexOfItem(item)];
+  }
 
+  getFormats() {
+    this.fileService
+      .getFormats()
+      .subscribe(
+        data => (this.formats = data),
+        error => (this.errorMessage = error)
+      );
+  }
+  getPapers() {
+    this.fileService
+      .getPapers()
+      .subscribe(
+        papers => (this.papers = papers),
+        error => (this.errorMessage = error)
+      );
+  }
+  getDefaults() {
+    this.fileService
+      .getDefaults()
+      .subscribe(
+        defaultParam => (
+          this.defaultParam = defaultParam),
+        error => (this.errorMessage = error)
+      );
+      
+    
+  }
+  onProfitSelectionChange(item, entry): void {
+    let id = this.uploader.getIndexOfItem(item);
+    this.fileItemDetails[id].crop = entry;
+    console.log(this.fileItemDetails[id].crop);
+
+    console.log(entry);
+    
+}
+  showqueue(item: any){ 
+    console.log(this.fileItemDetails[this.uploader.getIndexOfItem(item)].crop);
+
+  }
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+    
+    this.uploader.onAfterAddingFile = fileItem => {
+      this.fileItemDetails.push(
+        new FileItemDetails(
+          this.formats,
+          fileItem._file.name,
+          this.defaults
+        )
+      );
+    };
+
+    this.uploader.onAfterAddingAll = (fileItems: any[]) => {
+      this.fileService.powiadom2(this.fileItemDetails);
+      this.child.liczPoczatek(this.defaults);
+      
+    };
+  }
+
+  removeElement(itemDetails, item) {
+    this.child.liczPoUsunieciu(itemDetails);    
+    this.fileItemDetails.splice(this.uploader.queue.indexOf(item), 1);
+
+  }
 }
