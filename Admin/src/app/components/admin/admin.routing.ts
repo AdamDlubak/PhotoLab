@@ -1,3 +1,4 @@
+import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
@@ -19,6 +20,7 @@ export const Routing: ModuleWithProviders = RouterModule.forChild([
       { path: "home", component: HomeComponent},
       { path: "user", component: UserEditComponent},
       { path: "users", component: UsersComponent},
+      { path: "control-panel", component: ControlPanelComponent},
       { path: "**", redirectTo: "home", pathMatch: "full" }    
     ]
   }

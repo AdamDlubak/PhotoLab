@@ -1,0 +1,125 @@
+<div class="title-block">
+	<h3 class="title" style="font-family: 'Comfortaa', cursive">
+		Panel sterowania
+	</h3>
+	<p class="title-description" style="font-family: 'Roboto', sans-serif;">
+		W tej sekcji można zarządzać wszystkimi dostępnymi ustawieniami serwisu oraz parametrami domyślnymi.
+	</p>
+</div>
+<hr/>
+
+<section class="section">
+  <div class="row sameheight-container">
+    <div class="col-xl-6">
+
+
+
+
+
+
+
+
+
+      <div class="card sameheight-item">
+        <div class="card-block">
+          <!-- Nav tabs -->
+          <div class="card-title-block">
+            <h3 class="title" style="font-family: 'Comfortaa', cursive">
+              Ceny i formaty odbitek:
+            </h3>
+            <button>Dodaj</button>
+            
+          </div>
+
+
+
+          
+        </div>
+        <!-- /.card-block -->
+
+        <section *ngIf="formats" class="example">
+          
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th>Id</th>
+                              <th>Nazwa</th>
+                              <th>Wysokość</th>
+                              <th>Szerokość</th>
+                              <th>Cena</th>
+                              <th>Akcje</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let format of formats">
+                              <td>{{ format.id }}</td>
+                              <td>{{ format.name }}</td>
+                              <td>{{ format.height }} mm</td>
+                              <td>{{ format.width }} mm</td>
+                              <td>{{ format.price | number:'1.2-2' }} zł</td>
+                              <td>Edytuj | Usuń</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+        
+      </div>
+      <!-- /.card -->
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- /.col-xl-6 -->
+    <div class="col-xl-6">
+
+      <div class="card sameheight-item">
+        <div class="card-block">
+          <!-- Nav tabs -->
+          <div class="card-title-block">
+            <h3 class="title" style="font-family: 'Comfortaa', cursive">
+              Rodzaje papieru
+            </h3>
+            <button>Dodaj</button>
+          </div>
+
+        </div>
+        <!-- /.card-block -->
+
+        <section *ngIf="papers" class="example">
+          
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th>Id</th>
+                              <th>Nazwa</th>
+                              <th>Akcje</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let paper of papers">
+                              <td>{{ paper.id }}</td>
+                              <td>{{ paper.name }}</td>
+                              <td>Edytuj | Usuń</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+      </div>
+      <!-- /.card -->
+
+
+    </div>
+    <!-- /.col-xl-6 -->
+  </div>
+</section>

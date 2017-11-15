@@ -16,6 +16,8 @@ import { HomeComponent } from "./home/home.component";
 
 import { Routing } from "./admin.routing";
 import { AuthGuard } from "../../auth.guard";
+import { ControlPanelComponent } from './control-panel/control-panel.component';
+import { FileService } from "../lab/services/file.service";
 
 @NgModule({
   imports: [CommonModule, FormsModule, Routing, SharedModule],
@@ -26,9 +28,10 @@ import { AuthGuard } from "../../auth.guard";
     HomeComponent,
     AdminLayoutComponent,
     AdminHeaderComponent,
-    AdminSidebarComponent
-  ],
+    AdminSidebarComponent,
+    ControlPanelComponent
+],
   exports: [],
-  providers: [AuthGuard, UserService]
+  providers: [AuthGuard, UserService, FileService]
 })
 export class AdminModule {}

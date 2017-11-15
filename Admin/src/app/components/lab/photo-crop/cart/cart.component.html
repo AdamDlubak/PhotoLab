@@ -16,7 +16,7 @@
             
             <td>{{ getFormatName(cart.formatId) }}</td>
             <td>{{ cart.amount }}</td>
-            <td>{{ cart.price }}</td>
+            <td>{{ cart.price | number:'1.2-2' }} zł</td>
               
           </tr>
 
@@ -24,7 +24,7 @@
               <td colspan="2">
                 <b>Razem do zapłaty:</b>
               </td>
-              <td>{{ suma }} zł</td>
+              <td>{{ suma | number:'1.2-2' }} zł</td>
             </tr>
       </tbody>
     </table>
@@ -32,7 +32,6 @@
     <button type="button" class="btn btn-success btn-xs" (click)="addDatas(); uploader.uploadAll();" [disabled]="!uploader.getNotUploadedItems().length">
       <span class="glyphicon glyphicon-upload"></span> Wgraj zdjęcia i przejdź dalej
     </button>
-    <button (click)="pokaz()">Poka</button>
     
   </div>
 </div>

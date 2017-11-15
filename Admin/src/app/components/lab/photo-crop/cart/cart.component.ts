@@ -4,6 +4,7 @@ import { FileService } from "./../../services/file.service";
 import { FileItemDetails } from "./../models/file-item-details.class";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+
 @Component({
   selector: "app-cart",
   templateUrl: "./cart.component.html",
@@ -19,7 +20,7 @@ export class CartComponent implements OnInit {
 
   prices: number[];
   amounts: number[];
-  suma: number;
+  suma: number = 0;
   carts: Cart[];
   ngOnInit() {
     this.carts = [];
@@ -30,9 +31,6 @@ export class CartComponent implements OnInit {
         price: 0
       });
     }
-  }
-  pokaz(){
-    console.log(this.carts);
   }
   getFormatName(formatId: number) {
     for (let format of this.formats) {
