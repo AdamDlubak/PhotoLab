@@ -9,7 +9,7 @@ import { DefaultParam } from "../../lab/photo-crop/models/default-param.class";
 @Component({
   selector: "app-control-panel",
   templateUrl: "./control-panel.component.html",
-  styleUrls: ["./control-panel.component.css"]
+  styleUrls: ["./control-panel.component.scss"]
 })
 export class ControlPanelComponent implements OnInit {
   errorMessage: any;

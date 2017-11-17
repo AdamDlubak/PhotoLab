@@ -9,7 +9,7 @@ import { last } from "rxjs/operator/last";
 @Component({
   selector: "app-print-type",
   templateUrl: "./print-type.component.html",
-  styleUrls: ["./print-type.component.css"]
+  styleUrls: ["./print-type.component.scss"]
 })
 export class PrintTypeComponent implements OnInit, AfterContentInit, OnChanges {
   @Input() item: FileItem;

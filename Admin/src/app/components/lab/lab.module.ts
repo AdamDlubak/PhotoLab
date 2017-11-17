@@ -17,11 +17,13 @@ import { ImagePreview } from "./services/image-preview.directive";
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailedDataComponent } from './order-detailed-data/order-detailed-data.component';
+import { LoginModalComponent } from './login-modal/login-modal.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, SharedModule, Routing, AngularCropperjsModule, FileUploadModule, NgbModule.forRoot()  ],
   declarations: [LabLayoutComponent, HomeComponent, PhotoCropComponent, PrintTypeComponent, ImagePreview, CartComponent,
-    OrderDetailedDataComponent
+    OrderDetailedDataComponent,
+    LoginModalComponent
 ],
   exports: [],  
   providers: [UserService, FileService]
