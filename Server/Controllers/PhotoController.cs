@@ -24,8 +24,8 @@ namespace Server.Controllers
   [AllowAnonymous]
   public class PhotoController : Controller
   {
-
     private readonly PhotoLabContext _context;
+    private readonly IHostingEnvironment _hostingEnvironment;
 
     public PhotoController(PhotoLabContext appDbContext, IHostingEnvironment environment)
     {
@@ -33,27 +33,120 @@ namespace Server.Controllers
       _hostingEnvironment = environment;
 
     }
-    private readonly IHostingEnvironment _hostingEnvironment;
 
-    [HttpGet("GetFormats")]
+    // GET api/photo/getformats
+    [HttpGet("getFormats")]
     public IActionResult GetFormats()
     {
       var formats = _context.Formats.ToList();
-      return Ok(formats);
+      return new OkObjectResult(formats);
     }
 
-    [HttpGet("GetPapers")]
+    // POST api/photo/saveformat
+    [HttpPost("saveFormat")]
+    public async Task<IActionResult> SaveFormat([FromBody] Format formatModel)
+    {
+      string message;
+      Format format = _context.Formats.FirstOrDefault(x => x.Id == formatModel.Id);
+      if (format == null)
+      {
+        format = new Format()
+        {
+          Name = formatModel.Name,
+          Width = formatModel.Width,
+          Height = formatModel.Height,
+          Price = formatModel.Price
+        };
+        _context.Formats.Add(format);
+        message = "Format added!";
+      }
+      else
+      {
+        format.Name = formatModel.Name;
+        format.Width = formatModel.Width;
+        format.Height = formatModel.Height;
+        format.Price = formatModel.Price;
+
+        message = "Format edited!";
+      }
+      await _context.SaveChangesAsync();
+      return new OkObjectResult(message);
+    }
+
+    // DELETE api/photo/deleteformat
+    [HttpDelete("deleteFormat/{id}")]
+    public async Task<IActionResult> DeleteFormatById(int id)
+    {
+      var format = _context.Formats.FirstOrDefault(x => x.Id == id);
+      if (format != null)
+      {
+        _context.Formats.Remove(format);
+      }
+      await _context.SaveChangesAsync();
+      return new OkObjectResult("Format removed!");
+    }
+
+
+
+    // GET api/photo/getpapers
+    [HttpGet("getPapers")]
     public IActionResult GetPapers()
     {
       var papers = _context.Papers.ToList();
-      return Ok(papers);
+      return new OkObjectResult(papers);
     }
-    [HttpGet("GetDefaults")]
+
+    // POST api/photo/savepaper
+    [HttpPost("savePaper")]
+    public async Task<IActionResult> SavePaper([FromBody] Paper paperModel)
+    {
+      string message;
+      Paper paper = _context.Papers.FirstOrDefault(x => x.Id == paperModel.Id);
+      if (paper == null)
+      {
+        paper = new Paper()
+        {
+          Name = paperModel.Name
+        };
+        _context.Papers.Add(paper);
+        message = "Paper added!";
+      }
+      else
+      {
+        paper.Name = paperModel.Name;
+
+        message = "Paper edited!";
+      }
+      await _context.SaveChangesAsync();
+      return new OkObjectResult(message);
+    }
+
+    // DELETE api/photo/deletepaper
+    [HttpDelete("deletePaper/{id}")]
+    public async Task<IActionResult> DeletePaperById(int id)
+    {
+      var paper = _context.Papers.FirstOrDefault(x => x.Id == id);
+      if (paper != null)
+      {
+        _context.Papers.Remove(paper);
+      }
+      await _context.SaveChangesAsync();
+      return new OkObjectResult("Paper removed!");
+    }
+
+
+
+    // GET api/photo/getdefaults
+    [HttpGet("getDefaults")]
     public IActionResult GetDefaults()
     {
-      var defaults = _context.OrderDefaultParams.Include(def => def.Format).Include(def => def.Paper).FirstOrDefault();
-      return Ok(defaults);
+      var defaults = _context.PrintsParam.Include(def => def.Format).Include(def => def.Paper).FirstOrDefault();
+      return new OkObjectResult(defaults);
     }
+
+
+
+
     [HttpPost("Upload")]
     [EnableCors("CorsDevPolicy")]
     public async Task<IActionResult> Upload(List<IFormFile> files)

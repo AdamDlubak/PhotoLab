@@ -13,14 +13,13 @@ import { RegistrationFormComponent } from "./registration-form/registration-form
 import { UserEditComponent } from "./user-edit/user-edit.component";
 import { UsersComponent } from "./users/users.component";
 import { HomeComponent } from "./home/home.component";
-
 import { Routing } from "./admin.routing";
 import { AuthGuard } from "../../auth.guard";
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { FileService } from "../lab/services/file.service";
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
-  imports: [CommonModule, FormsModule, Routing, SharedModule],
+  imports: [CommonModule, FormsModule, Routing, SharedModule, ToastrModule.forRoot()],
   declarations: [
     RegistrationFormComponent,
     UserEditComponent,
@@ -29,7 +28,7 @@ import { FileService } from "../lab/services/file.service";
     AdminLayoutComponent,
     AdminHeaderComponent,
     AdminSidebarComponent,
-    ControlPanelComponent
+    ControlPanelComponent,
 ],
   exports: [],
   providers: [AuthGuard, UserService, FileService]

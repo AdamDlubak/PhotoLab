@@ -2,30 +2,32 @@ import { DefaultParam } from "./default-param.class";
 import { Format } from "./format.class";
 export class  FileItemDetails {
   index: number;
-  crop: boolean;
+  isContain: boolean;
   prints: Print[];
   name: string;
+  isHorizontal: boolean;
 
   constructor(
     formats: Format[],
     name: string,
-    defaultParams: any
+    defaultParams: DefaultParam
   ) {
-    this.crop = false;
+    this.isContain = defaultParams.isContain;
     this.name = name;
     this.prints = [];
+    this.isHorizontal = defaultParams.isHorizontal;
     for (let formatType of formats) {
       let print: Print;
-      if (formatType.id == defaultParams.format) {
+      if (formatType.id == defaultParams.formatId) {
         print = {
           format: formatType.id,
-          paper: defaultParams.paper,
+          paper: defaultParams.paperId,
           amount: defaultParams.amount
         };
       } else {
         print = {
           format: formatType.id,
-          paper: defaultParams.paper,
+          paper: defaultParams.paperId,
           amount: 0
         };
       }

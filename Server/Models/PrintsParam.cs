@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Server.Models
 {
-  public class OrderDefaultParam
+  public class PrintsParam
   {
     public int Id { get; set; }
     public int FormatId { get; set; }
@@ -13,5 +13,7 @@ namespace Server.Models
     public int PaperId { get; set; }
     public Paper Paper { get; set; }
     public int Amount { get; set; }
+    public Boolean IsHorizontal { get; set; }
+    public Boolean IsContain { get; set; }
   }
 }

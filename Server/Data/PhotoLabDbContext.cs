@@ -11,6 +11,6 @@ namespace Server.Helpers
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Format> Formats { get; set; }
         public DbSet<Paper> Papers { get; set; }
-        public DbSet<OrderDefaultParam> OrderDefaultParams { get; set; }
+        public DbSet<PrintsParam> PrintsParam { get; set; }
   }
 }

@@ -9,6 +9,6 @@ namespace Server.Models
   {
     public int Id { get; set; }
     public string Name { get; set; }
-    public OrderDefaultParam OrderDefaultParam { get; set; }
+    public PrintsParam PrintsParam { get; set; }
   }
 }

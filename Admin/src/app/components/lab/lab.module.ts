@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedModule } from "../../shared/modules/shared.module";
-
 import { UserService } from "../../shared/services/user.service";
 import { FileService } from "./services/file.service";
 import { Routing } from "./lab.routing";
@@ -17,10 +16,13 @@ import { ImagePreview } from "./services/image-preview.directive";
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { OrderDetailedDataComponent } from './order-detailed-data/order-detailed-data.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, SharedModule, Routing, AngularCropperjsModule, FileUploadModule, NgbModule.forRoot()  ],
-  declarations: [LabLayoutComponent, HomeComponent, PhotoCropComponent, PrintTypeComponent, ImagePreview, CartComponent ],
+  declarations: [LabLayoutComponent, HomeComponent, PhotoCropComponent, PrintTypeComponent, ImagePreview, CartComponent,
+    OrderDetailedDataComponent
+],
   exports: [],  
   providers: [UserService, FileService]
 })

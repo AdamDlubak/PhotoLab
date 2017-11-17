@@ -1,4 +1,4 @@
-import { Format } from './../photo-crop/models/format.class';
+import { Format } from "./../photo-crop/models/format.class";
 import { Cart } from "./../photo-crop/models/cart.class";
 import { DefaultParam } from "./../photo-crop/models/default-param.class";
 import { FileUploader, FileItem } from "ng2-file-upload";
@@ -52,14 +52,19 @@ export class FileService extends BaseService {
   getIndexInUploadQueue(item): number {
     return this.uploader.queue.indexOf(item);
   }
-  getFormatPrice(formats : Format[], formatId: number){
-      for(let format of formats){
-        if(format.id == formatId){
-          return format.price;
-        }
+  getFormatPrice(formats: Format[], formatId: number) {
+    for (let format of formats) {
+      if (format.id == formatId) {
+        return format.price;
       }
+    }
   }
-  licz(itemDetails: Array<FileItemDetails>, data: any, carts: Cart[], formats : Format[]) {
+  licz(
+    itemDetails: Array<FileItemDetails>,
+    data: any,
+    carts: Cart[],
+    formats: Format[]
+  ) {
     for (let cart of carts) {
       if (cart.formatId == data.format) {
         cart.amount = 0;
@@ -69,8 +74,10 @@ export class FileService extends BaseService {
           for (var i: number = 0; i < item.prints.length; i++) {
             if (item.prints[i].format == data.format) {
               cart.amount += item.prints[i].amount;
-              cart.price += item.prints[i].amount * this.getFormatPrice(formats, data.format);
-              cart.price = Math.round(cart.price*100)/100;
+              cart.price +=
+                item.prints[i].amount *
+                this.getFormatPrice(formats, data.format);
+              cart.price = Math.round(cart.price * 100) / 100;
             }
           }
         }
@@ -78,54 +85,51 @@ export class FileService extends BaseService {
       }
     }
   }
-  liczPoUsunieciu(
-    carts: Cart[],
-    item: FileItemDetails,
-    formats : Format[]){
-
-      for (let cart of carts) {
-        for (var i: number = 0; i < item.prints.length; i++) {
-          if(cart.formatId == item.prints[i].format){
-            cart.amount -= item.prints[i].amount;
-            cart.price -= item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format);
-            cart.price = Math.round(cart.price*100)/100;
-          }
+  liczPoUsunieciu(carts: Cart[], item: FileItemDetails, formats: Format[]) {
+    for (let cart of carts) {
+      for (var i: number = 0; i < item.prints.length; i++) {
+        if (cart.formatId == item.prints[i].format) {
+          cart.amount -= item.prints[i].amount;
+          cart.price -=
+            item.prints[i].amount *
+            this.getFormatPrice(formats, item.prints[i].format);
+          cart.price = Math.round(cart.price * 100) / 100;
         }
       }
-
+    }
   }
   liczPoczatek(
     itemDetails: Array<FileItemDetails>,
     carts: Cart[],
-    defaults: any,
-    formats : Format[]
+    defaults: DefaultParam,
+    formats: Format[]
   ) {
     for (let cart of carts) {
-      if (defaults.format == cart.formatId) {
-        
-      cart.amount = 0;
-      cart.price = 0;
+      if (defaults.formatId == cart.formatId) {
+        cart.amount = 0;
+        cart.price = 0;
 
-      for (let item of itemDetails) {
-        for (var i: number = 0; i < item.prints.length; i++) {
-          if (defaults.format == item.prints[i].format) {
-            
-            cart.amount += item.prints[i].amount;
-            cart.price += item.prints[i].amount * this.getFormatPrice(formats, item.prints[i].format);
-            cart.price = Math.round(cart.price*100)/100;
+        for (let item of itemDetails) {
+          for (var i: number = 0; i < item.prints.length; i++) {
+            if (defaults.formatId == item.prints[i].format) {
+              cart.amount += item.prints[i].amount;
+              cart.price +=
+                item.prints[i].amount *
+                this.getFormatPrice(formats, item.prints[i].format);
+              cart.price = Math.round(cart.price * 100) / 100;
+            }
           }
         }
       }
     }
   }
-}
 
   suma(carts: Cart[]) {
     let result = 0;
     for (let cart of carts) {
       result += cart.price;
     }
-    return Math.round(result*100)/100;
+    return Math.round(result * 100) / 100;
   }
   invokeEvent: Subject<any> = new Subject();
   invokeEvent2: Subject<any> = new Subject();
@@ -134,5 +138,41 @@ export class FileService extends BaseService {
   }
   powiadom2(itemDetails) {
     this.invokeEvent2.next(itemDetails);
+  }
+
+  // Admin - Formats
+  submitFormat(format: Format): Observable<Format[]> {
+    let body = JSON.stringify(format);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/saveformat", body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+  deleteFormat(id: number): Observable<string> {
+    return this.http
+      .delete(this.baseUrl + "/photo/deleteformat/" + id)
+      .map(response => response.json().message)
+      .catch(this.handleError);
+  }
+
+  // Admin - Papers
+  submitPaper(paper: Paper): Observable<Paper[]> {
+    let body = JSON.stringify(paper);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/savepaper", body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+  deletePaper(id: number): Observable<string> {
+    return this.http
+      .delete(this.baseUrl + "/photo/deletepaper/" + id)
+      .map(response => response.json().message)
+      .catch(this.handleError);
   }
 }

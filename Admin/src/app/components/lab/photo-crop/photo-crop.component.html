@@ -1,156 +1,181 @@
-<div class="container">
-
-	
+<!-- style="pointer-events: none; opacity: 0.4" -->
 
 
-	<div class="row all-photos-info">
-		<div class="col-sm-10">
-			Nadaj ogolne ustawienia dla wszystkich zdjęć.
-			<br /> Zdefiniuj początkowe ustawienia dla wszystkich zdjęć, by następnie dostosowywać je do poszczegolnych odbitek!
+<!-- Control Panel Header -->
+<div class="title-block">
+	<h2 class="title" style="font-family: 'Comfortaa', cursive">
+		Złóż zlecenie wywołania zdjęć
+	</h2>
+	<hr/>
+</div>
+
+<div class="row">
+	<div class="col-12 all-photos-info">
+		<div class="col-1 number-col">
+			<p class="number">1</p>
+		</div>
+		<div class="col-9" *ngIf="defaultParam">
+			<p class="header">Nadaj predefiniowane ustawienia dla wszystkich nowo dodawanych zdjęć!</p>
+			<p class="content">Zdefiniuj początkowe ustawienia dla wszystkich zdjęć, by następnie dostosowywać je do poszczegolnych odbitek.</p>
 			<div class="row">
 				<div class="col-3">
-					<select *ngIf="formats" style="width: 170px;" class="custom-select d-block" name="selectFormat" [(ngModel)]="defaults.format">
-							<option disabled>Wybierz format</option>
+					<label for="selectFormat">Format zdjęć:</label>
+					<select *ngIf="formats && defaultParam" class="custom-select d-block" (change) ="TryActivateDropBox()" name="selectFormat" [(ngModel)]="defaultParam.formatId">
 						<option *ngFor="let format of formats" [ngValue]="format.id">{{format.name}}</option>
 					</select>
 				</div>
 				<div class="col-3">
-					<select *ngIf="papers" style="width: 170px;" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaults.paper">
-						<option disabled>Wybierz papier</option>
+					<label for="selectPaper && defaultParam">Rodzaj papieru:</label>
+					<select *ngIf="papers" class="custom-select d-block" name="selectPaper" (change) ="TryActivateDropBox()" [(ngModel)]="defaultParam.paperId">
 						<option *ngFor="let paper of papers" [ngValue]="paper.id">{{paper.name}}</option>
 					</select>
 				</div>
-				<div class="col-3">
-					<input style="width: 170px;" type="number" min="1" max="999" step="1" [(ngModel)]="defaults.amount" class="form-control"
-					 id="inlineFormInputGroup">
+				<div class="col-2">
+					<label for="printsAmount">Liczba odbitek:</label>
+					<input type="number" min="1" max="999" step="1" name="printsAmount" (change) ="TryActivateDropBox()" [(ngModel)]="defaultParam.amount" class="form-control" id="inlineFormInputGroup">
 				</div>
+				<div class="col-2">
+						<label for="printsAmount">Dopasowanie:</label>
+						<select *ngIf="papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaultParam.isHorizontal">
+								<option [ngValue]="true">Wypełnij</option>
+								<option [ngValue]="false">Paski</option>
+							</select>
+					</div>
+					<div class="col-2">
+							<label for="printsAmount">Ułożenie:</label>
+							<select *ngIf="papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaultParam.isContain">
+									<option [ngValue]="true">Poziom</option>
+									<option [ngValue]="false">Pion</option>
+								</select>
+						</div>
 			</div>
 		</div>
-		<div class="col-sm-2">
-			<p>Liczba wgranych zdjęć: {{ uploader?.queue?.length }}</p>
+		<div class="col-2 printsAmount">
+			<span>Wgranych zdjęć</span>
+			<span>{{ uploader?.queue?.length }}</span>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col">
-			<div [ngClass]="displayText">
-				<div ng2FileDrop class="show-class" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone">
-					Przeciągnij i upuść zdjęcia ktore chcesz wgrać lub po prostu kliknij tutaj!
-				</div>
-			</div>
-		</div>
-	</div>
+</div>
+<div class="row">
 
+
+	<div class="col-12 drop-box" draggable="false"  >
+		<div class="col-1 number-col">
+			<p class="number">2</p>
+		</div>
+		<div ng2FileDrop (fileOver)="fileOverBase($event)"[uploader]="uploader" class="col-11 well my-drop-zone">
+
+			<div (click)="clickInputFile()" [ngClass]="hasBaseDropZoneOver ? 'is-dragover-padding' : 'is-empty-padding'">
+				<div [ngClass]="hasBaseDropZoneOver ? 'is-dragover' : 'is-empty'">
+					<div class="upload-icon">
+						<img src="../../../../assets/images/icons/outbox.svg" />
+					</div>
+					<p class="drop-text">Przeciągnij i upuść zdjęcia, które chcesz wywołać lub po prostu kliknij tutaj!</p>
+					<input type="file" (click)="fileOverBase($event); fileOverBase(false)" ng2FileSelect [uploader]="uploader" id="uploader-input"
+					 style="display: none;" multiple />
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 
 
 
+<div class="row" *ngIf="formats && defaultParam">
+
+
+	<div class="col-9 drop-box" draggable="false">
 
 
 
 
 
-<div class="container" *ngIf="formats" >
 
-	<div class="row">
-		<div class="col-9" style="margin-bottom: 40px">
-
-
-			<div *ngFor="let item of uploader.queue" class="media">
-				<div class="media-left">
-				</div>
+		<div *ngFor="let item of uploader.queue" class="media">
+			<div class="media-left">
 			</div>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Zdjęcie</th>
-						<th>Wybór formatu i papieru</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let item of uploader.queue">
-						<td style="width: 300px">
-							<strong>{{ item?.file?.name }}</strong>
-							<div style="width: 210px; height: 150px; border: 1px solid #000; display: flex; align-items: center; align-content: center; ">
-								<img src="" imgPreview [image]="item?._file" class="media-object" id="image3" style="width: 100%" />
+		</div>
+		<table class="table photos-table">
+			<thead>
+				<tr>
+					<th>
+						<div class="flex-box">
+							<div class="flex-item-left">
+								Zdjęcie
 							</div>
+							<div class="flex-item-center">
+								Opcje
+							</div>
+							<div class="flex-item-right">
+								Wybór formatu i papieru
+							</div>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of uploader.queue">
+					<div class="flex-box item-height" style="border-bottom: 1px solid #eee">
+						<div class="flex-item flex-item-left">
+							<p class="file-name">{{ item?.file?.name }}</p>
+							<div class="photo-frame" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].horizontal ? 'photo-horizontal' : 'photo-vertical'">
+								<img src="" imgPreview [image]="item?._file" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop ? 'photo-cover' : 'photo-contain'"
+								 id="image3" class="media-object previewImg" />
 
-
-							<div class="btn-group" class="radio">
-									<label class="btn btn-secondary">
-										<input type="radio"
-											   value="true"
-											   [checked]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop == true"
-											   id="point1"
-											   (change)="onProfitSelectionChange(item, true)"
-											   name="ProfitCode"><small>Docięcie</small>
-									</label>
+								<!-- The Modal -->
+								<div id="myModal" class="modal">
+									<span class="close">&times;</span>
+									<img class="modal-content" id="img01">
+									<div id="caption"></div>
 								</div>
-								<div class="radio">
-									<label class="btn btn-secondary">
-										<input type="radio"
-											   value="false"
-											   [checked]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop == false"
-											   id="point2"
-											   (change)="onProfitSelectionChange(item, false)"
-											   name="ProfitCode"><small>Białe paski</small>
-									</label>
-								</div>
 
+							</div>
+						</div>
+						<div class="flex-item flex-item-center">
+							<div class="btn-group" role="group">
+								<button type="button" (click)="onProfitSelectionChange(item, true)" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop ? 'active' : 'no-active'"
+								 class="btn">Wypełnij</button>
+								<button type="button" (click)="onProfitSelectionChange(item, false)" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].crop ? 'no-active' : 'active'"
+								 class="btn">Paski</button>
+							</div>
+							<div class="btn-group" role="group">
+								<button type="button" (click)="rotate(item, true)" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].horizontal ? 'active' : 'no-active'"
+								 class="btn">Poziom</button>
+								<button type="button" (click)="rotate(item, false)" [ngClass]="fileItemDetails[this.uploader.getIndexOfItem(item)].horizontal ? 'no-active' : 'active'"
+								 class="btn">Pion</button>
+							</div>
+								<button type="button" class="btn btn-danger btn-xs button-remove" (click)="removeElement(getFileItemDetails(item), item); item.remove()"><i class="fa fa-trash" aria-hidden="true"></i> Usuń</button>
+						</div>
+						<div class="flex-item flex-item-right">
+							<div class="container">
 
-							<button class="btn btn-xs btn-outline-primary" (click)="open(content, item);">Podgląd</button>
-							<button type="button" class="btn btn-danger btn-xs" (click)="removeElement(getFileItemDetails(item), item); item.remove()">Usuń</button>
-							<!-- Modal -->
-							<ng-template #content let-c="close" let-d="dismiss">
-								<div class="modal-header">
-									<h4 class="modal-title">Modal title</h4>
-									<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<p>One fine body&hellip;</p>
-
-
-
-									<td>
-										<img src="" imgPreview [image]="item?._file" class="media-object" id="image" style="width: 700px" />
-										<div id="result"></div>
-										<button class="btn btn-lg btn-outline-primary" (click)="cropper(item)">Crop</button>
-
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-								</div>
-							</ng-template>
-							<!-- Koniec Modal -->
-							</td>
-
-							<td>
-								<div class="container">
-
-									<app-print-type [item]="item" (myEvent)="cart.licz($event)" [itemDetail]="getFileItemDetails(item)" [defaultParams]="defaultParams" [formats]="formats" [papers]="papers"></app-print-type>
-								</div>
-							</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<div>
-				<div>
-					Queue progress:
-					<div class="progress">
-						<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+								<app-print-type [item]="item" (myEvent)="cart.licz($event)" [itemDetail]="getFileItemDetails(item)" [defaultParams]="defaultParams"
+								 [formats]="formats" [papers]="papers"></app-print-type>
+							</div>
+						</div>
 					</div>
-				</div>
+			</tbody>
+		</table>
 
-			</div>
 
-		</div>
-		<div class="col-3" >
-			<app-cart #cart [uploader]="uploader" [itemDetails]="fileItemDetails" [formats]="formats"></app-cart>
-		</div>
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+
+	<div class="col-3 padding-right-0">
+		<app-cart #cart [uploader]="uploader" [itemDetails]="fileItemDetails" [formats]="formats"></app-cart>
 	</div>
 
 </div>

@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule, XHRBackend } from "@angular/http";
 import { AuthenticateXHRBackend } from "./authenticate-xhr.backend";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Routing } from "./app.routing";
 
@@ -31,7 +32,9 @@ import { EmailValidator } from "./directives/email.validator.directive";
     BrowserModule,
     FormsModule,
     HttpModule,
-    Routing
+    Routing,
+    BrowserAnimationsModule
+
   ],
   providers: [
     ConfigService,

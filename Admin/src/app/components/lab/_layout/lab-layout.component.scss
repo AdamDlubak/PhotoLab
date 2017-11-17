@@ -25,3 +25,21 @@ body {
   .bg-dark {
       background-color: #1b1a1a !important;
   }
+
+
+  .brand {
+    color: #fff;
+    text-align: left;
+    height: 49px;
+    font-size: 16px;
+    width: 189px;
+    background: url("../../../../assets/images/logo-lab.png") no-repeat
+      center center;
+  }
+
+.row {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}

@@ -12,7 +12,7 @@ namespace Server.Models
     public int Width { get; set; }
     public int Height { get; set; }
     public float Price { get; set; }
-    public OrderDefaultParam OrderDefaultParam { get; set; }
+    public PrintsParam PrintsParam { get; set; }
 
   }
 }

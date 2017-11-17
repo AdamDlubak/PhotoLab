@@ -7,6 +7,8 @@ export class DefaultParam {
         public format: Format,
         public paperId: number, 
         public paper: Paper,
-        public amount: number
+        public amount: number,
+        public isHorizontal: boolean,
+        public isContain: boolean
         ){ }
 }
