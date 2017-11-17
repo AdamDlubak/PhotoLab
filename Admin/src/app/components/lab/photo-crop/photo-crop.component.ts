@@ -38,8 +38,12 @@ export class PhotoCropComponent implements OnInit {
   errorMessage: any;
   defaultParam: DefaultParam;
   rotate(item, value){
+    console.log(this.getFileItemDetails(item).isHorizontal);
     
     this.getFileItemDetails(item).isHorizontal = value;
+    console.log(this.getFileItemDetails(item).isHorizontal);
+    
+    
   }
   constructor(
     private fileService: FileService,

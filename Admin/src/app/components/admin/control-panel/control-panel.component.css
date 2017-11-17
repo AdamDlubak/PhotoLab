@@ -1,3 +1,6 @@
+.card {
+    margin-bottom: 30px;
+}
 .box-title {
     font-family: 'Comfortaa', cursive;
     padding: 25px 20px 20px 20px;
@@ -30,7 +33,9 @@
     padding-left: 8px;
     padding-right: 8px;
 }
-
+form.full-width select {
+    width: 100%;
+}
 @media (max-width: 768px) { 
     .box-title {
        text-align: center;

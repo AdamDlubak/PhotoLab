@@ -54,6 +54,7 @@ export class ControlPanelComponent implements OnInit {
     this.selectedFormat = id; 
     if (id == 0) this.tmpFormat = new Format(0, "", 0, 0, 0);
     else this.tmpFormat = this.formats.find(item => item.id === id);
+    console.log("editingFormat");
   }
   submitFormat() {
     let FormatOperation: Observable<Format[]>;
@@ -142,5 +143,14 @@ export class ControlPanelComponent implements OnInit {
   getPositionType() {
     if(this.defaultParam.isHorizontal) return "Poziome";
     else return "Pionowe";
+  }
+  editDefault() {
+    let defaultOperation: Observable<DefaultParam>;
+    defaultOperation = this.fileService.editDefault(this.defaultParam);
+
+    defaultOperation.subscribe(papers => {
+        this.toastrService.info("Zmieniono domyślne ustawienia odbitek!");
+      this.loadDefault();
+    }, error => (this.errorMessage = error));
   }
 }

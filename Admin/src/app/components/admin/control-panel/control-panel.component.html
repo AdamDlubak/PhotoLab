@@ -13,7 +13,7 @@
 <section class="section">
   <div class="row sameheight-container">
 
-    <!-- Default Section -->
+    <!-- Default and Format Section -->
     <div class="col-xl-8" style="max-width: 850px;">
 
       <div class="card sameheight-item">
@@ -41,7 +41,7 @@
                 <tr class="text-center">
                   <th>Format</th>
                   <th>Papier</th>
-                  <th>Liczba odbitek</th>
+                  <th>Ilość odbitek</th>
                   <th>Dopasowanie</th>
                   <th>Ułożenie</th>
                   <th>Akcje</th>
@@ -67,10 +67,9 @@
         </section>
 
       </div>
-    </div>
 
-    <!-- Formats Section -->
-    <div class="col-xl-8" style="max-width: 850px;">
+
+      <!-- Formats Section -->
       <div class="card sameheight-item">
 
         <!-- Formats Section Header -->
@@ -194,6 +193,10 @@
       </div>
     </div>
 
+
+
+
+
   </div>
 </section>
 
@@ -227,8 +230,8 @@
 
       <!-- Submit Format Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title" *ngIf="editingFormat" id="exampleModalLabel">Edytuj format papieru</h5>
-        <h5 class="modal-title" *ngIf="!editingFormat" id="exampleModalLabel">Dodaj nowy format papieru</h5>
+        <h5 class="modal-title" *ngIf="editingFormat" id="edit-format">Edytuj format papieru</h5>
+        <h5 class="modal-title" *ngIf="!editingFormat" id="add-format">Dodaj nowy format papieru</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -273,8 +276,8 @@
 
       <!-- Submit Paper Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title" *ngIf="editingFormat" id="exampleModalLabel">Edytuj rodzaj papieru</h5>
-        <h5 class="modal-title" *ngIf="!editingFormat" id="exampleModalLabel">Dodaj nowy rodzaj papieru</h5>
+        <h5 class="modal-title" *ngIf="editingFormat" id="submitPaperModalLabel">Edytuj rodzaj papieru</h5>
+        <h5 class="modal-title" *ngIf="!editingFormat" id="submitPaperModalLabel">Dodaj nowy rodzaj papieru</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -292,6 +295,64 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
           <button *ngIf="!editingPaper" type="button" (click)="submitPaper()" data-dismiss="modal" class="btn btn-success btn-block">Dodaj</button>
           <button *ngIf="editingPaper" type="button" (click)="submitPaper()" data-dismiss="modal" class="btn btn-info btn-block">Zaktualizuj</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Default Edit Modal -->
+<div class="modal fade" id="editDefaultModal" tabindex="-1" role="dialog" aria-labelledby="editDefaultModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Submit Paper Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="editDefaultModalLabel">Edytuj ustawienia domyślne</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Submit Paper Modal Body -->
+      <form class="full-width">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="default-formatId" class="col-form-label">Format:</label>
+            <select *ngIf="formats && defaultParam" class="custom-select d-block" name="selectFormat" [(ngModel)]="defaultParam.formatId">
+              <option *ngFor="let format of formats" [ngValue]="format.id">{{format.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="default-paperId" class="col-form-label">Papier:</label>
+            <select *ngIf="papers && defaultParam" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaultParam.paperId">
+              <option *ngFor="let paper of papers" [ngValue]="paper.id">{{paper.name}}</option>
+            </select>
+          </div>
+          <div class="default-amount">
+            <label for="recipient-name" class="col-form-label">Ilość odbitek:</label>
+            <input *ngIf="defaultParam" type="text" name="default-amount" [(ngModel)]="defaultParam.amount" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="default-isContain" class="col-form-label">Dopasowanie:</label>
+            <select *ngIf="defaultParam" class="custom-select d-block" name="default-isContain" [(ngModel)]="defaultParam.isContain">
+              <option [ngValue]="true">Wypełnienie</option>
+              <option [ngValue]="false">Białe Paski</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="default-isHorizontal" class="col-form-label">Ułożenie:</label>
+            <select *ngIf="defaultParam" class="custom-select d-block" name="default-isHorizontal" [(ngModel)]="defaultParam.isHorizontal">
+              <option [ngValue]="true">Poziome</option>
+              <option [ngValue]="false">Pionowe</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="button" (click)="editDefault()" data-dismiss="modal" class="btn btn-info btn-block">Zaktualizuj</button>
         </div>
       </form>
 

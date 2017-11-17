@@ -175,4 +175,16 @@ export class FileService extends BaseService {
       .map(response => response.json().message)
       .catch(this.handleError);
   }
+
+  // Admin - Default 
+  editDefault(defaultParam: DefaultParam) : Observable<DefaultParam> {
+    let body = JSON.stringify(defaultParam);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/editdefault", body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
 }

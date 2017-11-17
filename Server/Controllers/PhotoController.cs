@@ -143,6 +143,22 @@ namespace Server.Controllers
       var defaults = _context.PrintsParam.Include(def => def.Format).Include(def => def.Paper).FirstOrDefault();
       return new OkObjectResult(defaults);
     }
+    // POST api/photo/editdefault
+    [HttpPost("editDefault")]
+    public async Task<IActionResult> EditDefault([FromBody] PrintsParam printsParamModel)
+    {
+      PrintsParam printsParam = _context.PrintsParam.FirstOrDefault(x => x.Id == printsParamModel.Id);
+      if (printsParam != null)
+      {
+        printsParam.FormatId = printsParamModel.FormatId;
+        printsParam.PaperId = printsParamModel.PaperId;
+        printsParam.Amount = printsParamModel.Amount;
+        printsParam.IsContain = printsParamModel.IsContain;
+        printsParam.IsHorizontal = printsParamModel.IsHorizontal;
+      }
+      await _context.SaveChangesAsync();
+      return new OkObjectResult("Default params edited!");
+    }
 
 
 
