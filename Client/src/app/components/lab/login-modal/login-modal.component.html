@@ -1,3 +1,86 @@
-<p>
-  login-modal works!
-</p>
+<div class="modal-dialog modal-flex-login">
+  <div class="modal-content modal-flex-content">
+    <div class="left-login">
+
+    </div>
+    <div class="right-login">
+      <button type="button" class="close" (click)="close()">&times;</button>
+
+
+      <div class="login-form">
+        <h2>Logowanie</h2>
+        <hr>
+
+        <form class="form-horizontal" #f="ngForm" novalidate (ngSubmit)="login(f)" action="login(f) ">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group has-danger">
+                <label class="input-label" for="email">Adres e-mail:</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <div class="input-group-addon" style="width: 2.6rem">
+                    <i class="fa fa-at"></i>
+                  </div>
+                  <input type="text"  required name="email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail class="form-control" id="email" placeholder="Podaj swój mail">
+                </div>
+              </div>
+              <!-- <div class="form-control-feedback">
+                <span class="text-danger align-middle" [hidden]="email.valid || (email.pristine && !submitted)">
+                  <i class="fa fa-close"></i> Przykładowa wiadomość błędu!
+                </span>
+              </div> -->
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="input-label" for="password">Hasło:</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <div class="input-group-addon" style="width: 2.6rem">
+                    <i class="fa fa-key"></i>
+                  </div>
+                  <input type="password" name="password" class="form-control" id="password" placeholder="Twoje hasło" ngModel required>
+                </div>
+              </div>
+              <div class="form-control-feedback">
+                <span class="text-danger align-middle">
+                  <!-- Put password error message here -->
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6" style="padding-top: 0.80rem">
+              <a class="btn btn-link" href="/password/reset">Nie pamiętasz hasła?</a>
+
+            </div>
+            <div class="col-md-6 login-button">
+              <button type="submit" class="btn btn-success" [disabled]="f.invalid || isRequesting">
+                <i class="fa fa-sign-in"></i> Zaloguj</button>
+            </div>
+          </div>
+          <div class="error-container">
+              <app-spinner [isRunning]="isRequesting"></app-spinner>          
+              <div *ngIf="errors" class="alert alert-danger login-alert" role="alert">
+                  <i class="fa fa-close"></i><strong> Oops!</strong> <br />
+                  <p *ngIf="errors.indexOf('Password must be between 6 and 12 characters') >= 0">Hasło musi mieć od 6 do 12 znaków.</p>
+                  <p *ngIf="errors.indexOf('Password must be between 6 and 12 characters') < 0">{{errors}}</p>
+                </div>
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="register-button">
+        <p><b>Nie masz jeszcze konta</b> w naszym serwisie?</p>
+          <button type="submit" class="btn btn-info">
+          Zarejestruj się!
+          </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

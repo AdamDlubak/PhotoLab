@@ -27,7 +27,8 @@
           <a class="nav-link" href="contact.html">Kontakt</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact.html">Zaloguj</a>
+          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showConfirm()">Zaloguj</a>
+          <a class="nav-link" *ngIf="isLoggedIn()" (click)="showConfirm()">Witaj</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +38,7 @@
 
             <a class="dropdown-item" href="faq.html">Moje Dane</a>
             <a class="dropdown-item" href="404.html">Moje Zamówienia</a>
-            <a class="dropdown-item" href="pricing.html">Wyloguj Mnie</a>
+            <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Wyloguj Mnie</a>
           </div>
         </li>
       </ul>

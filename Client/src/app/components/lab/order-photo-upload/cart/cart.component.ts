@@ -14,14 +14,12 @@ export class CartComponent implements OnInit {
   @Input() uploader: FileUploader;
   @Input() itemDetails: Array<FileItemDetails>;
   @Input() formats: Format[];
+  carts: Cart[];
+  
   constructor(private fileService: FileService) {
-    this.fileService.invokeEvent2.subscribe(format => this.licz(format));
+    this.fileService.invokeEvent2.subscribe(format => this.calculate(format));
   }
 
-  prices: number[];
-  amounts: number[];
-  suma: number = 0;
-  carts: Cart[];
   ngOnInit() {
     this.carts = [];
     for (var i = 0; i < this.formats.length; i++) {
@@ -37,25 +35,25 @@ export class CartComponent implements OnInit {
       if (formatId == format.id) return format.name;
     }
   }
-  liczPoczatek(defaults: any) {
-    this.fileService.liczPoczatek(
-      this.itemDetails,
-      this.carts,
-      defaults,
-      this.formats
-    );
-    this.suma = this.fileService.suma(this.carts);
+  getTotalPrice(){
+    return this.fileService.totalPrice;
   }
-  liczPoUsunieciu(item) {
-    this.fileService.liczPoUsunieciu(this.carts, item, this.formats);
-    this.suma = this.fileService.suma(this.carts);
+  calculateAfterAddingFile(defaults: any) {
+    this.fileService.calculateAfterAddingFile(this.itemDetails, this.carts, defaults, this.formats);
+    this.fileService.calculateTotalPrice(this.carts);
   }
-  licz(data: any) {
-    this.fileService.licz(this.itemDetails, data, this.carts, this.formats);
-    this.suma = this.fileService.suma(this.carts);
+  calculateAfterRemove(item : FileItemDetails) {
+    this.fileService.calculateAfterRemove(this.carts, item, this.formats);
+    this.fileService.calculateTotalPrice(this.carts);
+  }
+  calculate(data: any) {
+    this.fileService.calculate(this.itemDetails, data, this.carts, this.formats);
+    this.fileService.calculateTotalPrice(this.carts);
   }
 
   addDatas() {
+
+    
     // let iteratorek = 0;
     // this.uploader.onBuildItemForm = function(fileItem, form) {
     //   form.append(fileItem.file.name, iteratorek++);

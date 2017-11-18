@@ -10,24 +10,38 @@ import { HomeComponent } from "./home/home.component";
 import { OrderPhotoUploadComponent } from "./order-photo-upload/order-photo-upload.component";
 import { PrintTypeComponent } from "./order-photo-upload/print-type/print-type.component";
 import { CartComponent } from "./order-photo-upload/cart/cart.component";
-import { AngularCropperjsModule } from 'angular-cropperjs';
-import { FileUploadModule  } from 'ng2-file-upload';
+import { AngularCropperjsModule } from "angular-cropperjs";
+import { FileUploadModule } from "ng2-file-upload";
 import { ImagePreview } from "./services/image-preview.directive";
 
-
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { OrderDetailedDataComponent } from './order-detailed-data/order-detailed-data.component';
-import { LoginModalComponent } from './login-modal/login-modal.component';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
+import { LoginModalComponent } from "./login-modal/login-modal.component";
+import { BootstrapModalModule } from "ng2-bootstrap-modal";
 
 @NgModule({
-  imports: [CommonModule, FormsModule, SharedModule, Routing, AngularCropperjsModule, FileUploadModule, NgbModule.forRoot()  ],
-  declarations: [LabLayoutComponent, HomeComponent, OrderPhotoUploadComponent, PrintTypeComponent, ImagePreview, CartComponent,
-    OrderDetailedDataComponent
-,
+  imports: [
+    CommonModule,
+    FormsModule,
+    SharedModule,
+    Routing,
+    AngularCropperjsModule,
+    FileUploadModule,
+    NgbModule.forRoot(),
+    BootstrapModalModule
+  ],
+  declarations: [
+    LabLayoutComponent,
+    HomeComponent,
+    OrderPhotoUploadComponent,
+    PrintTypeComponent,
+    ImagePreview,
+    CartComponent,
+    OrderDetailedDataComponent,
     LoginModalComponent
-],
-  exports: [],  
-  providers: [UserService, FileService]
+  ],
+  exports: [],
+  providers: [UserService, FileService],
+  entryComponents: [LoginModalComponent]
 })
-
 export class LabModule {}

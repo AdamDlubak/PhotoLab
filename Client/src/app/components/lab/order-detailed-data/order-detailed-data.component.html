@@ -8,7 +8,7 @@
 <h3>Podsumowanie Zlecenia</h3>
 <hr/>
 Liczba odbitek: 50 szt. <br />
-Cena: 25 zł<br />
+Cena: {{ getTotalPrice() | number:'1.2-2' }} zł<br />
 Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
 <h3 style="margin-top: 20px">Dane do wysyłki</h3>
 <hr/>

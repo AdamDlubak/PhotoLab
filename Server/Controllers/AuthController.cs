@@ -119,7 +119,7 @@ namespace Server.Controllers
       var identity = await GetClaimsIdentity(credentials.Email, credentials.Password);
       if (identity == null)
       {
-        return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid email or password.", ModelState));
+        return BadRequest(Errors.AddErrorToModelState("login_failure", "Niepoprawny login lub hasło", ModelState));
       }
 
       // Serialize and return the response

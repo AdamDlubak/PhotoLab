@@ -1,3 +1,4 @@
+import { FileService } from './../services/file.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderDetailedDataComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fileService: FileService) { }
 
   ngOnInit() {
+
+  }
+  getTotalPrice(){
+    // console.log('retrievedObject: ', this.fileService.fileItemDetails);
+    
+    // // Retrieve the object from storage
+    // var retrievedObject = localStorage.getItem('testObject');
+    
+    // console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+    return this.fileService.totalPrice;
+    
   }
 
 }

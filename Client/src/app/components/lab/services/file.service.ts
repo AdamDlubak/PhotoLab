@@ -21,6 +21,9 @@ export class FileService extends BaseService {
   baseUrl: string = "";
   uploader: FileUploader;
   fileItemDetails: FileItemDetails;
+
+  totalPrice: number = 0;
+
   constructor(private http: Http, private configService: ConfigService) {
     super();
     this.baseUrl = configService.getApiURI();
@@ -45,7 +48,7 @@ export class FileService extends BaseService {
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
-  getDatas(uploader, fileItemDetails) {
+  sendDataToService(uploader, fileItemDetails) {
     this.fileItemDetails = fileItemDetails;
     this.uploader = uploader;
   }
@@ -59,7 +62,7 @@ export class FileService extends BaseService {
       }
     }
   }
-  licz(
+  calculate(
     itemDetails: Array<FileItemDetails>,
     data: any,
     carts: Cart[],
@@ -85,7 +88,11 @@ export class FileService extends BaseService {
       }
     }
   }
-  liczPoUsunieciu(carts: Cart[], item: FileItemDetails, formats: Format[]) {
+  calculateAfterRemove(
+    carts: Cart[],
+    item: FileItemDetails,
+    formats: Format[]
+  ) {
     for (let cart of carts) {
       for (var i: number = 0; i < item.prints.length; i++) {
         if (cart.formatId == item.prints[i].format) {
@@ -98,7 +105,7 @@ export class FileService extends BaseService {
       }
     }
   }
-  liczPoczatek(
+  calculateAfterAddingFile(
     itemDetails: Array<FileItemDetails>,
     carts: Cart[],
     defaults: DefaultParam,
@@ -124,12 +131,18 @@ export class FileService extends BaseService {
     }
   }
 
-  suma(carts: Cart[]) {
+  calculateTotalPrice(carts: Cart[]) {
     let result = 0;
     for (let cart of carts) {
       result += cart.price;
     }
-    return Math.round(result * 100) / 100;
+    this.totalPrice = Math.round(result * 100) / 100;
+  }
+  calculateTotalAmount(carts: Cart[]) {
+    let result = 0;
+    for (let cart of carts) {
+      result += cart.amount;
+    }
   }
   invokeEvent: Subject<any> = new Subject();
   invokeEvent2: Subject<any> = new Subject();
@@ -176,8 +189,8 @@ export class FileService extends BaseService {
       .catch(this.handleError);
   }
 
-  // Admin - Default 
-  editDefault(defaultParam: DefaultParam) : Observable<DefaultParam> {
+  // Admin - Default
+  editDefault(defaultParam: DefaultParam): Observable<DefaultParam> {
     let body = JSON.stringify(defaultParam);
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
