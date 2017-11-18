@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "client"
+    "name": "PhotoLab"
   },
   "apps": [
     {
@@ -20,13 +20,16 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/font-awesome/css/font-awesome.css",     
+        "../node_modules/ngx-toastr/toastr.css",   
         "styles.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/tether/dist/js/tether.js",
         "../node_modules/popper.js/dist/umd/popper.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.js"
+        "../node_modules/bootstrap/dist/js/bootstrap.js" 
+
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -63,6 +66,9 @@
     "styleExt": "scss",
     "class": {
       "spec": false
+    },
+    "serve": {
+      "port": 4500
     },
     "component": {}
   }

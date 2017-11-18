@@ -1,14 +1,21 @@
 import { ModuleWithProviders } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-
-import { HomeComponent } from "./components/home/home.component";
+import { AuthGuard } from "./auth.guard";
 
 const appRoutes: Routes = [
-  { path: "", component: HomeComponent },
   {
-    path: "account",
-    loadChildren: "app/components/account/account.module#AccountModule"
-  }
+    path: "",
+    loadChildren: "app/components/lab/lab.module#LabModule"
+  },
+  {
+    path: "login",
+    loadChildren: "app/components/others/others.module#OthersModule"
+  },
+  {
+    path: "admin",
+    loadChildren: "app/components/admin/admin.module#AdminModule"
+  },
+  { path: "**", redirectTo: "", pathMatch: "full" }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
