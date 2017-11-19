@@ -71,10 +71,28 @@ namespace Server.Controllers
 //    [Authorize("Admin")]
     public async Task<IActionResult> GetUsers()
     {
-//      var allCustomers = _context.Users.ToList();
-//      return Ok(Mapper.Map<IEnumerable<UsersViewModel>>(allCustomers));
-            return await GetUsers(-1, -1);
+      var usr = await _userManager.FindByIdAsync("91294cb2-a449-4393-b3a8-772f3818fedb");
+
+      //      var allCustomers = _context.Users.ToList();
+      //      return Ok(Mapper.Map<IEnumerable<UsersViewModel>>(allCustomers));
+      return await GetUsers(-1, -1);
     }
+
+
+    private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+
+    //    // Get api/auth/getClient
+    //    [HttpGet("getclient")]
+    //    [Produces(typeof(UsersViewModel))]
+    //    public OkObjectResult GetClient()
+    //    {
+    //      var userId = _userManager.GetUserId(User);
+    ////      User client = _context.Users.FirstOrDefault(x => x.Id == id.ToString());
+    //      return new OkObjectResult(userId);
+    //    }
+
+
 
     [HttpGet("users/{page:int}/{pageSize:int}")]
     [Produces(typeof(List<UsersViewModel>))]
@@ -117,6 +135,7 @@ namespace Server.Controllers
         return BadRequest(ModelState);
       }
       var identity = await GetClaimsIdentity(credentials.Email, credentials.Password);
+
       if (identity == null)
       {
         return BadRequest(Errors.AddErrorToModelState("login_failure", "Niepoprawny login lub hasło", ModelState));

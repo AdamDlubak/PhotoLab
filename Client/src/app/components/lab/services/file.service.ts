@@ -1,3 +1,4 @@
+import { Order } from "./../order-photo-upload/models/order.class";
 import { Format } from "./../order-photo-upload/models/format.class";
 import { Cart } from "./../order-photo-upload/models/cart.class";
 import { DefaultParam } from "./../order-photo-upload/models/default-param.class";
@@ -15,14 +16,19 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
 import { Paper } from "../order-photo-upload/models/paper.class";
+import { DeliveryType } from "../order-photo-upload/models/deliveryType.class";
 
 @Injectable()
 export class FileService extends BaseService {
   baseUrl: string = "";
-  uploader: FileUploader;
-  fileItemDetails: FileItemDetails;
 
-  totalPrice: number = 0;
+  formats: Format[];
+  papers: Paper[];
+  deliveryTypes: DeliveryType[];
+  uploader: FileUploader;
+  fileItemDetails: Array<FileItemDetails>;
+  order: Order;
+  defaultParam: DefaultParam;
 
   constructor(private http: Http, private configService: ConfigService) {
     super();
@@ -48,9 +54,11 @@ export class FileService extends BaseService {
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
-  sendDataToService(uploader, fileItemDetails) {
-    this.fileItemDetails = fileItemDetails;
-    this.uploader = uploader;
+  getDeliveryTypes(): Observable<DeliveryType[]> {
+    return this.http
+      .get(this.baseUrl + "/photo/getdeliverytypes")
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
   }
   getIndexInUploadQueue(item): number {
     return this.uploader.queue.indexOf(item);
@@ -131,18 +139,19 @@ export class FileService extends BaseService {
     }
   }
 
-  calculateTotalPrice(carts: Cart[]) {
+  calculateTotalPrintsPrice(carts: Cart[]) {
     let result = 0;
     for (let cart of carts) {
       result += cart.price;
     }
-    this.totalPrice = Math.round(result * 100) / 100;
+    this.order.totalPrintsPrice = Math.round(result * 100) / 100;
   }
-  calculateTotalAmount(carts: Cart[]) {
+  calculateTotalPrints(carts: Cart[]) {
     let result = 0;
     for (let cart of carts) {
       result += cart.amount;
     }
+    this.order.totalPrints = result;
   }
   invokeEvent: Subject<any> = new Subject();
   invokeEvent2: Subject<any> = new Subject();

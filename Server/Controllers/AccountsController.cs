@@ -24,5 +24,17 @@ namespace Server.Controllers
         _mapper = mapper;
         _context = appDbContext;
       }
+
+
+      // Get api/accounts/client/id
+      [HttpGet("client/{id}")]
+      //    [Authorize("Admin")]
+      public async Task<IActionResult> GetUsers(string id)
+      {
+        var client = await _userManager.FindByIdAsync(id);
+        return Ok(client);
+      }
+
+
   }
 }

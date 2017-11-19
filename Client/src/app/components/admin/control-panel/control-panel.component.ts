@@ -5,6 +5,7 @@ import { Component, OnInit } from "@angular/core";
 import { FileService } from "../../lab/services/file.service";
 import { ToastrService } from "ngx-toastr";
 import { DefaultParam } from "../../lab/order-photo-upload/models/default-param.class";
+import { DeliveryType } from "../../lab/order-photo-upload/models/deliveryType.class";
 
 @Component({
   selector: "app-control-panel",
@@ -15,6 +16,7 @@ export class ControlPanelComponent implements OnInit {
   errorMessage: any;
   formats: Format[];
   papers: Paper[];
+  deliveryTypes: DeliveryType[];
   defaultParam: DefaultParam;
   selectedFormat: number = 0;
   selectedPaper: number = 0;
@@ -37,7 +39,9 @@ export class ControlPanelComponent implements OnInit {
   loadData() {
     this.loadFormats();
     this.loadPapers();
+    this.loadDeliveryTypes();
     this.loadDefault();
+    
   }
 
   // Formats
@@ -144,6 +148,10 @@ export class ControlPanelComponent implements OnInit {
     if(this.defaultParam.isHorizontal) return "Poziome";
     else return "Pionowe";
   }
+  getDeliveryType() {
+    return this.deliveryTypes.find(x => x.id == this.defaultParam.deliveryTypeId).name;
+    
+  }
   editDefault() {
     let defaultOperation: Observable<DefaultParam>;
     defaultOperation = this.fileService.editDefault(this.defaultParam);
@@ -153,4 +161,12 @@ export class ControlPanelComponent implements OnInit {
       this.loadDefault();
     }, error => (this.errorMessage = error));
   }
+  loadDeliveryTypes() {
+      this.fileService
+      .getDeliveryTypes()
+      .subscribe(
+        data => (this.deliveryTypes = data),
+        error => (this.errorMessage = error)
+      );
+    }
 }

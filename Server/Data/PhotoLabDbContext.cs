@@ -12,5 +12,6 @@ namespace Server.Helpers
         public DbSet<Format> Formats { get; set; }
         public DbSet<Paper> Papers { get; set; }
         public DbSet<PrintsParam> PrintsParam { get; set; }
+        public DbSet<DeliveryType> DeliveryTypes { get; set; }
   }
 }

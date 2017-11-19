@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Server.Migrations
 {
-    public partial class AddedsomefieldsandeditedITAddedOrderDefaultParam : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,6 +66,22 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeliveryTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Formats",
                 columns: table => new
                 {
@@ -73,27 +89,12 @@ namespace Server.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Formats", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDefaultParams",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Amount = table.Column<int>(type: "int", nullable: false),
-                    Paper = table.Column<int>(type: "int", nullable: false),
-                    Size = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDefaultParams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,6 +234,42 @@ namespace Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PrintsParam",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    DeliveryTypeId = table.Column<int>(type: "int", nullable: false),
+                    FormatId = table.Column<int>(type: "int", nullable: false),
+                    IsContain = table.Column<bool>(type: "bit", nullable: false),
+                    IsHorizontal = table.Column<bool>(type: "bit", nullable: false),
+                    PaperId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrintsParam", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrintsParam_DeliveryTypes_DeliveryTypeId",
+                        column: x => x.DeliveryTypeId,
+                        principalTable: "DeliveryTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrintsParam_Formats_FormatId",
+                        column: x => x.FormatId,
+                        principalTable: "Formats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrintsParam_Papers_PaperId",
+                        column: x => x.PaperId,
+                        principalTable: "Papers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -271,6 +308,24 @@ namespace Server.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrintsParam_DeliveryTypeId",
+                table: "PrintsParam",
+                column: "DeliveryTypeId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrintsParam_FormatId",
+                table: "PrintsParam",
+                column: "FormatId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrintsParam_PaperId",
+                table: "PrintsParam",
+                column: "PaperId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -291,22 +346,25 @@ namespace Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Formats");
-
-            migrationBuilder.DropTable(
-                name: "OrderDefaultParams");
-
-            migrationBuilder.DropTable(
-                name: "Papers");
-
-            migrationBuilder.DropTable(
                 name: "Photos");
+
+            migrationBuilder.DropTable(
+                name: "PrintsParam");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryTypes");
+
+            migrationBuilder.DropTable(
+                name: "Formats");
+
+            migrationBuilder.DropTable(
+                name: "Papers");
         }
     }
 }

@@ -11,9 +11,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
   styleUrls: ["./cart.component.scss"]
 })
 export class CartComponent implements OnInit {
-  @Input() uploader: FileUploader;
-  @Input() itemDetails: Array<FileItemDetails>;
-  @Input() formats: Format[];
   carts: Cart[];
   
   constructor(private fileService: FileService) {
@@ -22,38 +19,41 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.carts = [];
-    for (var i = 0; i < this.formats.length; i++) {
+    for (var i = 0; i < this.fileService.formats.length; i++) {
       this.carts.push({
-        formatId: this.formats[i].id,
+        formatId: this.fileService.formats[i].id,
         amount: 0,
         price: 0
       });
     }
   }
   getFormatName(formatId: number) {
-    for (let format of this.formats) {
+    for (let format of this.fileService.formats) {
       if (formatId == format.id) return format.name;
     }
   }
-  getTotalPrice(){
-    return this.fileService.totalPrice;
+  getTotalPrintsPrice(){
+    return this.fileService.order.totalPrintsPrice;
   }
   calculateAfterAddingFile(defaults: any) {
-    this.fileService.calculateAfterAddingFile(this.itemDetails, this.carts, defaults, this.formats);
-    this.fileService.calculateTotalPrice(this.carts);
+    this.fileService.calculateAfterAddingFile(this.fileService.fileItemDetails, this.carts, defaults, this.fileService.formats);
+    this.fileService.calculateTotalPrintsPrice(this.carts);
+    this.fileService.calculateTotalPrints(this.carts);
   }
   calculateAfterRemove(item : FileItemDetails) {
-    this.fileService.calculateAfterRemove(this.carts, item, this.formats);
-    this.fileService.calculateTotalPrice(this.carts);
+    this.fileService.calculateAfterRemove(this.carts, item, this.fileService.formats);
+    this.fileService.calculateTotalPrintsPrice(this.carts);
+    this.fileService.calculateTotalPrints(this.carts);
   }
   calculate(data: any) {
-    this.fileService.calculate(this.itemDetails, data, this.carts, this.formats);
-    this.fileService.calculateTotalPrice(this.carts);
+    this.fileService.calculate(this.fileService.fileItemDetails, data, this.carts, this.fileService.formats);
+    this.fileService.calculateTotalPrintsPrice(this.carts);
+    this.fileService.calculateTotalPrints(this.carts);
   }
 
   addDatas() {
 
-    
+
     // let iteratorek = 0;
     // this.uploader.onBuildItemForm = function(fileItem, form) {
     //   form.append(fileItem.file.name, iteratorek++);

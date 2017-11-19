@@ -11,8 +11,8 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    [Migration("20171117144643_Edited Prints Default")]
-    partial class EditedPrintsDefault
+    [Migration("20171118231750_Init Database")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,6 +129,24 @@ namespace Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Server.Models.DeliveryType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("Name");
+
+                    b.Property<float>("Price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryTypes");
+                });
+
             modelBuilder.Entity("Server.Models.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -191,6 +209,8 @@ namespace Server.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<int>("DeliveryTypeId");
+
                     b.Property<int>("FormatId");
 
                     b.Property<bool>("IsContain");
@@ -200,6 +220,9 @@ namespace Server.Migrations
                     b.Property<int>("PaperId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeliveryTypeId")
+                        .IsUnique();
 
                     b.HasIndex("FormatId")
                         .IsUnique();
@@ -342,6 +365,11 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.PrintsParam", b =>
                 {
+                    b.HasOne("Server.Models.DeliveryType", "DeliveryType")
+                        .WithOne("PrintsParam")
+                        .HasForeignKey("Server.Models.PrintsParam", "DeliveryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Server.Models.Format", "Format")
                         .WithOne("PrintsParam")
                         .HasForeignKey("Server.Models.PrintsParam", "FormatId")

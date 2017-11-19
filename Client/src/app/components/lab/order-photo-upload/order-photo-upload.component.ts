@@ -1,3 +1,4 @@
+import { Order } from './models/order.class';
 import { Format } from "./models/format.class";
 import { PrintTypeComponent } from "./print-type/print-type.component";
 import { CartComponent } from "./cart/cart.component";
@@ -26,11 +27,6 @@ export class OrderPhotoUploadComponent implements OnInit {
   hasBaseDropZoneOver: boolean = false;
   errorMessage: any;
   
-  formats: Format[];
-  papers: Paper[];
-  uploader: FileUploader;
-  fileItemDetails: Array<FileItemDetails>;
-  defaultParam: DefaultParam;
 
   constructor(
     private fileService: FileService,
@@ -38,27 +34,29 @@ export class OrderPhotoUploadComponent implements OnInit {
     private router: Router
   ) {
     this.baseUrl = configService.getApiURI();
-    this.uploader = new FileUploader({ url: this.baseUrl + "/photo/upload" });
-    this.fileItemDetails = [];
-    this.fileService.sendDataToService(this.uploader, this.fileItemDetails);
-
-    this.uploader.onCompleteAll = () => {
-      this.fileService.sendDataToService(this.uploader, this.fileItemDetails);    
-      localStorage.setItem('uploader', JSON.stringify(this.uploader));
-      localStorage.setItem('fileItemDetails', JSON.stringify(this.fileItemDetails));
+    this.fileService.uploader = new FileUploader({ url: this.baseUrl + "/photo/upload" });
+    this.fileService.fileItemDetails = [];
+    this.fileService.order = new Order();
+    this.fileService.uploader.onCompleteAll = () => {
+      this.fileService.order.deliveryTypeId = this.fileService.defaultParam.deliveryTypeId;
+      localStorage.setItem('fileItemDetails', JSON.stringify(this.fileService.fileItemDetails));
+      localStorage.setItem('order', JSON.stringify(this.fileService.order));
       this.router.navigate(["order-deitaled-data"]);
+
     };
   }
   ngOnInit() {
-    this.getDefaults();
     this.getFormats();
     this.getPapers();
+    this.getDeliveryTypes();
+    this.getDefaults();
+    
   }
   getFormats() {
     this.fileService
       .getFormats()
       .subscribe(
-        data => (this.formats = data),
+        data => (this.fileService.formats = data),
         error => (this.errorMessage = error)
       );
   }
@@ -66,7 +64,7 @@ export class OrderPhotoUploadComponent implements OnInit {
     this.fileService
       .getPapers()
       .subscribe(
-        papers => (this.papers = papers),
+        papers => (this.fileService.papers = papers),
         error => (this.errorMessage = error)
       );
   }
@@ -74,38 +72,46 @@ export class OrderPhotoUploadComponent implements OnInit {
     this.fileService
       .getDefaults()
       .subscribe(
-        defaultParam => (this.defaultParam = defaultParam),
+        defaultParam => (this.fileService.defaultParam = defaultParam),
         error => (this.errorMessage = error)
       );
   }
+  getDeliveryTypes(){
+    this.fileService
+    .getDeliveryTypes()
+    .subscribe(
+      data => (this.fileService.deliveryTypes = data),
+      error => (this.errorMessage = error)
+    );
+  }
   getFileItemDetails(item: FileItem): FileItemDetails {
-    return this.fileItemDetails[this.uploader.getIndexOfItem(item)];
+    return this.fileService.fileItemDetails[this.fileService.uploader.getIndexOfItem(item)];
   }
   onProfitSelectionChange(item, entry): void {
-    let id = this.uploader.getIndexOfItem(item);
-    this.fileItemDetails[id].isContain = entry;
+    let id = this.fileService.uploader.getIndexOfItem(item);
+    this.fileService.fileItemDetails[id].isContain = entry;
   }
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
 
-    this.uploader.onAfterAddingFile = fileItem => {
-      this.fileItemDetails.push(
+    this.fileService.uploader.onAfterAddingFile = fileItem => {
+      this.fileService.fileItemDetails.push(
         new FileItemDetails(
-          this.formats,
+          this.fileService.formats,
           fileItem._file.name,
-          this.defaultParam
+          this.fileService.defaultParam
         )
       );
     };
 
-    this.uploader.onAfterAddingAll = (fileItems: any[]) => {
-      this.fileService.powiadom2(this.fileItemDetails);
-      this.child.calculateAfterAddingFile(this.defaultParam);
+    this.fileService.uploader.onAfterAddingAll = (fileItems: any[]) => {
+      this.fileService.powiadom2(this.fileService.fileItemDetails);
+      this.child.calculateAfterAddingFile(this.fileService.defaultParam);
     };
   }
   removeElement(itemDetails, item) {
     this.child.calculateAfterRemove(itemDetails);
-    this.fileItemDetails.splice(this.uploader.queue.indexOf(item), 1);
+    this.fileService.fileItemDetails.splice(this.fileService.uploader.queue.indexOf(item), 1);
   }
   clickInputFile() {
     var file = document.getElementById("uploader-input");

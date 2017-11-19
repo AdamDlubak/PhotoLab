@@ -2,21 +2,27 @@
     
       
     
-<h2 style="margin-top: 20px;">Twoje zlecenie</h2>
+<h2 style="margin-top: 20px;">Podsumowanie Zlecenia</h2>
 <hr/>
-
-<h3>Podsumowanie Zlecenia</h3>
-<hr/>
-Liczba odbitek: 50 szt. <br />
-Cena: {{ getTotalPrice() | number:'1.2-2' }} zł<br />
+Liczba odbitek: {{ getTotalPrints() }} szt. <br />
+Cena: {{ getTotalPrintsPrice() | number:'1.2-2' }} zł<br />
 Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
+<h3 style="margin-top: 20px">Sposób dostawy</h3>
+<hr/>
+Przesyłka
+Odbiór osobisty
+<div class="col-2">
+    <label for="printsAmount">Sposób dostawy:</label>
+    <select *ngIf="fileService.deliveryTypes" class="custom-select d-block" (change)="calculateTotalOrderPrice()" name="selectPaper" [(ngModel)]="fileService.order.deliveryTypeId">
+        <option *ngFor="let deliveryType of fileService.deliveryTypes" [ngValue]="deliveryType.id">{{deliveryType.name}}</option>
+        
+    </select>
+  </div>
 <h3 style="margin-top: 20px">Dane do wysyłki</h3>
 <hr/>
-
-
 <div class="row">
-    <div class="col-md-12">
-      <form class="form-horizontal" role="form">
+    <div class="col-md-8">
+      <form class="form-horizontal" *ngIf="client" role="form">
         <fieldset>
 
 
@@ -24,7 +30,7 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Imię</label>
             <div class="col-sm-10">
-              <input type="text" placeholder="Wpisz swoje imię" class="form-control">
+              <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.firstName" class="form-control">
             </div>
           </div>
 
@@ -32,7 +38,7 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Nazwisko</label>
             <div class="col-sm-10">
-              <input type="text" placeholder="Wpisz swoje nazwisko" class="form-control">
+              <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.lastName" class="form-control">
             </div>
           </div>
 
@@ -40,7 +46,7 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Miasto</label>
             <div class="col-sm-10">
-              <input type="text" placeholder="Miasto" class="form-control">
+              <input type="text" name="clientDeliveryCity" placeholder="Miasto" [(ngModel)]="client.deliveryCity" class="form-control">
             </div>
           </div>
 
@@ -48,12 +54,12 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Ulica</label>
             <div class="col-sm-4">
-              <input type="text" placeholder="Ulica i numer domu / mieszkania" class="form-control">
+              <input type="text" name="clientDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="client.deliveryAddress" class="form-control">
             </div>
 
             <label class="col-sm-2 control-label" for="textinput">Kod Pocztowy</label>
             <div class="col-sm-4">
-              <input type="text" placeholder="Kod pocztowy" class="form-control">
+              <input type="text" name="clientDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="client.deliveryPostCode" class="form-control">
             </div>
           </div>
 
@@ -63,7 +69,7 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Nr telefonu</label>
             <div class="col-sm-10">
-              <input type="text" placeholder="+48 --- --- ---" class="form-control">
+              <input type="text" name="clientPhoneNumber" placeholder="+48 --- --- ---" [(ngModel)]="client.phoneNumber" class="form-control">
             </div>
           </div>
 
@@ -78,32 +84,31 @@ Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
 
         </fieldset>
       </form>
-    </div><!-- /.col-lg-12 -->
+    </div><!-- /.col-lg-8 -->
+
+    <div class="col-md-4">
+      Hahah<br/>
+      Hehe
+    </div><!-- /.col-lg-4 -->
+    
 </div><!-- /.row -->
 
 
 
 <h3 style="margin-top: 20px">Forma płatności</h3>
-<div class="form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-      Bezpieczny przelew przez PayU
-    </label>
-  </div>
-  <div class="form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-      Tradycyjny przelew na konto
-    </label>
-  </div>
 
+  <div class="btn-group" role="group" *ngIf="fileService.order">
+      <button type="button" (click)="setTransferType(false)" [ngClass]="fileService.order.isTraditionalTransfer ? 'no-active' : 'active'"
+       class="btn">Bezpieczny przelew przez PayU</button>
+      <button type="button" (click)="setTransferType(true)" [ngClass]="fileService.order.isTraditionalTransfer ? 'active' : 'no-active'"
+       class="btn">Tradycyjny przelew na konto</button>
+    </div>
 
 <h3>Dodatkowe uwagi do zlecenia</h3>
 <hr/>
 
-Łącznie do zapłaty: 25 zł
-
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal">
+<p *ngIf="fileService.deliveryTypes && fileService.order">Łącznie do zapłaty: {{ getTotalOrderPrice() }} zł</p>
+<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal" (click)="showOrder()">
     <span class="glyphicon glyphicon-upload"></span> Płacę
   </button>
 

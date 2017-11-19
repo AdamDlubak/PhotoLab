@@ -140,7 +140,7 @@ namespace Server.Controllers
     [HttpGet("getDefaults")]
     public IActionResult GetDefaults()
     {
-      var defaults = _context.PrintsParam.Include(def => def.Format).Include(def => def.Paper).FirstOrDefault();
+      var defaults = _context.PrintsParam.Include(def => def.Format).Include(def => def.Paper).Include(def => def.DeliveryType).FirstOrDefault();
       return new OkObjectResult(defaults);
     }
     // POST api/photo/editdefault
@@ -158,6 +158,15 @@ namespace Server.Controllers
       }
       await _context.SaveChangesAsync();
       return new OkObjectResult("Default params edited!");
+    }
+
+
+    // GET api/photo/getdeliverytypes
+    [HttpGet("getDeliveryTypes")]
+    public IActionResult GetDeliveryTypes()
+    {
+      var deliveryTypes = _context.DeliveryTypes.ToList();
+      return new OkObjectResult(deliveryTypes);
     }
 
 

@@ -29,8 +29,6 @@ export class UserService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-
-
   register(
     email: string,
     password: string,
@@ -58,13 +56,13 @@ export class UserService extends BaseService {
       .map(res => res.json())
       .map(res => {
         localStorage.setItem("auth_token", res.auth_token);
+        localStorage.setItem("user_id", res.id);
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;
       })
       .catch(this.handleError);
   }
-
   logout() {
     localStorage.removeItem("auth_token");
     this.loggedIn = false;
@@ -75,11 +73,28 @@ export class UserService extends BaseService {
     return this.loggedIn;
   }
 
-  getUsers() : Observable<User[]> {
+  getUsers(): Observable<User[]> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(this.baseUrl + "/auth/users", options)
+    return this.http
+      .get(this.baseUrl + "/auth/users", options)
       .map((response: Response) => <User[]>response.json());
+  }
+  getClient(): Observable<User> {
+    let headers = new Headers();
+    let token = localStorage.getItem("auth_token");
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", "Bearer " + token);
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .get(
+        this.baseUrl + "/accounts/client/" + localStorage.getItem("user_id"),
+        options
+      )
+      .map((response: Response) => <User>response.json())
+      .catch(this.handleError);
+      
   }
 }

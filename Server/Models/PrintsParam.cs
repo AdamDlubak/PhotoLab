@@ -15,5 +15,7 @@ namespace Server.Models
     public int Amount { get; set; }
     public Boolean IsHorizontal { get; set; }
     public Boolean IsContain { get; set; }
+    public int DeliveryTypeId { get; set; }
+    public DeliveryType DeliveryType { get; set; }
   }
 }

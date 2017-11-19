@@ -24,19 +24,19 @@
           <td colspan="2">
             <b>Razem do zapłaty:</b>
           </td>
-          <td>{{ getTotalPrice() | number:'1.2-2' }} zł</td>
+          <td>{{ getTotalPrintsPrice() | number:'1.2-2' }} zł</td>
         </tr>
       </tbody>
     </table>
     <hr/>
     
         <div class="progress progress-upload-photos">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [ngStyle]="{ 'width': fileService.uploader.progress + '%' }"></div>
         </div>
 
         <hr/>
         
-    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal" [disabled]="!uploader.getNotUploadedItems().length">
+    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal" [disabled]="!fileService.uploader.getNotUploadedItems().length">
       <span class="glyphicon glyphicon-upload"></span> Wgraj zdjęcia i przejdź dalej
     </button>
 
@@ -54,7 +54,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let format of formats; let i = index">
+          <tr *ngFor="let format of fileService.formats; let i = index">
   
             <td>{{ format.name }}</td>
             <td>{{ format.price | number:'1.2-2'}} zł</td>
@@ -94,7 +94,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Wróć i popraw</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addDatas(); uploader.uploadAll();">Prześlij</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addDatas(); fileService.uploader.uploadAll();">Prześlij</button>
       </div>
     </div>
   </div>

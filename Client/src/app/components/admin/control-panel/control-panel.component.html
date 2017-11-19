@@ -44,6 +44,7 @@
                   <th>Ilość odbitek</th>
                   <th>Dopasowanie</th>
                   <th>Ułożenie</th>
+                  <th>Dostawa</th>
                   <th>Akcje</th>
 
                 </tr>
@@ -55,6 +56,7 @@
                   <td>{{ defaultParam.amount }}</td>
                   <td>{{ getContainType() }}</td>
                   <td>{{ getPositionType() }}</td>
+                  <td>{{ getDeliveryType() }}</td>
                   <td>
                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editDefaultModal">
                       Edytuj
@@ -348,6 +350,12 @@
               <option [ngValue]="false">Pionowe</option>
             </select>
           </div>
+          <div class="form-group">
+              <label for="default-paperId" class="col-form-label">Sposób dostawy:</label>
+              <select *ngIf="deliveryTypes && defaultParam" class="custom-select d-block" name="selectPaper" [(ngModel)]="defaultParam.deliveryTypeId">
+                <option *ngFor="let deliveryType of deliveryTypes" [ngValue]="deliveryType.id">{{deliveryType.name}}</option>
+              </select>
+            </div>
 
         </div>
         <div class="modal-footer">
