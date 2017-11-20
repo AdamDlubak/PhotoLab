@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171120023425_Relation Many to Many PhotoPrints 6")]
+    partial class RelationManytoManyPhotoPrints6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

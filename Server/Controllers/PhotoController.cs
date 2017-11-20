@@ -40,7 +40,7 @@ namespace Server.Controllers
     // POST api/photo/submitOrder
     [HttpPost("submitOrder")]
     public async Task<IActionResult> SubmitOrder([FromBody] OrderViewModel orderViewModel)
-    {
+     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
       var order = Mapper.Map<Order>(orderViewModel);

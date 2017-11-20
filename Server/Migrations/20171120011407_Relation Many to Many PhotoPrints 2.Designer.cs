@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171120011407_Relation Many to Many PhotoPrints 2")]
+    partial class RelationManytoManyPhotoPrints2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,6 +303,19 @@ namespace Server.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("Server.Models.PhotoPrint", b =>
+                {
+                    b.Property<int>("PhotoId");
+
+                    b.Property<int>("PrintId");
+
+                    b.HasKey("PhotoId", "PrintId");
+
+                    b.HasIndex("PrintId");
+
+                    b.ToTable("PhotoPrint");
+                });
+
             modelBuilder.Entity("Server.Models.Print", b =>
                 {
                     b.Property<int>("Id")
@@ -309,15 +323,15 @@ namespace Server.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<int>("Format");
+                    b.Property<int>("FormatId");
 
-                    b.Property<int>("Paper");
-
-                    b.Property<int?>("PhotoId");
+                    b.Property<int>("PaperId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhotoId");
+                    b.HasIndex("FormatId");
+
+                    b.HasIndex("PaperId");
 
                     b.ToTable("Prints");
                 });
@@ -491,11 +505,30 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Server.Models.PhotoPrint", b =>
+                {
+                    b.HasOne("Server.Models.Photo", "Photo")
+                        .WithMany("PhotoPrints")
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Print", "Print")
+                        .WithMany("PhotoPrints")
+                        .HasForeignKey("PrintId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Server.Models.Print", b =>
                 {
-                    b.HasOne("Server.Models.Photo")
-                        .WithMany("Prints")
-                        .HasForeignKey("PhotoId");
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithMany()
+                        .HasForeignKey("PaperId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Server.Models.PrintsParam", b =>

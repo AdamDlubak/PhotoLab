@@ -19,7 +19,7 @@ export class Order {
         public invoiceDataId : number = null,
         public isInvoice : boolean = false,
         public additionalInfo : string = "",
-        public photos : Array<FileItemDetails> = null
+        public photos : Array<FileItemDetails> = null,
     ) { }
 
 

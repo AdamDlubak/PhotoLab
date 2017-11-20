@@ -11,9 +11,10 @@ using System;
 namespace Server.Migrations
 {
     [DbContext(typeof(PhotoLabContext))]
-    partial class PhotoLabContextModelSnapshot : ModelSnapshot
+    [Migration("20171120010310_Removed relation many to many")]
+    partial class Removedrelationmanytomany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,13 +310,17 @@ namespace Server.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<int>("Format");
+                    b.Property<int>("FormatId");
 
-                    b.Property<int>("Paper");
+                    b.Property<int>("PaperId");
 
                     b.Property<int?>("PhotoId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FormatId");
+
+                    b.HasIndex("PaperId");
 
                     b.HasIndex("PhotoId");
 
@@ -493,6 +498,16 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.Print", b =>
                 {
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithMany()
+                        .HasForeignKey("PaperId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Server.Models.Photo")
                         .WithMany("Prints")
                         .HasForeignKey("PhotoId");

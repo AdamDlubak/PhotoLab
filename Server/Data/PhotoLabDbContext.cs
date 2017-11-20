@@ -19,23 +19,23 @@ namespace Server.Helpers
     public DbSet<Print> Prints { get; set; }
 
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-      base.OnModelCreating(modelBuilder);
-
-      modelBuilder.Entity<PhotoPrint>()
-        .HasKey(bc => new { bc.PhotoId, bc.PrintId });
-
-      modelBuilder.Entity<PhotoPrint>()
-        .HasOne(bc => bc.Photo)
-        .WithMany(b => b.Prints)
-        .HasForeignKey(bc => bc.PhotoId);
-
-      modelBuilder.Entity<PhotoPrint>()
-        .HasOne(bc => bc.Print)
-        .WithMany(c => c.Prints)
-        .HasForeignKey(bc => bc.PrintId);
-    }
+//    protected override void OnModelCreating(ModelBuilder modelBuilder)
+//    {
+//      base.OnModelCreating(modelBuilder);
+//
+//      modelBuilder.Entity<PhotoPrint>()
+//        .HasKey(bc => new { bc.PhotoId, bc.PrintId });
+//
+//      modelBuilder.Entity<PhotoPrint>()
+//        .HasOne(bc => bc.Photo)
+//        .WithMany(b => b.PhotoPrints)
+//        .HasForeignKey(bc => bc.PhotoId);
+//
+//      modelBuilder.Entity<PhotoPrint>()
+//        .HasOne(bc => bc.Print)
+//        .WithMany(c => c.PhotoPrints)
+//        .HasForeignKey(bc => bc.PrintId);
+//    }
   }
 
 
