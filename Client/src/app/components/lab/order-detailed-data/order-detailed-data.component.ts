@@ -1,3 +1,4 @@
+import { Format } from './../order-photo-upload/models/format.class';
 import { UserService } from "./../../../shared/services/user.service";
 import { FileService } from "./../services/file.service";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
@@ -9,11 +10,15 @@ import { User } from "../../../shared/models/user.interface";
   styleUrls: ["./order-detailed-data.component.scss"]
 })
 export class OrderDetailedDataComponent implements OnInit, AfterViewInit {
-
+  klik(){
+    console.log(this.client);
+  } 
   client : User;
   errorMessage: any;
   showOrder() {
     console.log(this.fileService.order);
+    this.submitOrder();
+
   }
   constructor(
     private fileService: FileService,
@@ -53,12 +58,7 @@ export class OrderDetailedDataComponent implements OnInit, AfterViewInit {
       return this.fileService.order.totalOrderPrice;
   }
   getClient() {
-    this.userService
-      .getClient()
-      .subscribe(
-        data => (this.client = data),
-        error => (this.errorMessage = error)
-      );
+    this.client = this.userService.getClient();
   }
   getDeliveryTypes(){
     this.fileService
@@ -70,5 +70,16 @@ export class OrderDetailedDataComponent implements OnInit, AfterViewInit {
   }
   setTransferType(value : boolean){
     this.fileService.order.isTraditionalTransfer = value;
+  }
+
+
+
+  submitOrder(){
+    this.fileService
+    .submitOrder()
+    .subscribe(
+      data => (data),
+      error => (this.errorMessage = error)
+    );
   }
 }

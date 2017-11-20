@@ -34,7 +34,17 @@ export class FileService extends BaseService {
     super();
     this.baseUrl = configService.getApiURI();
   }
-  public default: DefaultParam;
+  public submitOrder() {
+    this.order.photos = this.fileItemDetails;
+    let body = JSON.stringify(this.order);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/submitorder", body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
   getFormats() {
     return this.http
       .get(this.baseUrl + "/photo/getformats")

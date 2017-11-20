@@ -1,3 +1,4 @@
+import { UserPanelComponent } from './user-panel/user-panel.component';
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
@@ -15,6 +16,7 @@ export const Routing: ModuleWithProviders = RouterModule.forChild([
       { path: "home", component: HomeComponent},
       { path: "order-photo-upload", component: OrderPhotoUploadComponent},
       { path: "order-deitaled-data", component: OrderDetailedDataComponent},
+      { path: "user-panel", component: UserPanelComponent},
       { path: "**", redirectTo: "login", pathMatch: "full" }      
     ]
   }

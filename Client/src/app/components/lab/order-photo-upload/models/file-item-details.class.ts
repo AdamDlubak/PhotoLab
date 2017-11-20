@@ -1,7 +1,7 @@
 import { DefaultParam } from "./default-param.class";
 import { Format } from "./format.class";
 export class  FileItemDetails {
-  index: number;
+  id: number;
   isContain: boolean;
   prints: Print[];
   name: string;

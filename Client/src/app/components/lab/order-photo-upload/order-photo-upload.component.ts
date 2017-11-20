@@ -1,3 +1,5 @@
+import { User } from './../../../shared/models/user.interface';
+import { UserService } from './../../../shared/services/user.service';
 import { Order } from './models/order.class';
 import { Format } from "./models/format.class";
 import { PrintTypeComponent } from "./print-type/print-type.component";
@@ -26,17 +28,17 @@ export class OrderPhotoUploadComponent implements OnInit {
   dragAreaClass: string = "is-empty";
   hasBaseDropZoneOver: boolean = false;
   errorMessage: any;
-  
+  client : User;
 
   constructor(
     private fileService: FileService,
     private configService: ConfigService,
-    private router: Router
+    private router: Router,
+    private userService : UserService
   ) {
     this.baseUrl = configService.getApiURI();
     this.fileService.uploader = new FileUploader({ url: this.baseUrl + "/photo/upload" });
     this.fileService.fileItemDetails = [];
-    this.fileService.order = new Order();
     this.fileService.uploader.onCompleteAll = () => {
       this.fileService.order.deliveryTypeId = this.fileService.defaultParam.deliveryTypeId;
       localStorage.setItem('fileItemDetails', JSON.stringify(this.fileService.fileItemDetails));
@@ -50,7 +52,12 @@ export class OrderPhotoUploadComponent implements OnInit {
     this.getPapers();
     this.getDeliveryTypes();
     this.getDefaults();
+    this.getClient();
+    this.fileService.order = new Order(this.client.id);
     
+  }
+  getClient() {
+    this.client = this.userService.getClient();
   }
   getFormats() {
     this.fileService

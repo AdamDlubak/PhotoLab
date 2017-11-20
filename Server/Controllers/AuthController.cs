@@ -23,21 +23,21 @@ namespace Server.Controllers
   public class AuthController : Controller
   {
     private readonly PhotoLabContext _context;
-    private readonly UserManager<User> _userManager;
-    private readonly PasswordHasher<User> _passwordHasher;
+    private readonly UserManager<Models.User> _userManager;
+    private readonly PasswordHasher<Models.User> _passwordHasher;
     private readonly IMapper _mapper;
     private readonly JsonSerializerSettings _serializerSettings;
     private readonly IJwtFactory _jwtFactory;
     private readonly JwtIssuerOptions _jwtOptions;
 
     public IConfiguration Configuration { get; }
-    public AuthController(UserManager<User> userManager, IMapper mapper, PhotoLabContext appDbContext, IConfiguration configuration, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+    public AuthController(UserManager<Models.User> userManager, IMapper mapper, PhotoLabContext appDbContext, IConfiguration configuration, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
     {
       _userManager = userManager;
       _mapper = mapper;
       _context = appDbContext;
       _jwtFactory = jwtFactory;
-      _passwordHasher = new PasswordHasher<User>();
+      _passwordHasher = new PasswordHasher<Models.User>();
       Configuration = configuration;
       _jwtOptions = jwtOptions.Value;
 
@@ -53,7 +53,7 @@ namespace Server.Controllers
     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
-      var userIdentity = _mapper.Map<User>(model);
+      var userIdentity = _mapper.Map<Models.User>(model);
       var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
 
@@ -79,7 +79,7 @@ namespace Server.Controllers
     }
 
 
-    private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+    private Task<Models.User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 
     //    // Get api/auth/getClient
@@ -113,9 +113,9 @@ namespace Server.Controllers
       return Ok(usersVM);
     }
 
-    public async Task<List<User>> GetUsersAndRolesAsync(int page, int pageSize)
+    public async Task<List<Models.User>> GetUsersAndRolesAsync(int page, int pageSize)
     {
-      IQueryable<User> usersQuery = _context.Users.OrderBy(u => u.UserName);
+      IQueryable<Models.User> usersQuery = _context.Users.OrderBy(u => u.UserName);
 
       if (page != -1)
         usersQuery = usersQuery.Skip((page - 1) * pageSize);
@@ -142,15 +142,16 @@ namespace Server.Controllers
       }
 
       // Serialize and return the response
+
+      var user = _context.Users.Include(d => d.DeliveryData).Include(i => i.InvoiceData).Include((o => o.Orders)).SingleOrDefault(x => x.Email == credentials.Email);
+
       var response = new
       {
-        id = identity.Claims.Single(c => c.Type == "id").Value,
         auth_token = await _jwtFactory.GenerateEncodedToken(credentials.Email, identity),
-        expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
-      };
-
-      var json = response;
-      return new OkObjectResult(json);
+        expires_in = (int)_jwtOptions.ValidFor.TotalSeconds,
+        user = Mapper.Map<UsersViewModel>(user)
+    };
+      return new OkObjectResult(response);
     }
 
 

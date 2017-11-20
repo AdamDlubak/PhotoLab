@@ -8,25 +8,14 @@ namespace Server.Models
 {
   public class Photo
   {
-    [Required]
     public int Id { get; set; }
+    public string Name { get; set; }
+    public string Path { get; set; }
+    public bool IsContain { get; set; }
+    public bool IsHorizontal { get; set; }
+    public int OrderId { get; set; }
+    public Order Order { get; set; }
+    public ICollection<PhotoPrint> Prints { get; set; }
 
-    [Required]
-    public string FileName { get; set; }
-
-    [Required]
-    public int FileSize { get; set; }
-
-    [Required]
-    public string ImagePath { get; set; }
-
-    [Required]
-    public string ThumbPath { get; set; }
-
-    [Required]
-    public int ProjectId { get; set; }
-
-    [Required]
-    public int SectionId { get; set; }
   }
 }

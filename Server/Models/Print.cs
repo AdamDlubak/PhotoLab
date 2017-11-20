@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Server.Models
+{
+  public class Print
+  {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public int FormatId { get; set; }
+    public Format Format { get; set; }
+    public int PaperId { get; set; }
+    public Paper Paper { get; set; }
+    public int Amount { get; set; }
+    public ICollection<PhotoPrint> Prints { get; set; }
+
+  }
+}

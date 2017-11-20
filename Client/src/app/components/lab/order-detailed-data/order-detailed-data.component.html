@@ -4,6 +4,10 @@
     
 <h2 style="margin-top: 20px;">Podsumowanie Zlecenia</h2>
 <hr/>
+
+<div class="row">
+<div class="col-md-8">
+    
 Liczba odbitek: {{ getTotalPrints() }} szt. <br />
 Cena: {{ getTotalPrintsPrice() | number:'1.2-2' }} zł<br />
 Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
@@ -24,13 +28,13 @@ Odbiór osobisty
     <div class="col-md-8">
       <form class="form-horizontal" *ngIf="client" role="form">
         <fieldset>
-
+<button (click)="klik()">asdasdas</button>
 
           <!-- Text input-->
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Imię</label>
             <div class="col-sm-10">
-              <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.firstName" class="form-control">
+              <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.deliveryData.deliveryFirstName" class="form-control">
             </div>
           </div>
 
@@ -38,7 +42,7 @@ Odbiór osobisty
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Nazwisko</label>
             <div class="col-sm-10">
-              <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.lastName" class="form-control">
+              <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.deliveryData.deliveryLastName" class="form-control">
             </div>
           </div>
 
@@ -46,7 +50,7 @@ Odbiór osobisty
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Miasto</label>
             <div class="col-sm-10">
-              <input type="text" name="clientDeliveryCity" placeholder="Miasto" [(ngModel)]="client.deliveryCity" class="form-control">
+              <input type="text" name="clientDeliveryCity" placeholder="Miasto" [(ngModel)]="client.deliveryData.deliveryCity" class="form-control">
             </div>
           </div>
 
@@ -54,12 +58,12 @@ Odbiór osobisty
           <div class="form-group">
             <label class="col-sm-2 control-label" for="textinput">Ulica</label>
             <div class="col-sm-4">
-              <input type="text" name="clientDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="client.deliveryAddress" class="form-control">
+              <input type="text" name="clientDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="client.deliveryData.deliveryAddress" class="form-control">
             </div>
 
             <label class="col-sm-2 control-label" for="textinput">Kod Pocztowy</label>
             <div class="col-sm-4">
-              <input type="text" name="clientDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="client.deliveryPostCode" class="form-control">
+              <input type="text" name="clientDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="client.deliveryData.deliveryPostCode" class="form-control">
             </div>
           </div>
 
@@ -86,15 +90,20 @@ Odbiór osobisty
       </form>
     </div><!-- /.col-lg-8 -->
 
-    <div class="col-md-4">
-      Hahah<br/>
-      Hehe
-    </div><!-- /.col-lg-4 -->
+
     
 </div><!-- /.row -->
-
-
-
+<div class="checkbox">
+    <label><input type="checkbox" value="">Tę przesyłke chcę przesłać na inny adres</label>
+  </div>
+  <div class="checkbox">
+      <label><input type="checkbox" value="">chcę podać inne dane do faktury</label>
+    </div>
+<h3>Dodatkowe uwagi do zlecenia</h3>
+<hr/>
+<div class="form-group">
+    <textarea class="form-control" rows="5" id="comment" [(ngModel)]="fileService.order.additionalInfo"></textarea>
+  </div>
 <h3 style="margin-top: 20px">Forma płatności</h3>
 
   <div class="btn-group" role="group" *ngIf="fileService.order">
@@ -104,12 +113,18 @@ Odbiór osobisty
        class="btn">Tradycyjny przelew na konto</button>
     </div>
 
-<h3>Dodatkowe uwagi do zlecenia</h3>
-<hr/>
 
 <p *ngIf="fileService.deliveryTypes && fileService.order">Łącznie do zapłaty: {{ getTotalOrderPrice() }} zł</p>
 <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal" (click)="showOrder()">
     <span class="glyphicon glyphicon-upload"></span> Płacę
   </button>
 
+
+  </div>
+  <div class="col-md-4">
+      Hahah<br/>
+      Hehe
+    </div><!-- /.col-lg-4 -->
+
+  </div>
   </div>

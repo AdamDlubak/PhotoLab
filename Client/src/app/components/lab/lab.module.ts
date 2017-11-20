@@ -18,6 +18,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
 import { LoginModalComponent } from "./login-modal/login-modal.component";
 import { BootstrapModalModule } from "ng2-bootstrap-modal";
+import { UserPanelComponent } from "./user-panel/user-panel.component";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { BootstrapModalModule } from "ng2-bootstrap-modal";
     ImagePreview,
     CartComponent,
     OrderDetailedDataComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    UserPanelComponent
   ],
   exports: [],
   providers: [UserService, FileService],

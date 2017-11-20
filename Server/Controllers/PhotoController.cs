@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Helpers;
 using Server.Models;
+using Server.ViewModels;
 
 namespace Server.Controllers
 {
@@ -33,6 +34,26 @@ namespace Server.Controllers
       _hostingEnvironment = environment;
 
     }
+
+
+
+    // POST api/photo/submitOrder
+    [HttpPost("submitOrder")]
+    public async Task<IActionResult> SubmitOrder([FromBody] OrderViewModel orderViewModel)
+    {
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+
+      var order = Mapper.Map<Order>(orderViewModel);
+      foreach (var photo in order.Photos)
+      {
+        _context.Photos.Add(photo);
+      }
+      _context.Orders.Add(order);
+      await _context.SaveChangesAsync();
+
+      return new OkObjectResult("Order added correctly!");
+    }
+
 
     // GET api/photo/getformats
     [HttpGet("getFormats")]

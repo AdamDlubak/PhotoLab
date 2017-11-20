@@ -12,7 +12,6 @@ namespace Server.Models
     public string Icon { get; set; }
     public string Description { get; set; }
     public float Price { get; set; }
-    public PrintsParam PrintsParam { get; set; }
 
   }
 }

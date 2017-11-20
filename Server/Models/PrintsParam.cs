@@ -9,13 +9,13 @@ namespace Server.Models
   {
     public int Id { get; set; }
     public int FormatId { get; set; }
-    public Format Format { get; set; }
+    public virtual Format Format { get; set; }
     public int PaperId { get; set; }
-    public Paper Paper { get; set; }
+    public virtual Paper Paper { get; set; }
     public int Amount { get; set; }
     public Boolean IsHorizontal { get; set; }
     public Boolean IsContain { get; set; }
     public int DeliveryTypeId { get; set; }
-    public DeliveryType DeliveryType { get; set; }
+    public virtual DeliveryType DeliveryType { get; set; }
   }
 }
