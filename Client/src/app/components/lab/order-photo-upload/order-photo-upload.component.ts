@@ -31,10 +31,10 @@ export class OrderPhotoUploadComponent implements OnInit {
   client : User;
 
   constructor(
-    private fileService: FileService,
-    private configService: ConfigService,
-    private router: Router,
-    private userService : UserService
+    public fileService: FileService,
+    public configService: ConfigService,
+    public router: Router,
+    public userService : UserService
   ) {
     this.baseUrl = configService.getApiURI();
     this.fileService.uploader = new FileUploader({ url: this.baseUrl + "/photo/upload" });

@@ -54,6 +54,21 @@ namespace Server.Controllers
       return new OkObjectResult("Order added correctly!");
     }
 
+    // GET api/photo/getorder/id
+   [HttpGet("getOrder/{id}")]
+    public IActionResult GetOrder(int id)
+    {
+      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).FirstOrDefault(o => o.Id == id);
+      return new OkObjectResult(orders);
+    }
+    // GET api/photo/getorders
+    [HttpGet("getOrders")]
+    public IActionResult GetOrders()
+    {
+      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).ToList();
+      return new OkObjectResult(orders);
+    }
+
 
     // GET api/photo/getformats
     [HttpGet("getFormats")]

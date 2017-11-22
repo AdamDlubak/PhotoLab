@@ -1,3 +1,4 @@
+import { RegisterModalComponent } from './../register-modal/register-modal.component';
 import { UserService } from './../../../shared/services/user.service';
 import { LoginModalComponent } from './../login-modal/login-modal.component';
 import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
@@ -31,6 +32,22 @@ export class LabLayoutComponent implements OnInit {
                 // alert('declined');
             }
         });
+
+}
+
+showRegisterModal() {
+  let disposable = this.dialogService.addDialog(RegisterModalComponent , {
+      title:'Confirm title', 
+      message:'Confirm message'})
+      .subscribe((isConfirmed)=>{
+          //We get dialog result
+          if(isConfirmed) {
+              // alert('accepted');
+          }
+          else {
+              // alert('declined');
+          }
+      });
 
 }
 isLoggedIn() {

@@ -20,17 +20,17 @@ export class ControlPanelComponent implements OnInit {
   defaultParam: DefaultParam;
   selectedFormat: number = 0;
   selectedPaper: number = 0;
-  private editingFormat = false;
-  private editingPaper = false;
-  private tmpFormat = new Format(0, "", null, null, null);
-  private tmpPaper = new Paper(0, "");
+   editingFormat = false;
+  editingPaper = false;
+  tmpFormat = new Format(0, "", null, null, null);
+  tmpPaper = new Paper(0, "");
   title : string;
   context : string;
   formatToDelete : boolean;
 
   constructor(
-    private fileService: FileService,
-    private toastrService: ToastrService
+    public fileService: FileService,
+    public toastrService: ToastrService
   ) {}
 
   ngOnInit() {

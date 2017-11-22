@@ -21,8 +21,8 @@ export class OrderDetailedDataComponent implements OnInit, AfterViewInit {
 
   }
   constructor(
-    private fileService: FileService,
-    private userService: UserService
+    public fileService: FileService,
+    public userService: UserService
   ) {}
   ngOnInit() {
     if (!this.fileService.fileItemDetails) {

@@ -70,6 +70,19 @@ export class FileService extends BaseService {
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
+
+  getOrders() : Observable<Order[]> {
+    return this.http
+    .get(this.baseUrl + "/photo/getorders")
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
+  getOrder(id : number) : Observable<Order> {
+    return this.http
+    .get(this.baseUrl + "/photo/getorder/" + id)
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
   getIndexInUploadQueue(item): number {
     return this.uploader.queue.indexOf(item);
   }

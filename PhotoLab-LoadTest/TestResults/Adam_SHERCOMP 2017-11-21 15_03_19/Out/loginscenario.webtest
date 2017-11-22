@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="LoginScenario" Id="0e650637-522c-4e9d-854c-2c6e8b0c4deb" Owner="" Priority="0" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Guid="9a063260-ddef-4b07-a8c1-637bc8208d31" Version="1.1" Url="http://localhost:3000/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Upgrade-Insecure-Requests" Value="1" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="33c6b109-9951-4811-a681-675ae86c2fa6" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuIiP" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="POST" Guid="eccba165-6b36-46d3-b5a4-ed8e20bf125a" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Content-type" Value="text/plain;charset=UTF-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuIic" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="QH__yfE0hWCxf7N3AAAC" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <StringHttpBody ContentType="text/plain;charset=UTF-8" InsertByteOrderMark="False">MQA1ADoANAAwAC8AYgByAG8AdwBzAGUAcgAtAHMAeQBuAGMA</StringHttpBody>
+    </Request>
+    <Request Method="GET" Guid="4e9be451-f923-4a0b-b844-0a7924c559dd" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuIie" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="QH__yfE0hWCxf7N3AAAC" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="fc6fa50b-2fe1-405d-93dc-ad0b351da351" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Pragma" Value="no-cache" />
+        <Header Name="Upgrade" Value="websocket" />
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Sec-WebSocket-Version" Value="13" />
+        <Header Name="Sec-WebSocket-Key" Value="xq28qx2BIOGEOlPdBPrBgQ==" />
+        <Header Name="Sec-WebSocket-Extensions" Value="permessage-deflate; client_max_window_bits" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="websocket" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="QH__yfE0hWCxf7N3AAAC" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="fda0450b-222a-4270-9158-862cbb5205c9" Version="1.1" Url="http://localhost:3000/fontawesome-webfont.af7ae505a9eed503f8b8.woff2" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Origin" Value="http://localhost:3000" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="c8f396a2-efe9-4fd4-82bd-60e43c5d24cd" Version="1.1" Url="http://localhost:3000/fontawesome-webfont.af7ae505a9eed503f8b8.woff2" ThinkTime="5" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="If-None-Match" Value="W/&quot;12d68-15fdbba4839&quot;" />
+        <Header Name="If-Modified-Since" Value="Mon, 20 Nov 2017 23:18:59 GMT" />
+      </Headers>
+    </Request>
+    <Request Method="OPTIONS" Guid="337628fe-8bbe-4efa-9f2a-1a84419fd93e" Version="1.1" Url="http://localhost:57500/api/auth/login" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Access-Control-Request-Method" Value="POST" />
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Access-Control-Request-Headers" Value="content-type" />
+      </Headers>
+    </Request>
+    <Request Method="OPTIONS" Guid="85a1cf1f-3b91-4212-be01-1900a1db8376" Version="1.1" Url="http://localhost:57500/api/auth/login" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Access-Control-Request-Method" Value="POST" />
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Access-Control-Request-Headers" Value="content-type" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="d33422e7-d34b-43d5-bfa4-fa310e6d9413" Version="1.1" Url="http://localhost:3000/login(f)" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Upgrade-Insecure-Requests" Value="1" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="email" Value="a" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="password" Value="Test123" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="POST" Guid="7d9f68ba-aba3-4c30-a237-037e809159a8" Version="1.1" Url="http://localhost:57500/api/auth/login" ThinkTime="-2" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Content-Type" Value="application/json" />
+      </Headers>
+      <StringHttpBody ContentType="application/json" InsertByteOrderMark="False">ewAiAGUAbQBhAGkAbAAiADoAIgBhAGQAYQBtAC4AZABsAHUAYgBhAGsAQABnAG0AYQBpAGwALgBjAG8AbQAiACwAIgBwAGEAcwBzAHcAbwByAGQAIgA6ACIAVABlAHMAdAAxADIAMwAiAH0A</StringHttpBody>
+    </Request>
+    <Request Method="GET" Guid="1b0af4f0-86c6-41cc-8c94-f8e4b81691f5" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuLap" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="POST" Guid="fe71218f-a35a-4cf6-8a76-84aa16380c13" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Content-type" Value="text/plain;charset=UTF-8" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuLay" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="Kp21u2pYnL476IIqAAAD" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <StringHttpBody ContentType="text/plain;charset=UTF-8" InsertByteOrderMark="False">MQA1ADoANAAwAC8AYgByAG8AdwBzAGUAcgAtAHMAeQBuAGMA</StringHttpBody>
+    </Request>
+    <Request Method="GET" Guid="c41ab984-e961-4611-a396-70fd3a9642a1" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="0" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="polling" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="t" Value="L_UuLa_" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="Kp21u2pYnL476IIqAAAD" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="b272e544-9576-48e3-ad3b-c324bfa654de" Version="1.1" Url="http://localhost:3000/browser-sync/socket.io/" ThinkTime="1" Timeout="60" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Pragma" Value="no-cache" />
+        <Header Name="Upgrade" Value="websocket" />
+        <Header Name="Origin" Value="http://localhost:3000" />
+        <Header Name="Sec-WebSocket-Version" Value="13" />
+        <Header Name="Sec-WebSocket-Key" Value="Sr/HcgZbYS/l32HumDcbYw==" />
+        <Header Name="Sec-WebSocket-Extensions" Value="permessage-deflate; client_max_window_bits" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="EIO" Value="3" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="transport" Value="websocket" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+        <QueryStringParameter Name="sid" Value="Kp21u2pYnL476IIqAAAD" RecordedValue="" CorrelationBinding="" UrlEncode="True" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+  </Items>
+</WebTest>

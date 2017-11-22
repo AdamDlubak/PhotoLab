@@ -13,7 +13,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 export class CartComponent implements OnInit {
   carts: Cart[];
   
-  constructor(private fileService: FileService) {
+  constructor(public fileService: FileService) {
     this.fileService.invokeEvent2.subscribe(format => this.calculate(format));
   }
 

@@ -19,6 +19,7 @@ import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed
 import { LoginModalComponent } from "./login-modal/login-modal.component";
 import { BootstrapModalModule } from "ng2-bootstrap-modal";
 import { UserPanelComponent } from "./user-panel/user-panel.component";
+import { RegisterModalComponent } from './register-modal/register-modal.component';
 
 @NgModule({
   imports: [
@@ -40,10 +41,13 @@ import { UserPanelComponent } from "./user-panel/user-panel.component";
     CartComponent,
     OrderDetailedDataComponent,
     LoginModalComponent,
+    RegisterModalComponent,
     UserPanelComponent
-  ],
+,
+    RegisterModalComponent
+],
   exports: [],
   providers: [UserService, FileService],
-  entryComponents: [LoginModalComponent]
+  entryComponents: [LoginModalComponent, RegisterModalComponent]
 })
 export class LabModule {}

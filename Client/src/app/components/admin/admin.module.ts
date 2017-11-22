@@ -18,6 +18,8 @@ import { AuthGuard } from "../../auth.guard";
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { FileService } from "../lab/services/file.service";
 import { ToastrModule } from 'ngx-toastr';
+import { OrderComponent } from './Order/Order.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 @NgModule({
   imports: [CommonModule, FormsModule, Routing, SharedModule, ToastrModule.forRoot()],
   declarations: [
@@ -29,6 +31,8 @@ import { ToastrModule } from 'ngx-toastr';
     AdminHeaderComponent,
     AdminSidebarComponent,
     ControlPanelComponent,
+    OrderComponent,
+    OrderDetailsComponent
 ],
   exports: [],
   providers: [AuthGuard, UserService, FileService]

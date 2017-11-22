@@ -27,11 +27,16 @@
           <a class="nav-link" href="contact.html">Kontakt</a>
         </li>
         <li class="nav-item">
+          <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Wyloguj Mnie</a>
+
+        </li>
+        <li class="nav-item">
           <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showConfirm()">Zaloguj</a>
+          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showRegisterModal()">Rejestracja</a>
           <a class="nav-link" *ngIf="isLoggedIn()" (click)="showConfirm()">Witaj</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Moje Konto
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
@@ -91,13 +96,14 @@
 
 <!-- Page Content -->
 <div class="container">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
   <hr>
 
   <!-- Call to Action Section -->
   <div class="row mb-4">
     <div class="col-md-8">
-      <p>Gorąco zachęcam do zapisania się do naszej listy mailgowej. Co tydzień zniżki, rabaty i promocje dla stałych klient. Nie zwklekaj - zapisz się już teraz i ciesz się wspaniałymi zdjęciami za najniższą cenę!</p>
+      <p>Gorąco zachęcam do zapisania się do naszej listy mailgowej. Co tydzień zniżki, rabaty i promocje dla stałych klient.
+        Nie zwklekaj - zapisz się już teraz i ciesz się wspaniałymi zdjęciami za najniższą cenę!</p>
     </div>
     <div class="col-md-4">
       <a class="btn btn-lg btn-secondary btn-block" href="#">Zapisz mnie do newslettera!</a>
@@ -114,5 +120,3 @@
   </div>
   <!-- /.container -->
 </footer>
-
-
