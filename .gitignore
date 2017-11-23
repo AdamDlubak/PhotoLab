@@ -46,4 +46,4 @@ Server/obj
 Server/wwwroot/uploads
 
 #Visual Studio files
-Server/.vs
+Server/.vs/Server/
