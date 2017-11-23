@@ -1,3 +1,4 @@
+import { RegisterModel } from "./../../../shared/models/register-model.interface";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 import { UserService } from "./../../../shared/services/user.service";
@@ -11,7 +12,7 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "app-register-modal",
   templateUrl: "./register-modal.component.html",
-  styleUrls: ["../login-modal/login-modal.component.scss"]
+  styleUrls: ["./register-modal.component.scss"]
 })
 export class RegisterModalComponent extends DialogComponent<
   ConfirmModel,
@@ -25,6 +26,13 @@ export class RegisterModalComponent extends DialogComponent<
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
+  registerModel: RegisterModel = {
+    email: "",
+    password: "",
+    repeatedPassword: "",
+    firstName: "",
+    lastName: ""
+  };
 
   constructor(
     dialogService: DialogService,
@@ -46,5 +54,18 @@ export class RegisterModalComponent extends DialogComponent<
   ngOnDestroy() {
     // prevent memory leak by unsubscribing
     this.subscription.unsubscribe();
+  }
+
+  register() {
+    this.isRequesting = true;
+    this.userService
+      .register(this.registerModel)
+      .finally(() => (this.isRequesting = false))
+      .subscribe(result => {
+        if (result) {
+          this.close();
+          this.router.navigate(["/home"]);
+        }
+      }, error => (this.errors = error));
   }
 }
