@@ -1,0 +1,18 @@
+
+<div class="row" style="margin-bottom: 5px;" *ngFor="let print of itemDetail.prints; let i = index">
+     <div class="col-6">
+      <label class="sr-only" for="inlineFormInputGroup"></label>
+      <div class="input-group mb-2 mb-sm-0">
+        <div  class="input-group-addon">{{ getFormatName(print.format) }}</div>
+        <input type="number" (keyup)="onChangePrints(print.format, $event)" (click)="onChangePrints(print.format, $event)" [(ngModel)]="print.amount" class="form-control" id="inlineFormInputGroup" placeholder="0 szt.">
+      </div>
+   </div>
+    <div class="col-6 padding-left-0">
+         <form *ngIf="print.amount > 0">
+						<select class="custom-select d-block" name="selectPaper" [(ngModel)]="print.paper"  (ngModelChange)="onChangePaper($event, i)"
+						 required>
+							<option *ngFor="let paper of papers" [ngValue]="paper.id">{{paper.name}}</option>
+						</select>
+          </form>
+    </div> 
+  </div>

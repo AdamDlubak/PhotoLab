@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +13,8 @@ using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
 using Server.Models;
 using Server.Helpers;
 using Server.Helpers.Interfaces;
@@ -44,6 +48,7 @@ namespace Server
         options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
       services.AddSingleton<IJwtFactory, JwtFactory>();
+      services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
       var jwtAppSettingOptions = Configuration["JWT:Issuer"];
       // Configure JwtIssuerOptions
@@ -113,13 +118,15 @@ namespace Server
             .AllowCredentials();
         });
       });
-      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+      services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+        .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore); ;
       services.AddAutoMapper();
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
       loggerFactory.AddConsole();
+
 
       if (env.IsDevelopment())
       {

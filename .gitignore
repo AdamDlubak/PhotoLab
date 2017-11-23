@@ -41,3 +41,9 @@ Client/app/**/*.js.map
 # .NET compiled files
 Server/bin
 Server/obj
+
+# Uploaded files by Client
+Server/wwwroot/uploads
+
+#Visual Studio files
+Server/.vs/Server/

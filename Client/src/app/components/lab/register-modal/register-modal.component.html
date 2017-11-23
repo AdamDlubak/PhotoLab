@@ -1,0 +1,130 @@
+<div class="modal-dialog modal-flex-login">
+    <div class="modal-content modal-flex-content">
+        <div class="left-login">
+                <div *ngIf="errors" class="alert alert-danger login-alert" role="alert">
+                        <i class="fa fa-close"></i>
+                        <strong> Oops!</strong>
+                        <br />
+                        <p>{{errors}}</p>
+                    </div>
+        </div>
+        <div class="right-login">
+            <button type="button" class="close" (click)="close()">&times;</button>
+
+
+            <div class="login-form">
+                <h2>Rejestracja</h2>
+                <hr>
+
+                <form class="form-vertical" #registerForm="ngForm" novalidate (ngSubmit)="registerForm.form.valid && register()">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group has-danger" [ngClass]="{ 'has-error': registerForm.submitted && !firstName.valid }">
+                                <label class="input-label" for="firstName">Imię:</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-at"></i>
+                                    </div>
+                                    <input type="text" required name="firstName" [(ngModel)]="registerModel.firstName" #firstName="ngModel" class="form-control"
+                                        id="firstName" placeholder="Twoje imię">
+                                </div>
+                                <div *ngIf="registerForm.submitted && !firstName.valid" class="help-block">Podaj proszę swoje imię</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group has-danger" [ngClass]="{ 'has-error': registerForm.submitted && !lastName.valid }">
+                                <label class="input-label" for="lastName">Nazwisko:</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-at"></i>
+                                    </div>
+                                    <input type="text" required name="lastName" [(ngModel)]="registerModel.lastName" #lastName="ngModel" class="form-control"
+                                        id="lastName" placeholder="Twoje nazwisko">
+                                </div>
+                                <div *ngIf="registerForm.submitted && !lastName.valid" class="help-block">Podaj proszę swoje nazwisko</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group has-danger" [ngClass]="{ 'has-error': registerForm.submitted && !email.valid }">
+                                <label class="input-label" for="email">Adres e-mail:</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-at"></i>
+                                    </div>
+                                    <input type="email" required name="email" [(ngModel)]="registerModel.email" #email="ngModel" tmFocus validateEmail class="form-control"
+                                        id="email" placeholder="Podaj swój mail">
+                                </div>
+                                <div *ngIf="registerForm.submitted && !email.valid" class="help-block">Adres e-mail jest wymagany</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group has-danger" [ngClass]="{ 'has-error': registerForm.submitted && !password.valid }">
+                                <label class="input-label" for="password">Hasło:</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-at"></i>
+                                    </div>
+                                    <input type="password" required name="password" [(ngModel)]="registerModel.password" #password="ngModel" class="form-control"
+                                        id="password" placeholder="Wprowadź bezpieczne hasło">
+                                </div>
+                                <div *ngIf="registerForm.submitted && !password.valid" class="help-block">Hasło jest wymagane</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group has-danger" [ngClass]="{ 'has-error': registerForm.submitted && !repeatedPassword.valid }">
+                                <label class="input-label" for="password">Powtórz hasło:</label>
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-at"></i>
+                                    </div>
+                                    <input type="password" required name="repeatedPassword" ([ngModel])="registerModel.repeatedPassword" #repeatedPassword="ngModel" class="form-control"
+                                        id="repeatedPassword" placeholder="Powtórz wprowadzone hasło">
+                                </div>
+                                <div *ngIf="registerForm.submitted && !repeatedPassword.valid" class="help-block">Powtórz wprowadzone hasło</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 login-button">
+                                <app-spinner [isRunning]="isRequesting"></app-spinner>
+</div>                            
+                        <div class="col-md-6 login-button">
+                            <button type="submit" class="btn btn-success" [disabled]="f.invalid || isRequesting">
+                                <i class="fa fa-sign-in"></i> Zarejestruj</button>
+                        </div>
+                    </div>
+                    <div class="error-container">
+                        
+                        
+                    </div>
+
+                </form>
+
+
+                <div class="lets-login-button">
+                    <p>
+                        <b>Masz już u nas konto?</b> Na co czekać?</p>
+                    <button type="submit" class="btn btn-info">
+                        Zaloguj się!
+                    </button>
+                </div>
+    
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,61 @@
+.login-page {
+    display: flex;
+    align-items: center;  
+    min-height: 100vh;
+    color: #fff;
+    background:
+    linear-gradient(
+        rgba(0, 0, 0, 0.5), 
+        rgba(0, 0, 0, 0.5)
+      ),
+     url('../../../../assets/images/login-page-bg.jpg') no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .login-page .container {
+      height: 700px;
+      display: flex;
+      width: 1000px;
+      padding: 0;
+      box-shadow: 5px 5px 40px #222;
+    
+  }
+  .login-page .container .left-login {
+      width: 50%;
+      background: url('../../../../assets/images/login-bg.jpg');
+      display: flex;
+      align-items: center;
+      justify-content: center;   
+      flex-direction: column;
+      
+      
+  }
+  .login-page .container .right-login {
+      background-color: #fff;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;    
+  }
+  
+.login-form {
+    width: 100%;
+    padding: 10%;
+    color: #595959;    
+}
+.login-form .form-control {
+    border-radius: 0;
+}
+.login-form .forgot-pass {
+    padding-left: 20px;
+    color: #595959;
+    font-size: 12px;
+}
+.login-form .form-button {
+    border-radius: 0;
+    background-color: #5ce272;
+    color: #fff;
+    border: 1px solid rgba(34, 34, 34, 0.323);
+    width: 90px;
+}

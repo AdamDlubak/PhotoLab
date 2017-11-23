@@ -1,0 +1,360 @@
+.padding-right-0 {
+  padding-right: 0;
+}
+.title-block {
+  margin-top: 40px;
+  hr {
+    margin-top: 0.3rem;
+  }
+}
+.all-photos-info {
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #eee;
+  border-left-width: 0.25rem;
+  border-radius: 0.25rem;
+  border-left-color: #f0ad4e;
+  display: flex;
+  flex-direction: row;
+}
+.number-col {
+  border-right: 1px ridge #aaa;
+  display: flex;
+  padding-left: 7px;
+}
+.all-photos-info p.number {
+  font-weight: bold;
+  font-size: 100px;
+  align-items: center;
+  align-content: center;
+}
+.all-photos-info p.header {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.all-photos-info p.content {
+  font-size: 1rem;
+  text-align: justify;
+}
+.all-photos-info label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.all-photos-info select {
+  width: 100%;
+}
+.all-photos-info .printsAmount {
+  border-left: 1px ridge #aaa;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  span {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  span:last-child {
+    font-size: 2.5rem;
+  }
+}
+
+.drop-box {
+  @extend .all-photos-info;
+  border-left-color: #e98d0c;
+  padding: 0;
+  margin-top: 0;
+
+  .number-col {
+    margin: 1.25rem 0 1.25rem 1.25rem;
+  }
+  p.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+}
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
+}
+
+.box.has-advanced-upload {
+  background-color: white;
+  outline: 2px dashed black;
+  outline-offset: -10px;
+}
+.box.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+
+.is-empty {
+  height: 100%;
+  transition: 0.45s all ease;
+  border: dashed 1px #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.is-empty-padding {
+  padding: 10px;
+  height: 100%;
+  transition: 0.45s all ease;
+  cursor: pointer;
+}
+.is-dragover-padding,
+.is-empty-padding:hover {
+  height: 100%;
+  transition: 0.25s all ease;
+  padding: 20px;
+  cursor: auto;
+  cursor: pointer;
+}
+
+.is-dragover,
+.is-empty:hover {
+  background-color: #f6f6f6;
+  height: 100%;
+  transition: 0.25s all ease;
+  border: dashed 1px #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 6px;
+  justify-content: center;
+}
+.is-empty:hover {
+  text-decoration: underline;
+  transition: 0.25s all ease;
+}
+.is-empty .upload-icon {
+  width: 60px;
+  height: auto;
+  display: block;
+  transition: 0.45s all ease;
+  margin-bottom: 10px;
+}
+.is-dragover .upload-icon {
+  width: 75px;
+  height: auto;
+  display: block;
+  transition: 0.25s all ease-in;
+  margin-bottom: 10px;
+}
+p.drop-text {
+  display: block;
+  font-style: italic;
+}
+.center {
+  width: 150px;
+  margin: 40px auto;
+}
+
+.error {
+  color: #f00;
+}
+.drag-area {
+  font-size: 24px;
+  border: 3px solid #bbb;
+  padding: 20px;
+  background-color: #fff;
+  color: #bbb;
+}
+.drop-area {
+  font-size: 24px;
+  border: 3px dashed #bbb;
+  padding: 20px;
+  background-color: #eff;
+  color: #aaa;
+}
+
+.my-drop-zone,
+.my-drop-zone:hover {
+  width: 100%;
+  height: 100%;
+}
+.drop-hidden {
+  display: none;
+}
+.show-class {
+  visibility: visible;
+  opacity: 1;
+  max-height: 400px;
+  height: auto;
+  transition: visibility 0.5s linear, max-height 0.5s linear,
+    opacity 0.5s linear;
+}
+.hide-class {
+  visibility: hidden;
+  height: 0px;
+  max-height: 0px;
+  opacity: 1;
+  transition: visibility 0.5s linear, max-height 0.5s linear,
+    opacity 0.5s linear;
+}
+.nv-file-over {
+  border: dotted 3px red;
+} /* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Limit image width to avoid overflow the container */
+img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+
+.table td,
+.table th {
+  text-align: center;
+}
+
+label input[type="radio"] {
+  opacity: 0;
+}
+.flex-box-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;  
+}
+.icon-waiting-photo {
+    opacity: 0.15;
+    font-size: 200px;
+    height: 200px;
+    i {
+        vertical-align: top;
+    }
+}
+.text-waiting-photo {
+    width: auto;
+    font-weight: bold;
+    opacity: 0.15;
+    font-size: 1.2rem;
+}
+.photos-table {
+  .flex-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+  }
+  .flex-item {
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+  }
+  .flex-item-left {
+    width: 35%;
+  }
+  .flex-item-center {
+    width: 20%;
+  }
+  .flex-item-right {
+    width: 45%;
+  }
+  .btn-group {
+    width: 100%;
+    margin: 8px 0;
+    .active {
+      background-color: #d6d8db;
+      cursor: not-allowed;
+      width: 50%;
+    }
+    .no-active {
+      background-color: #e9ecef;
+      box-shadow: 0;
+      width: 50%;
+    }
+
+    .no-active:hover {
+      background-color: #e1e5e8;
+      transition: 0.3s easy;
+    }
+    .button-preview {
+      width: 60%;
+    }
+    .button-remove {
+      width: 40%;
+    }
+  }
+  .file-name {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 8px 0 5px 0;
+  }
+  .flex-item-right .btn:active {
+    box-shadow: none;
+  }
+  .btn:focus {
+    box-shadow: none;
+  }
+  .photo-horizontal .photo-cover {
+    object-fit: cover;
+    height: 178px;
+    width: 250px;
+    transition: 0.5s ease;
+  }
+  .photo-horizontal .photo-contain {
+    object-fit: contain;
+    height: 178px;
+    width: 250px;
+    transition: 0.5s ease;
+  }
+  .photo-vertical .photo-cover {
+    object-fit: cover;
+    height: 250px;
+    width: 178px;
+    transition: 0.5s ease;
+  }
+  .photo-vertical .photo-contain {
+    object-fit: contain;
+    height: 250px;
+    width: 178px;
+    transition: 0.5s ease;
+  }
+  .photo-vertical {
+    height: 252px;
+    width: 178px;
+    transition: 0.5s ease;
+  }
+  .photo-horizontal {
+    width: 250px;
+    height: 180px;
+    transition: 0.5s ease;
+  }
+  .photo-frame {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    border: 1px dashed #000;
+    transition: 0.5s ease;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .item-height {
+    height: 300px;
+  }
+}

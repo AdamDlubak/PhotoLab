@@ -1,7 +1,9 @@
+import { RegisterModel } from './../models/register-model.interface';
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 
 import { UserRegistration } from "../models/user.registration.interface";
+import { User } from "../models/user.interface";
 import { ConfigService } from "../utils/config.service";
 
 import { BaseService } from "./base.service";
@@ -28,13 +30,8 @@ export class UserService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-  register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-  ): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName });
+  register(registerModel : RegisterModel): Observable<UserRegistration> {
+    let body = JSON.stringify(registerModel);
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
 
@@ -55,20 +52,47 @@ export class UserService extends BaseService {
       .map(res => res.json())
       .map(res => {
         localStorage.setItem("auth_token", res.auth_token);
+        localStorage.setItem("user", JSON.stringify(res.user));
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;
       })
       .catch(this.handleError);
   }
-
   logout() {
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("user");
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }
 
   isLoggedIn() {
     return this.loggedIn;
+  }
+
+  getUsers(): Observable<User[]> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .get(this.baseUrl + "/auth/users", options)
+      .map((response: Response) => <User[]>response.json());
+  }
+    getClient(): User {
+      return <User>JSON.parse(localStorage.getItem("user"));
+    // let headers = new Headers();
+    // let token = localStorage.getItem("auth_token");
+    // headers.append("Content-Type", "application/json");
+    // headers.append("Authorization", "Bearer " + token);
+    // let options = new RequestOptions({ headers: headers });
+
+    // return this.http
+    //   .get(
+    //     this.baseUrl + "/accounts/client/" + localStorage.getItem("user_id"),
+    //     options
+    //   )
+    //   .map((response: Response) => <User>response.json())
+    //   .catch(this.handleError);
+      
   }
 }

@@ -6,9 +6,9 @@ namespace Server.ViewModels.Validations
     {
         public CredentialsViewModelValidator()
         {
-            RuleFor(vm => vm.Email).NotEmpty().WithMessage("Email cannot be empty");
-            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Password cannot be empty");
-            RuleFor(vm => vm.Password).Length(6, 12).WithMessage("Password must be between 6 and 12 characters");        
+            RuleFor(vm => vm.Email).NotEmpty().WithMessage("Adres email nie mo¿e byæ pusty.");
+            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Pole has³o nie mo¿e byæ puste.");
+            RuleFor(vm => vm.Password).Length(6, 12).WithMessage("Has³o musi mieæ od 6 do 12 znaków.");        
         }
     }
 }

@@ -128,17 +128,10 @@ namespace Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Server.Models.User", b =>
+            modelBuilder.Entity("Server.Models.DeliveryData", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("Avatar");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
 
                     b.Property<string>("DeliveryAddress");
 
@@ -150,12 +143,57 @@ namespace Server.Migrations
 
                     b.Property<string>("DeliveryPostCode");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
+                    b.Property<string>("UserId");
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.HasKey("Id");
 
-                    b.Property<string>("FirstName");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("DeliveryDatas");
+                });
+
+            modelBuilder.Entity("Server.Models.DeliveryType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("Name");
+
+                    b.Property<float>("Price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryTypes");
+                });
+
+            modelBuilder.Entity("Server.Models.Format", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Height");
+
+                    b.Property<string>("Name");
+
+                    b.Property<float>("Price");
+
+                    b.Property<int>("Width");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Formats");
+                });
+
+            modelBuilder.Entity("Server.Models.InvoiceData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("InvoiceAddress");
 
@@ -173,6 +211,166 @@ namespace Server.Migrations
 
                     b.Property<bool>("InvoiceType");
 
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("InvoiceDatas");
+                });
+
+            modelBuilder.Entity("Server.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AdditionalInfo");
+
+                    b.Property<int?>("DeliveryDataId");
+
+                    b.Property<int>("DeliveryTypeId");
+
+                    b.Property<DateTime?>("EndDate");
+
+                    b.Property<int?>("InvoiceDataId");
+
+                    b.Property<bool>("IsInvoice");
+
+                    b.Property<bool>("IsTraditionalTransfer");
+
+                    b.Property<DateTime?>("OrderDate");
+
+                    b.Property<DateTime?>("PaymentDate");
+
+                    b.Property<int>("PaymentStatus");
+
+                    b.Property<DateTime?>("ShippingDate");
+
+                    b.Property<float>("TotalOrderPrice");
+
+                    b.Property<int>("TotalPrints");
+
+                    b.Property<float>("TotalPrintsPrice");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryDataId");
+
+                    b.HasIndex("InvoiceDataId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Server.Models.Paper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Papers");
+                });
+
+            modelBuilder.Entity("Server.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsContain");
+
+                    b.Property<bool>("IsHorizontal");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("OrderId");
+
+                    b.Property<string>("Path");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Server.Models.Print", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("Format");
+
+                    b.Property<int>("Paper");
+
+                    b.Property<int?>("PhotoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotoId");
+
+                    b.ToTable("Prints");
+                });
+
+            modelBuilder.Entity("Server.Models.PrintsParam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<int>("DeliveryTypeId");
+
+                    b.Property<int>("FormatId");
+
+                    b.Property<bool>("IsContain");
+
+                    b.Property<bool>("IsHorizontal");
+
+                    b.Property<int>("PaperId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryTypeId");
+
+                    b.HasIndex("FormatId");
+
+                    b.HasIndex("PaperId");
+
+                    b.ToTable("PrintsParam");
+                });
+
+            modelBuilder.Entity("Server.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<int?>("DeliveryDataId");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<int?>("InvoiceDataId");
+
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
@@ -186,8 +384,6 @@ namespace Server.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
-
-                    b.Property<string>("Phone");
 
                     b.Property<string>("PhoneNumber");
 
@@ -255,6 +451,68 @@ namespace Server.Migrations
                     b.HasOne("Server.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.Models.DeliveryData", b =>
+                {
+                    b.HasOne("Server.Models.User", "User")
+                        .WithOne("DeliveryData")
+                        .HasForeignKey("Server.Models.DeliveryData", "UserId");
+                });
+
+            modelBuilder.Entity("Server.Models.InvoiceData", b =>
+                {
+                    b.HasOne("Server.Models.User", "User")
+                        .WithOne("InvoiceData")
+                        .HasForeignKey("Server.Models.InvoiceData", "UserId");
+                });
+
+            modelBuilder.Entity("Server.Models.Order", b =>
+                {
+                    b.HasOne("Server.Models.DeliveryData", "DeliveryData")
+                        .WithMany()
+                        .HasForeignKey("DeliveryDataId");
+
+                    b.HasOne("Server.Models.InvoiceData", "InvoiceData")
+                        .WithMany()
+                        .HasForeignKey("InvoiceDataId");
+
+                    b.HasOne("Server.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Server.Models.Photo", b =>
+                {
+                    b.HasOne("Server.Models.Order", "Order")
+                        .WithMany("Photos")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.Models.Print", b =>
+                {
+                    b.HasOne("Server.Models.Photo")
+                        .WithMany("Prints")
+                        .HasForeignKey("PhotoId");
+                });
+
+            modelBuilder.Entity("Server.Models.PrintsParam", b =>
+                {
+                    b.HasOne("Server.Models.DeliveryType", "DeliveryType")
+                        .WithMany()
+                        .HasForeignKey("DeliveryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithMany()
+                        .HasForeignKey("PaperId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
