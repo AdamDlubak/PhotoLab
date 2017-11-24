@@ -16,7 +16,6 @@ export class LabLayoutComponent implements OnInit {
   errorMessage: string;
   images: Array<any>= [];
 
-  client: User;
   @ViewChild('loginModal') myModal:ElementRef;
 
   constructor(private fileService: FileService, private dialogService:DialogService, private userService: UserService) { }
@@ -59,8 +58,8 @@ logout() {
   this.userService.logout();
 }
   ngOnInit() { 
-    if (!this.client && localStorage.getItem("user") != null) {
-        this.client = JSON.parse(localStorage.getItem("user"));
+    if (!this.userService.client && localStorage.getItem("user") != null) {
+        this.userService.client = JSON.parse(localStorage.getItem("user"));
     }
     
 

@@ -29,28 +29,16 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
     dialogService: DialogService,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {
     super(dialogService);
   }
-  ngOnInit() {
-    // subscribe to router event
-    this.subscription = this.activatedRoute.queryParams.subscribe(
-      (param: any) => {
-        this.brandNew = param["brandNew"];
-        this.userLogin.email = param["email"];
-      }
-    );
-  }
+  ngOnInit() { }
   confirm() {
-    // we set dialog result as true on click on confirm button,
-    // then we can get dialog result from caller code
     this.result = true;
     this.close();
   }
   ngOnDestroy() {
-    // prevent memory leak by unsubscribing
-    this.subscription.unsubscribe();
+
   }
   login({ value, valid }: { value: UserLogin; valid: boolean }) {
     this.submitted = true;
@@ -62,8 +50,8 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
         .finally(() => (this.isRequesting = false))
         .subscribe(result => {
           if (result) {
+            this.userService.client = result;
             this.close();
-            this.router.navigate(["/home"]);
           }
         }, error => (this.errors = error));
     }

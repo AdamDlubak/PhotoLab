@@ -14,12 +14,14 @@ import { AngularCropperjsModule } from "angular-cropperjs";
 import { FileUploadModule } from "ng2-file-upload";
 import { ImagePreview } from "../../directives/image-preview.directive";
 
+import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
 import { LoginModalComponent } from "./login-modal/login-modal.component";
 import { BootstrapModalModule } from "ng2-bootstrap-modal";
 import { UserPanelComponent } from "./user-panel/user-panel.component";
 import { RegisterModalComponent } from './register-modal/register-modal.component';
+import { EqualValidator} from "../../directives/equal.validator.directive";
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
     AngularCropperjsModule,
     FileUploadModule,
     NgbModule.forRoot(),
+    ToastrModule.forRoot(),
     BootstrapModalModule
   ],
   declarations: [
@@ -42,7 +45,8 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
     OrderDetailedDataComponent,
     LoginModalComponent,
     RegisterModalComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    EqualValidator
 ,
     RegisterModalComponent
 ],

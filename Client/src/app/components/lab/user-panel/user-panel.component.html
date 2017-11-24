@@ -6,14 +6,14 @@
           role="tab" aria-controls="home">Panel Użytkownika</a>
         <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab"
           aria-controls="home">Mój profil</a>
-        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab"
+        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-current-orders" role="tab"
           aria-controls="current-orders">Obecne zlecenia</a>
-        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab"
+        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-history-orders" role="tab"
           aria-controls="orders-history">Historia zleceń</a>
-        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab"
-          aria-controls="profile">Dane do wysyłki</a>
-        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab"
-          aria-controls="messages">Dane do faktury</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" (click)="userEditDeliveryTab()"
+          role="tab" aria-controls="profile">Dane do wysyłki</a>
+        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" (click)="userEditInvoiceTab()"
+          role="tab" aria-controls="messages">Dane do faktury</a>
         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab"
           aria-controls="settings">Zmiana hasła</a>
         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" (click)="logout()" role="tab"
@@ -28,32 +28,33 @@
 
           <h3>Mój profil</h3>
           <hr/>
-          <form class="form-horizontal" role="form" *ngIf="client">
+          <form class="form-horizontal" role="form" *ngIf="userService.client">
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientFirstName">Imię:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.firstName" class="form-control">
+                <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEdit.firstName" class="form-control"
+                  autofocus>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientLastName">Nazwisko:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.lastName" class="form-control">
+                <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEdit.lastName" class="form-control">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientEmail">Adres e-mail:</label>
               <div class="col-sm-8">
-                <input type="email" name="clientEmail" placeholder="Podaj swój adres e-mail" [(ngModel)]="client.email" class="form-control">
+                <input type="email" name="clientEmail" placeholder="Podaj swój adres e-mail" [(ngModel)]="userEdit.email" class="form-control">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-6 control-label font-weight-bold" for="clientPhone">Numer telefonu:</label>
               <div class="col-sm-8">
-                <input type="tel" name="clientPhone" placeholder="Podaj swój numer telefonu" [(ngModel)]="client.phoneNumber" class="form-control">
+                <input type="tel" name="clientPhone" placeholder="Podaj swój numer telefonu" [(ngModel)]="userEdit.phoneNumber" class="form-control">
               </div>
             </div>
 
@@ -61,7 +62,7 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-8">
                 <div class="pull-right">
-                  <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                  <button type="submit" class="btn btn-success" (click)="editProfile()">Zapisz zmiany</button>
                 </div>
               </div>
             </div>
@@ -75,18 +76,19 @@
 
           <h3>Dane do wysyłki</h3>
           <hr/>
-          <form class="form-horizontal" role="form" *ngIf="client">
+          <form class="form-horizontal" role="form" *ngIf="userService.client && userEditDelivery">
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientDeliveryFirstName">Imię:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientDeliveryFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.deliveryFirstName" class="form-control">
+                <input type="text" name="clientDeliveryFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEditDelivery.deliveryFirstName"
+                  class="form-control">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientDeliveryLastName">Nazwisko:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientDeliveryLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.deliveryLastName"
+                <input type="text" name="clientDeliveryLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEditDelivery.deliveryLastName"
                   class="form-control">
               </div>
             </div>
@@ -94,7 +96,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientDeliveryAddress">Adres:</label>
               <div class="col-sm-8">
-                <input type="email" name="clientDeliveryAddress" [(ngModel)]="client.deliveryAddress" placeholder="Ulica, numer domu / mieszkania"
+                <input type="email" name="clientDeliveryAddress" [(ngModel)]="userEditDelivery.deliveryAddress" placeholder="Ulica, numer domu / mieszkania"
                   class="form-control">
               </div>
             </div>
@@ -103,10 +105,11 @@
               <label class="col-sm-6 control-label font-weight-bold" for="clientDeliveryPostCodeAndCity">Kod pocztowy i miejscowość:</label>
               <div class="row col-12">
                 <div class="col-sm-3">
-                  <input type="tel" name="clientDeliveryPostCode" [(ngModel)]="client.deliveryPostCode" placeholder="Kod pocztowy" class="form-control">
+                  <input type="tel" name="clientDeliveryPostCode" [(ngModel)]="userEditDelivery.deliveryPostCode" placeholder="Kod pocztowy"
+                    class="form-control">
                 </div>
                 <div class="col-sm-5" style="padding-right: 0;">
-                  <input type="tel" name="clientDeliveryCity" [(ngModel)]="client.deliveryCity" placeholder="Miejscowość" class="form-control">
+                  <input type="tel" name="clientDeliveryCity" [(ngModel)]="userEditDelivery.deliveryCity" placeholder="Miejscowość" class="form-control">
                 </div>
 
               </div>
@@ -116,7 +119,7 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-8">
                 <div class="pull-right">
-                  <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                  <button type="submit" class="btn btn-success" (click)="editDeliveryData()">Zapisz zmiany</button>
                 </div>
               </div>
             </div>
@@ -130,25 +133,27 @@
 
           <h3>Dane do faktury</h3>
           <hr/>
-          <form class="form-horizontal" role="form" *ngIf="client">
+          <form class="form-horizontal" role="form" *ngIf="userService.client && userEditInvoice">
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientInvoiceFirstName">Imię:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientInvoiceFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.invoiceFirstName" class="form-control">
+                <input type="text" name="clientInvoiceFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEditInvoice.invoiceFirstName"
+                  class="form-control">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientInvoiceLastName">Nazwisko:</label>
               <div class="col-sm-8">
-                <input type="text" name="clientInvoiceLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.invoiceLastName" class="form-control">
+                <input type="text" name="clientInvoiceLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEditInvoice.invoiceLastName"
+                  class="form-control">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label font-weight-bold" for="clientInvoiceAddress">Adres:</label>
               <div class="col-sm-8">
-                <input type="email" name="clientInvoiceAddress" [(ngModel)]="client.invoiceAddress" placeholder="Ulica, numer domu / mieszkania"
+                <input type="email" name="clientInvoiceAddress" [(ngModel)]="userEditInvoice.invoiceAddress" placeholder="Ulica, numer domu / mieszkania"
                   class="form-control">
               </div>
             </div>
@@ -157,10 +162,10 @@
               <label class="col-sm-6 control-label font-weight-bold" for="clientInvoicePostCodeAndCity">Kod pocztowy i miejscowość:</label>
               <div class="row col-12">
                 <div class="col-sm-3">
-                  <input type="tel" name="clientInvoicePostCode" [(ngModel)]="client.invoicePostCode" placeholder="Kod pocztowy" class="form-control">
+                  <input type="tel" name="clientInvoicePostCode" [(ngModel)]="userEditInvoice.invoicePostCode" placeholder="Kod pocztowy" class="form-control">
                 </div>
                 <div class="col-sm-5" style="padding-right: 0;">
-                  <input type="tel" name="clientInvoiceCity" [(ngModel)]="client.invoiceCity" placeholder="Miejscowość" class="form-control">
+                  <input type="tel" name="clientInvoiceCity" [(ngModel)]="userEditInvoice.invoiceCity" placeholder="Miejscowość" class="form-control">
                 </div>
 
               </div>
@@ -170,7 +175,7 @@
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-8">
                 <div class="pull-right">
-                  <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                  <button type="submit" class="btn btn-success" (click)="editInvoiceData()">Zapisz zmiany</button>
                 </div>
               </div>
             </div>
@@ -188,35 +193,45 @@
 
           <h3>Zmiana hasła</h3>
           <hr/>
-          <form class="form-horizontal" role="form" *ngIf="client">
+          <form class="form-horizontal" role="form" *ngIf="userService.client" #model="ngForm" novalidate (ngSubmit)="changePassword(model.value, model.valid)">
             <div class="form-group">
-              <label class="col-sm-6 control-label font-weight-bold" for="clientPassword">Poprzednie hasło:</label>
+              <label class="col-sm-6 control-label font-weight-bold" for="currentPassword">Obecne hasło:</label>
               <div class="col-sm-8">
-                <input type="password" name="clientPassword" [(ngModel)]="password" class="form-control">
+                <input type="password" name="currentPassword" required minlength="5" #currentPassword="ngModel" [ngModel]="userChangePassword.currentPassword"
+                  class="form-control">
+                <small [hidden]="currentPassword.valid || (currentPassword.pristine && !model.submitted)">
+                  Podanie poprawnego hasła jest wymagane.
+                </small>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-6 control-label font-weight-bold" for="clientNewPassword">Nowe hasło:</label>
+              <label class="col-sm-6 control-label font-weight-bold" for="newPassword">Nowe hasło:</label>
               <div class="col-sm-8">
-                <input type="password" name="clientNewPassword" [(ngModel)]="newPassword" class="form-control">
+                <input type="password" name="newPassword" minlength="5" validateEqual="confirmPassword" reverse="true"  [ngModel]="userChangePassword.newPassword" required #newPassword="ngModel"
+                  class="form-control">
+                <small [hidden]="newPassword.valid || (newPassword.pristine && !model.submitted)">
+                  Nowe hasło powinno posiadać conajmniej 5 znaków.
+                </small>
               </div>
             </div>
-
             <div class="form-group">
-              <label class="col-sm-6 control-label font-weight-bold" for="clientRepeatedNewPassword">Potwierdź nowe hasło:</label>
+              <label class="col-sm-6 control-label font-weight-bold" for="confirmPassword" required>Potwierdź nowe hasło:</label>
               <div class="col-sm-8">
-                <input type="password" name="clientRepeatedNewPassword" [(ngModel)]="repeatedNewPassword" class="form-control">
+                <input type="password" [disabled]="!newPassword.valid" name="confirmPassword" minlength="5" validateEqual="newPassword" reverse="false" [ngModel]="userChangePassword.confirmPassword" required #confirmPassword="ngModel"
+                  class="form-control">
+                <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !model.submitted)">
+                  Podane hasła nie są identyczne.
+                </small>
               </div>
             </div>
-
 
 
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-8">
                 <div class="pull-right">
-                  <button type="submit" class="btn btn-success">Zmień hasło</button>
+                  <button type="submit" [disabled]="!model.valid" class="btn btn-success">Zmień hasło</button>
                 </div>
               </div>
             </div>
@@ -229,8 +244,8 @@
 
 
         </div>
-        <div class="tab-pane fade" id="list-current-orders" role="tabpanel" aria-labelledby="list-settings-list">Obecne</div>
-        <div class="tab-pane fade" id="list-orders-history" role="tabpanel" aria-labelledby="list-settings-list">Historia</div>
+        <div class="tab-pane fade" id="list-current-orders" role="tabpanel" aria-labelledby="list-current-orders">Obecne Zlecenia</div>
+        <div class="tab-pane fade" id="list-history-orders" role="tabpanel" aria-labelledby="list-history-orders">Poprzednie zlecenia</div>
       </div>
     </div>
   </div>

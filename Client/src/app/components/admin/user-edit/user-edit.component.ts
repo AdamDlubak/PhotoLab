@@ -17,7 +17,7 @@ export class UserEditComponent implements OnInit {
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  userEdit: UserEdit = { email: "", password: "", firstName: "", lastName: "", deliveryPostCode: "" };
+  userEdit: UserEdit = { id: "", email: "", firstName: "", lastName: "", phoneNumber: "" };
 
   constructor(
     private userService: UserService,

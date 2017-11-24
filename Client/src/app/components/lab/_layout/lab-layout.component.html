@@ -27,15 +27,16 @@
           <a class="nav-link" href="contact.html">Kontakt</a>
         </li>
         <li class="nav-item">
-          <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Wyloguj Mnie</a>
-
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showConfirm()">Zaloguj</a>
-          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showRegisterModal()">Rejestracja</a>
-          <a class="nav-link" *ngIf="isLoggedIn()" (click)="showConfirm()">Witaj</a>
+          <a class="nav-link" *ngIf="isLoggedIn()"  href="./user-panel">Witaj {{ userService.client.firstName }}</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showRegisterModal()">Rejestracja</a>
+        </li>
+
+        <li *ngIf="isLoggedIn()" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Moje Konto
           </a>
@@ -43,7 +44,7 @@
 
             <a class="dropdown-item" href="./user-panel">Mój profil</a>
             <a class="dropdown-item" href="./user-panel">Moje Zamówienia</a>
-            <a class="dropdown-item" href="./user-panel">Historia Zamówień</a>
+            <a class="dropdown-item" href="./user-panel#list-messages">Historia Zamówień</a>
             <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Wyloguj Mnie</a>
           </div>
         </li>

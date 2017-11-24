@@ -31,8 +31,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     AdminHeaderComponent,
     AdminSidebarComponent,
     ControlPanelComponent,
-    OrderComponent
-,
+    OrderComponent,
     OrderDetailsComponent
 ],
   exports: [],

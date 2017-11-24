@@ -1,8 +1,8 @@
 export interface UserEdit {
-    email: string;
-    password: string;
+    id: string;
     firstName: string;
     lastName: string;
-    deliveryPostCode: string;
-  }
+    email: string;
+    phoneNumber: string;
+}
   
