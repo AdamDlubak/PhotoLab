@@ -1,7 +1,7 @@
-import { RegisterModel } from "./../../../shared/models/register-model.interface";
+import { UserRegister } from "./../../../models/user.register.interface";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
-import { UserService } from "./../../../shared/services/user.service";
+import { UserService } from "./../../../services/user.service";
 import { DialogService } from "ng2-bootstrap-modal";
 import { OnDestroy } from "@angular/core";
 import { ConfirmModel } from "./../login-modal/login-modal.component";
@@ -26,7 +26,7 @@ export class RegisterModalComponent extends DialogComponent<
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  registerModel: RegisterModel = {
+  registerModel: UserRegister = {
     email: "",
     password: "",
     repeatedPassword: "",
@@ -52,8 +52,6 @@ export class RegisterModalComponent extends DialogComponent<
     this.close();
   }
   ngOnDestroy() {
-    // prevent memory leak by unsubscribing
-    this.subscription.unsubscribe();
   }
 
   register() {

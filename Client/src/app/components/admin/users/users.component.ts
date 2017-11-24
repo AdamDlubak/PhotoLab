@@ -2,9 +2,9 @@ import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 
-import { UserEdit } from "../../../shared/models/user.edit.interface";
-import { UserService } from "../../../shared/services/user.service";
-import { User } from "../../../shared/models/user.interface";
+import { UserEdit } from "../../../models/user.edit.interface";
+import { UserService } from "../../../services/user.service";
+import { User } from "../../../models/user.interface";
 
 @Component({
   selector: "app-admin-users",

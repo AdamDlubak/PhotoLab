@@ -1,11 +1,11 @@
-import { User } from './../../../shared/models/user.interface';
-import { UserService } from './../../../shared/services/user.service';
+import { User } from './../../../models/user.interface';
+import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-panel',
   templateUrl: './user-panel.component.html',
-  styleUrls: ['./user-panel.component.css']
+  styleUrls: ['./user-panel.component.scss']
 })
 export class UserPanelComponent implements OnInit {
 

@@ -1,5 +1,5 @@
-import { FileService } from './../../lab/services/file.service';
-import { Order } from './../../lab/order-photo-upload/models/order.class';
+import { FileService } from '../../../services/file.service';
+import { Order } from '../../../models/order.class';
 import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 

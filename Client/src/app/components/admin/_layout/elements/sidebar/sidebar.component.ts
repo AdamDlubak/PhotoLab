@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
-import { UserService } from "../../../../../shared/services/user.service";
+import { UserService } from "../../../../../services/user.service";
 
 @Component({
   selector: 'admin-sidebar',

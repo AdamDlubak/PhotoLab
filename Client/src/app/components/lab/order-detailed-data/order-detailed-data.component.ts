@@ -1,8 +1,8 @@
-import { Format } from './../order-photo-upload/models/format.class';
-import { UserService } from "./../../../shared/services/user.service";
-import { FileService } from "./../services/file.service";
+import { Format } from '../../../models/format.class';
+import { UserService } from "./../../../services/user.service";
+import { FileService } from "../../../services/file.service";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { User } from "../../../shared/models/user.interface";
+import { User } from "../../../models/user.interface";
 
 @Component({
   selector: "app-order-detailed-data",

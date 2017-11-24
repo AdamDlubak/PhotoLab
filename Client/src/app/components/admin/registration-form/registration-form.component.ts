@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { UserRegistration } from "../../../shared/models/user.registration.interface";
-import { UserService } from "../../../shared/services/user.service";
+import { UserRegister } from "../../../models/user.register.interface";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: "app-registration-form",
@@ -18,26 +18,27 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  registerUser({ value, valid }: { value: UserRegistration; valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors = "";
-    if (valid) {
-      this.userService
-        .register(
-          value.email,
-          value.password,
-          value.firstName,
-          value.lastName
-        )
-        .finally(() => (this.isRequesting = false))
-        .subscribe(result => {
-          if (result) {
-            this.router.navigate(["/login"], {
-              queryParams: { brandNew: true, email: value.email }
-            });
-          }
-        }, errors => (this.errors = errors));
-    }
-  }
+  // registerUser({ value, valid }: { value: UserRegistration; valid: boolean }) {
+  //   this.submitted = true;
+  //   this.isRequesting = true;
+  //   this.errors = "";
+  //   if (valid) {
+  //     this.userService
+  //       .register(
+  //         value.email,
+  //         value.password,
+  //         value.repeatedPassword,
+  //         value.firstName,
+  //         value.lastName
+  //       )
+  //       .finally(() => (this.isRequesting = false))
+  //       .subscribe(result => {
+  //         if (result) {
+  //           this.router.navigate(["/login"], {
+  //             queryParams: { brandNew: true, email: value.email }
+  //           });
+  //         }
+  //       }, errors => (this.errors = errors));
+  //   }
+  // }
 }

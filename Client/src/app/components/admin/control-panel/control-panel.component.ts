@@ -1,11 +1,11 @@
 import { Observable } from "rxjs/Observable";
-import { Paper } from "./../../lab/order-photo-upload/models/paper.class";
-import { Format } from "./../../lab/order-photo-upload/models/format.class";
+import { Paper } from "../../../models/paper.class";
+import { Format } from "../../../models/format.class";
 import { Component, OnInit } from "@angular/core";
-import { FileService } from "../../lab/services/file.service";
+import { FileService } from "../../../services/file.service";
 import { ToastrService } from "ngx-toastr";
-import { DefaultParam } from "../../lab/order-photo-upload/models/default-param.class";
-import { DeliveryType } from "../../lab/order-photo-upload/models/deliveryType.class";
+import { DefaultParam } from "../../../models/default-param.class";
+import { DeliveryType } from "../../../models/deliveryType.class";
 
 @Component({
   selector: "app-control-panel",

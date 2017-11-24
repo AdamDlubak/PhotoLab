@@ -1,8 +1,7 @@
-import { RegisterModel } from './../models/register-model.interface';
+import { UserRegister } from './../models/user.register.interface';
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 
-import { UserRegistration } from "../models/user.registration.interface";
 import { User } from "../models/user.interface";
 import { ConfigService } from "../utils/config.service";
 
@@ -10,7 +9,7 @@ import { BaseService } from "./base.service";
 
 import { Observable } from "rxjs/Rx";
 import { BehaviorSubject } from "rxjs/Rx";
-import "../../rxjs-operators";
+import "../rxjs-operators";
 
 @Injectable()
 export class UserService extends BaseService {
@@ -30,7 +29,7 @@ export class UserService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-  register(registerModel : RegisterModel): Observable<UserRegistration> {
+  register(registerModel : UserRegister): Observable<UserRegister> {
     let body = JSON.stringify(registerModel);
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });

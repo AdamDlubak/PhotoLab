@@ -1,22 +1,23 @@
-import { Order } from "./../order-photo-upload/models/order.class";
-import { Format } from "./../order-photo-upload/models/format.class";
-import { Cart } from "./../order-photo-upload/models/cart.class";
-import { DefaultParam } from "./../order-photo-upload/models/default-param.class";
+import { Order } from "../models/order.class";
+import { Format } from "../models/format.class";
+import { Cart } from "../models/cart.class";
+import { Paper } from "../models/paper.class";
+import { DeliveryType } from "../models/deliveryType.class";
+import { DefaultParam } from "../models/default-param.class";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions, Response } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 
-import { FileItemDetails } from "../order-photo-upload/models/file-item-details.class";
+import { FileItemDetails } from "../models/file-item-details.class";
 import { Subject } from "rxjs/Subject";
-import { BaseService } from "../../../shared/services/base.service";
-import { ConfigService } from "../../../shared/utils/config.service";
+import { BaseService } from "./base.service";
+import { ConfigService } from "../utils/config.service";
 
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
-import { Paper } from "../order-photo-upload/models/paper.class";
-import { DeliveryType } from "../order-photo-upload/models/deliveryType.class";
+
 
 @Injectable()
 export class FileService extends BaseService {

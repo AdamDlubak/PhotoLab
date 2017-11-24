@@ -6,7 +6,7 @@ import { AuthenticateXHRBackend } from "./authenticate-xhr.backend";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { Routing } from "./app.routing";
 import { AppComponent } from "./app.component";
-import { ConfigService } from "./shared/utils/config.service";
+import { ConfigService } from "./utils/config.service";
 import { EmailValidator } from "./directives/email.validator.directive";
 
 @NgModule({

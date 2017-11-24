@@ -1,10 +1,10 @@
-import { Cart } from './../models/cart.class';
-import { Format } from './../models/format.class';
-import { Paper } from './../models/paper.class';
-import { FileItemDetails } from "./../models/file-item-details.class";
+import { Cart } from '../../../../models/cart.class';
+import { Format } from '../../../../models/format.class';
+import { Paper } from '../../../../models/paper.class';
+import { FileItemDetails } from "../../../../models/file-item-details.class";
 import { FileItem, FileUploader } from "ng2-file-upload";
 import { Component, Input, OnInit, AfterContentInit, OnChanges, Output, EventEmitter } from "@angular/core";
-import { FileService } from './../../services/file.service';
+import { FileService } from '../../../../services/file.service';
 import { last } from "rxjs/operator/last";
 @Component({
   selector: "app-print-type",

@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { SharedModule } from "../../shared/modules/shared.module";
+import { SharedModule } from "../shared/shared.module";
 
-import { UserService } from "../../shared/services/user.service";
+import { UserService } from "../../services/user.service";
 import { OthersLayoutComponent } from "./_layout/others-layout.component";
 import { LoginFormComponent } from "./login-form/login-form.component";
 

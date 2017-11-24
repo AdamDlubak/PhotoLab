@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
-import { Credentials } from "../../../shared/models/credentials.interface";
-import { UserService } from "../../../shared/services/user.service";
+import { UserLogin } from "../../../models/user.login.interface";
+import { UserService } from "../../../services/user.service";
 import { Subscription } from "rxjs";
 import { Router, ActivatedRoute } from "@angular/router";
 export interface ConfirmModel {
@@ -23,7 +23,7 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  credentials: Credentials = { email: "", password: "" };
+  userLogin: UserLogin = { email: "", password: "" };
 
   constructor(
     dialogService: DialogService,
@@ -38,7 +38,7 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
     this.subscription = this.activatedRoute.queryParams.subscribe(
       (param: any) => {
         this.brandNew = param["brandNew"];
-        this.credentials.email = param["email"];
+        this.userLogin.email = param["email"];
       }
     );
   }
@@ -52,7 +52,7 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
     // prevent memory leak by unsubscribing
     this.subscription.unsubscribe();
   }
-  login({ value, valid }: { value: Credentials; valid: boolean }) {
+  login({ value, valid }: { value: UserLogin; valid: boolean }) {
     this.submitted = true;
     this.isRequesting = true;
     this.errors = "";

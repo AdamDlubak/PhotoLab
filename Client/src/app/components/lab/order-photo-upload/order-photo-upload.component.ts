@@ -1,19 +1,19 @@
-import { User } from './../../../shared/models/user.interface';
-import { UserService } from './../../../shared/services/user.service';
-import { Order } from './models/order.class';
-import { Format } from "./models/format.class";
+import { User } from './../../../models/user.interface';
+import { UserService } from './../../../services/user.service';
+import { Order } from '../../../models/order.class';
+import { Format } from "../../../models/format.class";
 import { PrintTypeComponent } from "./print-type/print-type.component";
 import { CartComponent } from "./cart/cart.component";
-import { FileItemDetails } from "./models/file-item-details.class";
+import { FileItemDetails } from "../../../models/file-item-details.class";
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from "@angular/core";
-import { FileService } from "../services/file.service";
+import { FileService } from "../../../services/file.service";
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { AngularCropperjsComponent } from "angular-cropperjs";
 import { FileUploader, FileItem } from "ng2-file-upload";
-import { ConfigService } from "../../../shared/utils/config.service";
+import { ConfigService } from "../../../utils/config.service";
 import { ViewChild } from "@angular/core";
-import { DefaultParam } from "./models/default-param.class";
-import { Paper } from "./models/paper.class";
+import { DefaultParam } from "../../../models/default-param.class";
+import { Paper } from "../../../models/paper.class";
 import { Router } from "@angular/router";
 
 @Component({

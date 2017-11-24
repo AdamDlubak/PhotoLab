@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { SharedModule } from "../../shared/modules/shared.module";
+import { SharedModule } from "../shared/shared.module";
 
-import { UserService } from "../../shared/services/user.service";
+import { UserService } from "../../services/user.service";
 
 import { AdminLayoutComponent } from "./_layout/admin-layout.component";
 import { AdminHeaderComponent } from "./_layout/elements/header/header.component";
@@ -16,7 +16,7 @@ import { HomeComponent } from "./home/home.component";
 import { Routing } from "./admin.routing";
 import { AuthGuard } from "../../auth.guard";
 import { ControlPanelComponent } from './control-panel/control-panel.component';
-import { FileService } from "../lab/services/file.service";
+import { FileService } from "../../services/file.service";
 import { ToastrModule } from 'ngx-toastr';
 import { OrderComponent } from './Order/Order.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
@@ -31,7 +31,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     AdminHeaderComponent,
     AdminSidebarComponent,
     ControlPanelComponent,
-    OrderComponent,
+    OrderComponent
+,
     OrderDetailsComponent
 ],
   exports: [],

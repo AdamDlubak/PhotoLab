@@ -1,7 +1,7 @@
-import { Cart } from "./../models/cart.class";
-import { Format } from "./../models/format.class";
-import { FileService } from "./../../services/file.service";
-import { FileItemDetails } from "./../models/file-item-details.class";
+import { Cart } from "../../../../models/cart.class";
+import { Format } from "../../../../models/format.class";
+import { FileService } from "../../../../services/file.service";
+import { FileItemDetails } from "../../../../models/file-item-details.class";
 import { FileUploader, FileSelectDirective } from "ng2-file-upload";
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 

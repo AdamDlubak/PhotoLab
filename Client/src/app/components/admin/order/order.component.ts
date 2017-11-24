@@ -1,5 +1,5 @@
-import { Order } from './../../lab/order-photo-upload/models/order.class';
-import { FileService } from './../../lab/services/file.service';
+import { Order } from './../../../models/order.class';
+import { FileService } from './../../../services/file.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

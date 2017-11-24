@@ -1,9 +1,10 @@
+import { User } from './../../../models/user.interface';
 import { RegisterModalComponent } from './../register-modal/register-modal.component';
-import { UserService } from './../../../shared/services/user.service';
+import { UserService } from './../../../services/user.service';
 import { LoginModalComponent } from './../login-modal/login-modal.component';
 import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { DialogService } from "ng2-bootstrap-modal";
-import { FileService } from '../services/file.service';
+import { FileService } from '../../../services/file.service';
 @Component({
   selector: 'app-lab-layout',
   templateUrl: './lab-layout.component.html',
@@ -15,6 +16,7 @@ export class LabLayoutComponent implements OnInit {
   errorMessage: string;
   images: Array<any>= [];
 
+  client: User;
   @ViewChild('loginModal') myModal:ElementRef;
 
   constructor(private fileService: FileService, private dialogService:DialogService, private userService: UserService) { }
@@ -56,6 +58,11 @@ isLoggedIn() {
 logout() {
   this.userService.logout();
 }
-  ngOnInit() { }
+  ngOnInit() { 
+    if (!this.client && localStorage.getItem("user") != null) {
+        this.client = JSON.parse(localStorage.getItem("user"));
+    }
+    
 
+  }
 }
