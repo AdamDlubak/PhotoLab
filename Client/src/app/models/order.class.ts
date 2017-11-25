@@ -1,10 +1,12 @@
 import { DeliveryType } from "./deliveryType.class";
 import { del } from "selenium-webdriver/http";
 import { FileItemDetails } from "./file-item-details.class";
+import { User } from "./user.interface";
 
 export class Order {
     constructor(
-        public userId : string,        
+        public userId : string,   
+        public user : User = null,     
         public totalPrintsPrice : number = 0,
         public totalPrints : number = 0,
         public totalOrderPrice : number = 0,

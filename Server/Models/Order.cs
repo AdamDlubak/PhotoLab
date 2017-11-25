@@ -26,6 +26,7 @@ namespace Server.Models
     public int? InvoiceDataId { get; set; }
     public InvoiceData InvoiceData { get; set; }
     public int DeliveryTypeId { get; set; }
+    public int Status { get; set; }
     [ForeignKey("User")]
     public string UserId { get; set; }
     public User User { get; set; }

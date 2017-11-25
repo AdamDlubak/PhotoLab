@@ -14,7 +14,7 @@
   <div class="row sameheight-container">
 
     <!-- Default and Format Section -->
-    <div class="col-xl-12" style="max-width: 850px;">
+    <div class="col-xl-12">
 
 
 
@@ -24,22 +24,19 @@
         <!-- Formats Section Header -->
         <div class="card-block">
           <div class="card-title-block">
-            <div class="container">
               <div class="row">
                 <div class="col-12 col-md-8 title-flex-container">
                   <h3 class="title box-title">
-                    Zlecenia
-                    <button (click)="klik()">Adam</button>
+                    Bieżące zlecenia
                   </h3>
                 </div>
                 <div class="col-12 col-md-4 flex-container">
-                  <button type="button" class="btn btn-success new-button" data-toggle="modal" data-target="#submitFormatModal">
+                  <button type="button" class="btn btn-success new-button" data-toggle="modal" data-target="#submitFormatModal" (click)="selectFormat(false, 0)">
                     Dodaj nowy
                   </button>
                 </div>
               </div>
             </div>
-          </div>
         </div>
 
         <!-- Formats Section Body -->
@@ -49,20 +46,26 @@
               <thead>
                 <tr class="text-center">
                   <th>Id</th>
-                  <th>Nazwa</th>
-                  <th>Wysokość</th>
-                  <th>Szerokość</th>
-                  <th>Cena</th>
+                  <th>Klient</th>
+                  <th>Zlecono</th>
+                  <th>Odbitek</th>
+                  <th>Wartość</th>
+                  <th>Przesyłka</th>
+                  <th>Faktura</th>
+                  <th>Status</th>
                   <th>Akcje</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let order of orders" class="text-center">
                   <td>{{ order.id }}</td>
-                  <td>{{ order.clientId }}</td>
-                  <td>{{ order.totalPrice }}</td>
-                  <td>{{ order.totalPrintsPrice }}</td>
-                  <td>{{ order.totalPrints }}</td>
+                  <td>{{ order.userName }}</td>
+                  <td>{{ order.orderDate | date: 'HH:mm' }} <br /> {{ order.orderDate | date: 'dd.MM.yyyy' }}</td>
+                  <td>{{ order.printsAmt }}</td>
+                  <td>{{ order.totalOrderPrice }}</td>
+                  <td>{{ order.Delivery }}</td>
+                  <td>{{ order.isInvoice }}</td>
+                  <td>{{ order.status }}</td>
                   <td>
                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#submitFormatModal" >
                       Edytuj

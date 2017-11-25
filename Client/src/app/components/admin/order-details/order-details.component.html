@@ -1,6 +1,185 @@
-<p>
-  order-details works!
+<!-- Control Panel Header -->
+<div class="title-block" *ngIf="order">
+  <h3 class="title" style="font-family: 'Comfortaa', cursive">
+    Szczegóły zamówienia nr {{ order.id }}
+  </h3>
+  <p class="title-description" style="font-family: 'Roboto', sans-serif;">
+    Poniżej przedstawione są wszystkie szczegóły zlecenia wraz z możliwością edycji i zmiany stanu.
+  </p>
+</div>
+<hr/>
 
-  <button (click)="daj()">Dawaj</button>
-  Showing product details for product: {{id}}
-</p>
+<!-- Control Panel Body Section -->
+<section class="section">
+  <div class="row sameheight-container">
+
+    <!-- Default and Format Section -->
+    <div class="col-xl-4" style="max-width: 500px;">
+
+      <div class="card sameheight-item">
+
+        <!-- Papers Section Header -->
+        <div class="card-block">
+          <div class="card-title-block">
+            <div class="container">
+              <div class="row">
+                <div class="col-12 col-md-7 title-flex-container">
+                  <h3 class="title box-title">
+                    Dane Kienta
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Papers Section Body -->
+        <section *ngIf="order">
+          <div class="paragraph-padding">
+            <p class="paragraph-key">Imię i nazwisko:</p>
+            <p class="paragraph-value">
+              <i class="fa fa-user-circle" aria-hidden="true"></i> {{ order.user.firstName}} {{ order.user.lastName }}</p>
+            <p class="paragraph-key">Adres e-mail:</p>
+            <p class="paragraph-value">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i> {{ order.user.email }}</p>
+            <p class="paragraph-key">Telefon:</p>
+            <p class="paragraph-value">
+              <i class="fa fa-phone" aria-hidden="true"></i> +48 {{ order.user.phoneNumber | slice:0:3 }} {{ order.user.phoneNumber | slice:3:6 }} {{ order.user.phoneNumber
+              | slice:6:9 }}</p>
+            <p>
+              <b>Złożonych zamówień:</b> 9</p>
+          </div>
+        </section>
+
+      </div>
+
+
+      <!-- Formats Section -->
+
+    </div>
+
+    <!-- Papers Section -->
+    <div class="col-xl-8" style="max-width: 850px;">
+      <div class="card sameheight-item">
+
+        <!-- Papers Section Header -->
+        <div class="card-block">
+          <div class="card-title-block">
+            <div class="container">
+              <div class="row">
+                <div class="col-12 col-md-7 title-flex-container">
+                  <h3 class="title box-title">
+                    Szczegóły zamówienia
+                  </h3>
+                </div>
+                <div class="col-12 col-md-5 flex-container">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-success new-button" data-toggle="modal" data-target="#submitPaperModal" (click)="selectPaper(false, 0)">
+                    Dodaj nowy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Papers Section Body -->
+        <section *ngIf="order">
+          <div class="paragraph-padding">
+            <p class="paragraph-data">Numer zamówienia:
+              <span style="font-weight: bold">{{ order.id }}</span>
+            </p>
+            <p class="paragraph-data">Data złożenia:
+              <span style="font-weight: bold">{{ order.orderDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+              <span style="font-weight: bold"> {{ order.orderDate | date: 'HH:mm:ss' }} </span>
+            </p>
+            <p *ngIf="order.paymentDate" class="paragraph-data">Data zapłaty:
+              <span style="font-weight: bold">{{ order.paymentDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+              <span style="font-weight: bold"> {{ order.paymentDate | date: 'HH:mm:ss' }} </span>
+            </p>
+            <p *ngIf="!order.paymentDate" class="paragraph-data">Data zapłaty:
+              <span *ngIf="!order.paymentDate" style="font-weight: bold">Brak</span>
+            </p>
+            <p *ngIf="order.endDate" class="paragraph-data">Data wykonania:
+              <span style="font-weight: bold">{{ order.endDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+              <span style="font-weight: bold"> {{ order.endDate | date: 'HH:mm:ss' }} </span>
+            </p>
+            <p *ngIf="!order.endDate" class="paragraph-data">Data wykonania:
+              <span *ngIf="!order.endDate" style="font-weight: bold">Brak</span>
+            </p>
+
+            <p *ngIf="order.shippingDate" class="paragraph-data">Data wysyłki / odbioru:
+              <span style="font-weight: bold">{{ order.shippingDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+              <span style="font-weight: bold"> {{ order.shippingDate | date: 'HH:mm:ss' }} </span>
+            </p>
+            <p *ngIf="!order.shippingDate" class="paragraph-data">Data wysyłki / odbioru:
+              <span *ngIf="!order.shippingDate" style="font-weight: bold">Brak</span>
+            </p>
+            <hr/>
+            <p class="paragraph-data">Wartość odbitek:
+              <span style="font-weight: bold">{{ order.totalPrintsPrice | number:'1.2-2' }} zł</span>
+            </p>
+            <p class="paragraph-data">Cena dostarczenia:
+              <span style="font-weight: bold">{{ order.totalOrderPrice - order.totalPrintsPrice | number:'1.2-2' }} zł</span>
+            </p>
+            <p class="paragraph-data">Całkowita wartość zamówienia:
+              <span style="font-weight: bold">{{ order.totalOrderPrice | number:'1.2-2' }} zł</span>
+            </p>
+            <p class="paragraph-data">Forma płatności:
+              <span *ngIf="order.isTraditionalTransfer" style="font-weight: bold">Tradycyjny przelew na konto</span>
+              <span *ngIf="!order.isTraditionalTransfer" style="font-weight: bold">Płatność elektroniczna poprzez PayU</span>
+            </p>
+            <p class="paragraph-data">Status płatności:
+              <span style="font-weight: bold">{{ order.paymentStatus }} </span>
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Control Panel Body Section -->
+  <div class="row sameheight-container">
+
+    <!-- Default and Format Section -->
+    <div class="col-xl-12" style="max-width: 1350px;">
+
+      <div class="card sameheight-item">
+
+        <!-- Papers Section Header -->
+        <div class="card-block">
+          <div class="card-title-block">
+                <div class="col-12 col-md-7 title-flex-container">
+                  <h3 class="title box-title">
+                    Szczegóły zdjęć:
+                  </h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Papers Section Body -->
+        <section *ngIf="order">
+          <ol class="paragraph-padding">
+            <li class="paragraph-photo" *ngFor="let photo of order.photos">
+              <span *ngIf="photo.IsContain" class="color-box alert-info" style="margin-left: 20px;">Wypełnienie</span>
+              <span *ngIf="!photo.IsContain" class="color-box alert-warning" style="margin-left: 20px;">Białe Paski</span>
+              {{ photo.name }}
+              <ul style="margin: 0">
+                <ng-container *ngFor="let print of photo.prints">
+                <li *ngIf="print.amount != 0" class="paragraph-print">
+                  Format
+                  <span class="color-box alert-info">{{ getFormatNameById(print.format) }}</span>
+                  Papier:
+                  <span class="color-box alert-success">{{ getPaperNameById(print.paper) }}</span>
+                  Odbitek:
+                  <span class="color-box alert-secondary">{{ print.amount }} </span>
+                </li>
+              </ng-container>
+              </ul>
+            </li>
+
+          </ol>
+        </section>
+      </div>
+    </div>

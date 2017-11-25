@@ -10,6 +10,7 @@ namespace Server.ViewModels
   {
     public string AdditionalInfo { get; set; }
     public string UserId { get; set; }
+    public User User { get; set; }
     public int? DeliveryDataId { get; set; }
     public int DeliveryTypeId { get; set; }
     public DateTime? EndDate { get; set; }
@@ -23,6 +24,7 @@ namespace Server.ViewModels
     public float TotalOrderPrice { get; set; }
     public int TotalPrints { get; set; }
     public float TotalPrintsPrice { get; set; }
+    public int Status { get; set; }
     public ICollection<Photo> Photos { get; set; }
   }
 }

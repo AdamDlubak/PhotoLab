@@ -58,15 +58,35 @@ namespace Server.Controllers
    [HttpGet("getOrder/{id}")]
     public IActionResult GetOrder(int id)
     {
-      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).FirstOrDefault(o => o.Id == id);
+      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).Include(c => c.User).FirstOrDefault(o => o.Id == id);
       return new OkObjectResult(orders);
     }
     // GET api/photo/getorders
     [HttpGet("getOrders")]
     public IActionResult GetOrders()
     {
-      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).ToList();
-      return new OkObjectResult(orders);
+      
+      List<Order> ordersList = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).Include(c => c.User).ToList();
+      List<OrdersViewModel> ordersViewModelList = new List<OrdersViewModel>();
+
+      foreach (var order in ordersList)
+      {
+        bool delivery;
+        if (order.DeliveryDataId == 0) delivery = false;
+        else delivery = true;
+        ordersViewModelList.Add(new OrdersViewModel()
+        {
+          Id = order.Id,
+          UserName = order.User.FirstName + " "+ order.User.LastName,
+          OrderDate = order.OrderDate,
+          PrintsAmt = order.TotalPrints,
+          TotalOrderPrice = order.TotalOrderPrice,
+          Delivery = delivery,
+          Bill = order.IsInvoice,
+          Status = order.Status
+        });
+      }
+      return new OkObjectResult(ordersViewModelList);
     }
 
 

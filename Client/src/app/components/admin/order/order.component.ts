@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  styleUrls: ['./../control-panel/control-panel.component.scss']
 })
 export class OrderComponent implements OnInit {
 
@@ -13,10 +13,6 @@ export class OrderComponent implements OnInit {
   errorMessage: any;
 
   orders : Array<Order>;
-  klik(){
-    console.log(this.orders);
-  }
-
 
   
   ngOnInit() {
