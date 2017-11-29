@@ -1,27 +1,240 @@
 \chapter{Technologia}
+{\em \quad Rozdział ten został poświęcony szczegółowemu opisowi architektury tworzonego oprogramowania, uwzględniającego podział trójwarstwowy aplikacji oraz rodzaj i kierunek przepływu informacji między poszczególnymi warstwami. Drugą bardzo ważną częścią jest szczegółowy opis każdej z warstw. Przedstawiane są tam podstawowe informacje, możliwości, ograniczenia i argumenty przemawiające za lub przeciw wyborowi wskazanej technologii do zaimplementowania całego modelu aplikacji.}
 
-\section{Backend}
-\subsection{ASP.NET Core}
-	% Wspomnienie o najnowszej wersji 2.0 i aktualizacji w czasie trwania projektu z 1.1
-	% O wzorcu MVC (Model - View - Controller)
-	% ASP.NET Core Identity - Gotowe rozwiązanie rejestracji użytkowników
-\subsection{Microsoft SQL Server i Entity Framework Core}
-	% ORM Entity Framework Core
-	% MSQL - Relacyjna baza danych doskonale połączona natywnie z ASP.NEt Core
-\subsection{JSON Web Tokens}
-	% Bezpieczeństwo użytkowników aplikacji i ich danych przetrzymywanych na serwerze
-\subsection{PayU REST API}
-	% Bezpieczeństwo transakcji internetowych
+\section{Architektura}
+\quad Podjęcie decyzji dotyczącej wyboru architektury dla nowo tworzonej aplikacji jest bardzo ważnym etapem planowania procesu jej budowy. 
+Decydując się na \textbf{model trójwarstwowy} należy liczyć się ze wszystkimi jego zaletami i wadami. Zanim jednak zostaną one omówione, warto przyjrzeć się samemu pojęciu \textit{warstwy} i \textit{aplikacji warstwowej}.\\
+\\
+\textbf{Warstwa} to struktura, która definiuje określone zadania i zakres ich przetwarzania. Opisuje sposoby komunikacji z innymi strukturami (o ile występują) oraz miejsce odbywania się danych operacji.\\
+\\
+\textbf{Aplikacje n-warstwowe}, nazywane również \textit{aplikacjami rozproszonymi} lub \textit{aplikacjami warstwowymi} to systemy, które rozdzielają swoje moduły pomiędzy warstwy logiczne. ,,Najłatwiejszym sposobem rozdzielenia warstw w aplikacji n-warstwowej jest utworzenie dyskretnych projektów dla każdej warstwy, którą chce się zawrzeć w aplikacji'' \cite{tier-applications}.\\
+Podstawowymi modelami n-warstwowymi są:
+\begin{itemize}
+    \item Architektura \textbf{jednowarstwowa} - program składa się tylko z jednej warstwy, przykładem takiego oprogramowania są bardzo proste aplikacje desktopowe.
+    \item Architektura \textbf{dwuwarstwowa} - zbudowana na strukturze dwóch warstw, najlepszym przykładem takiego modelu są aplikacje typu klient - serwer.
+    \item Architektura \textbf{trójwarstwowa} - najczęściej wykorzystywany model w przypadku nowoczesnych aplikacji internetowych. Opiera się o trzy liniowo ułożone warstwy:
+        \begin{itemize}
+            \item \textbf{warstwę prezentacji} (\textit{ang. presentation tier}) - głównym zadaniem tej struktury jest kontakt z użytkownikiem aplikacji poprzez prezentowanie informacji, czy zbieranie danych np. z wykorzystaniem formularzy.
+            \item \textbf{warstwę biznesową} (ang. business tier) - będącą najczęściej warstwą pośrednią, jednak z biznesowego punktu widzenia warstwą najważniejszą. Odpowiedzialna za przetwarzanie żądań i danych otrzymanych od użytkownika za pośrednictwem warstwy prezentacji. Bardzo często wspiera się danymi otrzymanymi z warstwy trzeciej, z którą musi przebywać w ciągłej komunikacji. Jest pośrednikiem w wymianie danych pomiędzy klientem, a bazą danych, który odpowiednio formatuje i przetwarza przepływające przez niego informacje.
+            \item \textbf{warstwę danych} (ang. persistance tier) - zwaną również \textit{warstwą przetwarzania} i odpowiedzialną za przechowywanie danych aplikacji - np. z wykorzystaniem bazy danych.
+        \end{itemize}
+    Prosty diagram przedstawiający praktyczny przykład wykorzystania modelu trójwarstwowego w konkretnym przypadku biznesowym został przedstawiony poniżej.
+\end{itemize}
 
-\section{Frontend}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\linewidth]{graphics/three-tier-architecture.png}
+	\caption{Ogólna architektura aplikacji trójwarstwowej}
+	\label{three-tier-architecture}
+\end{figure}
+
+ 
+ Istnieją oczywiście architektury posiadające więcej warstw, jednak są one mało popularne i budowane specjalnie na potrzeby specyficznych i bardzo wymagających projektów.
+
+
+\section{Warstwa prezentacji - aplikacja kliencka}
+
+W ramach implementacji warstwy aplikacji zdecydowano się skorzystać z jednego z bardzo popularnych w ostatnich latach \textit{frameworków javascriptowych}, które dedykowane są do obsługi i komunikacji z klientem. Środowisko bibliotek javascriptowych jest obecnie bardzo szybko rozwijającym się elementem i istnieje wiele, różnego rodzaju rozwiązań tego typu. Najlepiej obecne trendy przedstawiają wykresy generowane przez system \textit{Google Trends} pokazujące popularność odpowiednich fraz w określonym przedziale czasowym. Poniżej znajduje się właśnie jeden z takich wykresów. Porównuje on zainteresowanie użytkowników sieci czterema najpopularniejszymi bibliotekami. W ramach wyjaśnienia wartości prezentowanych na osiach wykresu warto jest przytoczyć krótki tekst z instrukcji obsługi tego narzędzia:\\
+\begin{quote}
+    \item,,Liczby przedstawiają, jak często hasło było wyszukiwane w odniesieniu do najwyższego punktu wykresu w danym czasie i regionie. Wartość 100 oznacza najwyższą popularność hasła. Wartość 50 oznacza, że popularność hasła była dwukrotnie mniejsza. Natomiast 0 świadczy o tym, że popularność hasła wynosiła mniej niż 1\% najwyższej wartości.'' \cite{google-trends}
+\end{quote}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\linewidth]{graphics/frontend-frameworks.png}
+	\caption{Porównanie popularności frameworków aplikacji klienckich}
+	\label{fig:frontend-frameworks}
+\end{figure}
+Z przedstawionego wykresu jasno wynika, iż największym zainteresowaniem, deklasując przy tym konkurencję, cieszą się dwa rozwiązania: \textit{Angular} oraz \textit{React}, między którymi istnieje kilka zasadniczych różnic, takich jak np.: sposób wiązania danych (\textit{ang. data binding}), obsługa \textit{DOM}, czy sam fakt, że Angular jest pełnoprawnym frameworkiem, natomiast React jedynie biblioteką języka JavaScript \cite{angular-react-comparison}. Ze względu, na fakt ukierunkowania Angular'a na programowanie obiektowe (\textit{ang. Object Oriented Programming - OOP}), lepszą dokumentację oraz większą ilość materiałów naukowych, a także doświadczenie w praktycznym wykorzystaniu, zdecydowano się wybrać właśnie tę technologię.
+
+
+
 \subsection{Framework Angular}
-	% Wersja 4.4.6
+
+\quad Jest to nowoczesny i otwarty frontendowy framework oparty na języku \textbf{\textit{TypeScirpt}}, którego twórcą jest firma \textit{Google}. Głównym zadaniem biblioteki jest wdrożenie wzorca \textit{\textbf{serwis - kontroler}} w celu ułatwienia konstruowania i rozwoju aplikacji internetowych. \\
+\\
+Pierwsza wersja biblioteki powstała pod nazwą \textit{Angular} w roku 2009. Framework zyskał dużą popularność i przeszedł ogromną metamorfozę w stosunkowo krótkim czasie. Szybkie pojawianie się kolejnych wersji wymusiło konieczność usystematyzowania nazewnictwa. W ten sposób pierwsza wersja \textit{Angular'a} zmieniła nazwę na \textit{AngularJS}, natomiast kolejna, która pojawiła się 22 listopada 2014 roku i wprowadziła drastyczne zmiany w strukturze biblioteki przyjęła nazwę \textit{Angular 2.0}. Następna, wersja 4.0, pojawiła się 13 grudnia 2016 i przyniosła już o wiele mniej zmian i nowości w stosunku do różnic między wersją \textit{JS}, a \textit{2.0}. W momencie rozpoczynania projektu była to najnowsza wersja tej biblioteki (dokładnie \textit{4.4.6}), jednakże już 1 listopada 2017 roku pojawiła się wersja określona numerem \textit{5.0.0}, a kolejne wersje \textit{6} i \textit{7} planowane są na okres najbliższego roku. Mówiąc o ogromnej zmianie między wersjami \textit{JS}, a \textit{2.0} należy wspomnieć przede wszystkim o: różnicy w implementowanych wzorcach projektowych - \textit{AngularJS} oparty o wzorzec model-widok-controler (MVC), natomiast wersja 2.0 o model serwis-kontroler. Zmiana wzorca projektowego uniemożliwia wykonanie aktualizacji aplikacji z wersji JS na 2.0, gdyż operacja taka wymagałaby napisania całej architektury całkowicie od początku. Drugą różnicą jest wykorzystany do implementacji język \textit{Javascript} w wersji pierwszej, natomiast w wersji drugiej - \textit{Typescript}, który jest nadzbiorem \textit{Javascriptu} wspierającego budowę przejrzystszego i bardziej uporządkowanego kodu. Pomniejszych zmian i różnic między wersją \textit{JS}, \textit{2.0} i \textit{4.0} (a nawet \textit{5.0}) jest o wiele więcej i warto zapoznać się w tej kwestii z doskonałym zestawieniem autorstwa firmy \textit{Angular Minds} \cite{angular-comparison}\\
+\\
+Stopniowe zdobywanie popularności coraz to nowszych wersji biblioteki \textit{Angular} doskonale prezentuje kolejny wykres zapożyczony z serwisu \textit{Google Trends} przedstawiający zainteresowanie użytkowników wyszukiwarki \textit{Google} konkretnymi frazami:
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\linewidth]{graphics/angular-frameworks.png}
+	\caption{Porównanie popularności wersji Angular'a}
+	\label{fig:angular-version-comparison}
+\end{figure}
+
+W ramach wdrożenia projektu zdecydowano się na najnowszą dostępną wówczas wersję Angular'a tj. 4.4.6 umożliwiającego szybkie budowanie aplikacji typu \textit{single page}. Korzyści i możliwości jakie daje wykorzystanie tej technologii to:
+\begin{itemize}
+    \item Łatwość stworzenia i rozwijania projektu dzięki konsolowemu narzędziu \textbf{\textit{Angular CLI}}.
+    \item Mimo stosunkowo dużego rozmiaru samej biblioteki (w porównania z konkurencyjnymi rozwiązaniami), duża wydajność działania i wiele modułów dostępnych domyślnie - bez konieczność ich dodatkowej instalacji.
+    \item Dwukierunkowe wiązanie danych (\textit{ang. Two way data binding}) zapewniające automatyczną aktualizację danych modelu.
+    \item Architektura i podział całego projektu na moduły ułatwiający utrzymanie kodu i tworzenie go zgodnie z regułą \textbf{\textit{DRY}} (\textit{ang. Don't repeat yourself}).
+    \item Wiele wbudowanych dyrektyw skracających czas wykonywania i tworzenia podstawowych zadań.
+    \item Bardzo dobra obsługa formularzy i ich walidacji ułatwiająca tworzenie aplikacji nastawionych na częste interakcje z użytkownikiem.
+\end{itemize}
+Ogólny zarys przepływu danych w aplikacji wygląda w ten sposób, iż głównym elementem aplikacji opartej o Angular jest \textbf{moduł}. Każda aplikacja ma przynajmniej jedną klasę modułu, który jest modułem głównym i umownie nazywany jest \textit{AppModule}. Moduły opierają się o \textbf{szablony} (\textit{ang. templates}) połączone ze znacznikami \textit{Angular'a}. Do zarządzania szablonami tworzone są klasy \textbf{komponentów}, do których wstrzykiwane są zależności (\textit{ang. \textbf{dependency injection}}) zawierające logikę aplikacji w postaci \textbf{serwisów} (\textit{ang. services}). Angular generuje i przetwarza strukturę dokumentu DOM zgodnie z instrukcjami reprezentowanymi przez \textbf{dyrektywy}.  Ostatnim kluczowym elementem są \textbf{metadane}, które informują Angular'a, iż dany element jest np. komponentem lub dyrektywą. Graficzne przedstawienie architektury Angular'a przedstawia \textit{rysunek 3.4}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\linewidth]{graphics/angular-architecture.png}
+	\caption{Ogólna architektura frameworka Angular 4}
+	\label{fig:general-angular-architecture}
+\end{figure}
+
 	\subsubsection{Angular CLI}
-	% Proste tworzenie projektu angular
+\quad Wspomniane już wcześniej, jako jedna z licznych zalet Angular'a, narzędzie \textbf{Angular CLI} to konsolowy interfejs służący do budowania, utrzymania, rozwijania i konfigurowania aplikacji stworzonych właśnie w tej technologii. W ostatnim czasie stało się jednym z najczęściej wykorzystywanych narzędzi do tego typu zadań. 
+Usprawnia ono proces budowania nowego projektu ograniczając konieczność wykonania wielu niełatwych i powtarzalnych czynności do jednej konsolowej komendy. Przykładem może być polecenie tworzące nowy projekt: 
+\begin{lstlisting}
+    ng new [name]
+\end{lstlisting}
+Po wykonaniu tej komendy zostaje wygenerowany podstawowy szablon, który jest gotowy do uruchomienia za pomocą komendy:
+\begin{lstlisting}
+    ng serve
+\end{lstlisting}
+Dzięki tym dwóm prostym komendom został stworzony i uruchomiony w pełni funkcjonalny projekt aplikacji, oszczędzając w ten sposób programiście kilku godzin żmudnych ustawień i konfiguracji.\\
+Angular CLI nie ogranicza się jednak jedynie do generowania projektu. Jest również bardzo przydatne w czasie jego rozwoju, np. przy pomocy jednej komendy generując wszystkie potrzebne pliki dla nowego komponentu czy modułu:
+\begin{lstlisting}
+    ng generate component [name]
+    ng generate module [name]
+\end{lstlisting}
+
 	\subsubsection{Komponent ng2-file-upload}
+	\quad Omawiając wszystkie ważne składowe aplikacji klienckiej, koniecznie należy wspomnieć o jednym z komponentów, który ma zostać wykorzystany w aplikacji \textit{PhotoLab}.\\
+	\textbf{Ng2-file-upload} jest doskonałym przykładem jednego z bardzo wielu gotowych i ogólnodostępnych komponentów (na odpowiedniej licencji: np. MiT) dedykowanych dla frameworka Angular. Ogromna ilość komponentów wskazuje na wspominane wcześniej bardzo szeroko rozwinięte \textit{community}. Posiadanie grona takich osób dla każdej technologii jest bardzo ważne, gdyż gwarantuje: 
+	\begin{itemize}
+	    \item Szerokie wsparcie w przypadku problemów - programiści oferują wzajemną pomoc w rozwiązywaniu problemów i dzielą się własnym doświadczeniem.
+	    \item Ogromną ilość materiałów, poradników i szkoleń dostępnych w Internecie, które pozwalają w przyjazny sposób zaznajomić się z konkretnymi zagadnieniami.
+	    \item Szybki rozwój (w przypadku Angular'a jest bardzo dobrze widoczne) i aktualność z panującymi trendami, a wręcz bycie ich prekursorem.
+	\end{itemize}
+	\textit{ng2-file-upload} to stworzony przez jednego z członków społeczności i udostępniony na licencji \textit{MIT} komponent odpowiedzialny za obsługę wgrywania plików. Oferuje on bardzo przystępny interfejs użytkownika z uwzględnieniem takich elementów jak:
+	\begin{itemize}
+	    \item Wybór plików za pomocą standardowego okna systemowego lub zasady przeciągnij i upuść (\textit{ang. drag and drop}).
+	    \item Wypisanie wybranych plików gotowych do wgrywania.
+	    \item Możliwość wgrywania wszystkich wybranych plików jednocześnie.
+	    \item Animowany pasek postępu procesu przesyłania.
+	\end{itemize}
+	Aby system ten sprostał wymaganiom \textit{PhotoLab} wystarczy wprowadzić do niego kilka modyfikacji takich jak np.: dołączenie podglądu wybranych zdjęć, czy ograniczenie opcji przesyłania plików jedynie do wszystkich jednocześnie. Należy również zaznaczyć, iż komponent ten działa jedynie w warstwie prezentacji, co oznacza, iż konieczne jest zaimplementowanie obsługi uzyskanych informacji (czyli zapisanie plików i informacji o nich) po stronie serwera aplikacji.
 	% Komponent umożliwiający obsługę dynamicznego wgrywania zdjęć
 
-\subsection{Twitter Bootstrap}
-	% Warstwa prezentacji strony oparta o style Bootstrap
-	% Wersja 4 Beta
-	% Wykorzystanie Bootstrap Grid i FlexBox
+\subsection{Bootstrap}
+\quad Warstwa aplikacji to nie tylko interfejs przysyłający dane do kolejnej warstwy. To również, a wręcz przede wszystkim interakcja z użytkownikiem systemu, który chce skorzystać z usług firmy. Bardzo ważnym aspektem jest więc zaprezentowanie danych i funkcjonalności w sposób estetyczny, usystematyzowany i przyjazny dla człowieka. Do tego celu służą właśnie kaskadowe arkusze stylów (\textit{ang. cascading style sheets (CSS)}), które opisują formę prezentacji struktury utworzonej w hipertekstowym języku znaczników (\textit{ang. HyperText Markup Language}), czyli popularnym HTML'u. Czasy, gdy całe strony i duże aplikacje internetowe były dekorowane jedynie przy pomocy czystego CSS dawno minęły. Obecnie na szeroką skalę wykorzystuje się \textbf{\textit{frameworki CSS}}, czyli biblioteki zawierające zestaw wielu gotowych narzędzi i komponentów ułatwiających tworzenie estetycznych i przejrzystych interfejsów stron internetowych. \\
+\\
+Jednym z takich rozwiązań jest \textbf{\textit{Bootstrap}}. Jest to obecnie, podobnie jak Angular, najpopularniejsze i najszerzej wykorzystywane narzędzie w swojej klasie charakteryzujące się bardzo prężnym rozwojem. Zespołem odpowiedzialnym za Bootstrapa są programiści \textit{Twitter'a}. 10 sierpnia 2017 roku opublikowali oni najnowszą wersję 4.0.0 beta 2, która to właśnie wersja zostanie wdrożona w aplikacji \textit{PhotoLab}. Argumentami za zastosowaniem technologii znajdującej się jeszcze w wersji beta była przede wszystkim jej bardzo dobra stabilność (jak na wersję beta), szerokie grono społeczności, dobra dokumentacja, a przede wszystkim różnice względem poprzedniej wersji (3.3.7):
+\begin{itemize}
+    \item pliki źródłowe tworzone w technologi \textit{SASS}, a nie \textit{LESS},
+    \item domyślna jednostka, \textit{rem} - czyli wysokość czcionki elementu korzenia w drzewie dokumentu, a nie piksel,
+    \item pięcio-, a nie czterowarstwowy \textit{grid}, czyli siatka, według której budowany jest szablon,
+    \item wbudowany nowy sposobu układania elementów na stronie - \textit{FlexBox}.
+\end{itemize}
+Powodem wyboru \textit{Bootstrapa} jako frameworka CSS jest jego dobra znajomość i doświadczenie w wykorzystaniu, co znacznie ułatwi i przyspieszy pracę nad aplikacją ale przede wszystkim bardzo estetyczny sposób prezentowania treści w formie, która w pełni zadowala właściciela laboratorium.
+
+\section{Warstwa logiki biznesowej - serwer aplikacji}
+
+\quad Bardzo ważną częścią przygotowywania projektu jest podjęcie decyzji o wyborze technologii dla warstwy aplikacji, czyli warstwy najważniejszej dla całego modelu trójwarstwowego. W tej płaszczyźnie bowiem wykonywane są najistotniejsze operacje obsługujące procesy biznesowe, takie jak wyliczenia, autoryzacja użytkowników czy dostęp do danych. Podejmując decyzje należy mieć na względzie postawione cele tj. bezpieczeństwo aplikacji, jej wydajność i dostępność oraz możliwie niskie koszty wdrożenia i utrzymania. \\
+\\
+Możliwości i technologii jest wiele. Jedne są bardziej odpowiednie, inne mniej. Ścisła czołówka tzw. \textit{aplikacji backendowych} to z pewnością technologie takie jak: \textit{PHP}, \textit{.NET} i \textit{Java}, jednak coraz większą popularność zyskują również: \textit{Python} czy \textit{Ruby}.\\
+Wybór nie jest łatwy. Żadne zweryfikowane przesłanki zewnętrzne takie jak szybkość, wydajność, czy bezpieczeństwo nie wskazują konkretnego faworyta tej konkurencji. Wybór technologi, w której zostanie zaimplementowana aplikacja został więc wybranych w oparciu o aspekt wewnętrzny jakim są predyspozycje autora. W ramach implementacji warstwy biznesowej aplikacji \textit{PhotoLab} wykorzystana zostanie technologia \textbf{ASP.NET Core}.
+
+\subsection{ASP.NET Core}
+\textbf{\textit{.NET Framework}} jest to platforma programistyczna wywodząca się z rodziny rozwiązań firmy \textit{Mircosoft}.  Dostarcza wiele standardowych funkcjonalności w postaci \textbf{bibliotek klas} oraz przede wszystkim \textbf{środowisko uruchomieniowe} (\textit{ang. Common Language Runtime} (\textit{CLR}). \\
+Technologia ta nie jest związana z żadnym konkretnym językiem programowania i umożliwia budowanie kodu w oparciu o jeden z bardzo wielu dostępnych, m.in. C++, C\# czy F\#. Platforma \textit{\textbf{ASP.NET}} to, podobnie jak \textit{ADO.NET} (używana jako narzędzie dostępu do danych), pochodna platformy \textit{.NET} służąca do budowania dynamicznych strony WWW. \\
+    \textbf{\textit{ASP.NET Core}} jest biblioteką aplikacji internetowych, który wchodząc na rynek w połowie 2016 roku w wersji \textit{1.0} wprowadził ogromną rewolucję w produktach z serii \textit{ASP.NET}: 
+    \begin{enumerate}
+        \item Zintegrował wszystkie trzy osobno występujące modele aplikacji internetowych, czyli:
+    \begin{itemize}
+        \item \textit{ASP.NET MVC} - bibliotekę implementującą wzorzec \textit{Model-View-Controller} (\textit{MVC}) w aplikacjach internetowych.
+        \item \textit{ASP.NET Web API} - strukturę typu \textit{HTTP API} służącą do budowania \textit{web serwisów}.
+        \item \textit{ASP.NET Web Pages} - platformę wykorzystującą jedynie strony oparte o  składnię \textit{Razor}.
+    \end{itemize}
+   \item Został całkowicie przebudowany i stworzony w zupełnie nowym stosie technologicznym, zachowując przy tym jednak bardzo duże podobieństwo konceptualne z \textit{ASP.NET MVC}.
+    \item Jego całkowite przebudowanie umożliwiło:
+        \begin{itemize}
+            \item stworzenie wieloplatformowej technologii dostępnej już nie tylko na systemy \textit{Windows}, ale również \textit{Linux} i \textit{Mac},
+            \item zbudowanie modularnej biblioteki opartej o paczki \textit{NuGet'owe},
+            \item udostępnienie oprogramowania na otwartej licencji \textit{MiT}, która nakierowana jest na rozwój społecznościowy,
+            \item zunifikowanie sposobu generowania interfejsów internetowych,
+            \item całkowite przyspieszenie działania całej platformy względem jej poprzednich wersji,
+            \item stworzenie nowego, bardzo lekkiego i modułowego potoku żądań HTTP (\textit{ang. request pipeline}).
+        \end{itemize}
+    \end{enumerate}
+    Kierując się wszystkimi wspomnianymi powyżej przesłankami, została podjęta decyzja o wdrożeniu projektu aplikacji internetowej (ASP.NET Core Web Application) o strukturze typu \textbf{\textit{Web API}} w najnowszej obecnie wersji \textbf{\textit{1.1}}.\\
+    \\
+    Poniżej (\textit{rys. 3.5}) przedstawiony został ogólny zarys
+    obsługi żądań zapytań HTTP docierających do warstwy biznesowej aplikacji opartej o technologię ASP.NET Core Web API i obsługującej połączenie z bazą danych poprzez narzędzie \textit{Entity Framework}.
+
+    \begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\linewidth]{graphics/asp-net-web-api-architecture.png}
+	\caption{Architektura i przepływ danych warstwy biznesowej}
+	\label{fig:asp-net-web-api-architecture}
+    \end{figure}
+
+\subsection{ASP Identity i JSON Web Token}
+    W celu zapewnienia zakładanego, wysokiego poziomu bezpieczeństwa zarówno klientów systemu jak i przechowywanych w nim danych, konieczne jest zaimplementowanie systemu weryfikującego użytkowników. Zanim jednak zostanie omówione wybrane rozwiązanie należy wyjaśnić kilka pojęć związanych z tą tematyką.\\
+    \\
+    Z kwestią bezpieczeństwa nierozerwalnie związane są trzy pojęcia, które często są mylone i niepoprawnie definiowane. Istnieje wiele definicji i wywodów na temat każdego z poniższych haseł, jednak najprostsze wyjaśnienia przedstawiają się następująco:
+    \begin{itemize}
+        \item \textbf{Identyfikacja} (\textit{ang. identity}) - rozpoznanie użytkownika, próbującego połączyć się z systemem.
+        \item \textbf{Uwierzytelnienie} (\textit{ang. authentication}) - upewnienie co najmniej jedenej ze stron o tożsamości drugiej. Jest to tak naprawdę identyfikacja na poziomie zaawansowania i szczegółowości pozwalającej na przyznanie odpowiednich uprawnień i dostępów.
+        \item \textbf{Autoryzacja} (\textit{ang. authorization}) - jest to zapewnienie stronie zgłaszającej taką potrzebę odpowiednich uprawnień i praw dostępu. 
+    \end{itemize}
+    Podsumowując: ,,identyfikacja, uwierzytelnianie i autoryzacja powinny być elementami każdej transakcji biznesowej i muszą być zagwarantowane przez system komunikacyjny i oprogramowanie pośredniczące w związkach pomiędzy dostawcami i klientami.'' \cite{identity-theory}\\
+    \\
+    Cały system weryfikacji użytkowników można zaimplementować samodzielnie od podstaw. Mija się to jednakże z celem w momencie, gdy platforma \textit{.NET} udostępnia świetne narzędzie jakim jest \textbf{\textit{ASP.NET Identity}}. Dlaczego warto wybrać akurat to, gotowe rozwiązanie? Z pewnością dlatego, iż cały system weryfikacji użytkowników jest procesem trudnym i skomplikowanym, a najmniejsza luka w jego implementacji powoduje pojawienie się tzw. najsłabszego ogniwa, które powoduje, iż inne, nawet najmocniejsze zabezpieczenia tracą swoją wartość. \textit{ASP.NET Identity} jest produktem rozwijanym i modyfikowanym od wielu lat, uwzględniane są w nim wszystkie najnowsze mechanizmy, zabezpieczenia, sugestie użytkowników oraz dostrzeżone błędy i uchybienia. Gotowy system, stworzony przez duży zespół wsparty ogromnym \textit{community}, wykorzystany i przetestowany na setkach tysięcy rozwiązań i systemów, zarówno mniejszych, jak i większych, jest idealnym wyborem dla zapewnienia bezpieczeństwa aplikacji \textit{PhotoLab}.\\
+    \\
+    Mimo wielu zalety, dostrzeżono również dwa poważne mankamenty tego rozwiązania. Biblioteka ta działania jedynie w drugiej warstwie modelu - warstwie biznesowej. Oznacza to, iż sesje zalogowanego użytkownika muszą być przetrzymywane na serwerze, co powoduje jego dodatkowe obciążenie. Drugi przypadek zakłada dalszy rozwój aplikacji i pojawienie się dodatkowych serwisów, np. do obsługi urządzeń mobilnych. W takim przypadku konieczna jest ponowna implementacja systemu weryfikacji użytkownika na kolejnym serwerze i przez to redundancja kodu i odpowiedzialność. Rozwiązaniem tego typu problemów jest uzupełnienie biblioteki \textit{ASP.NET Identity} o standard kluczy dostępu \textbf{\textit{JSON Web Token}}.\\
+    Jest to otwarta technika generowania kluczy uwzględniających prawa dostępu. Zasada jej działania oparta jest na zasadzie klucza prywatnego. Niepowtarzalny klucz JWT generowany jest w momencie logowania użytkownika i składa się z trzech części:
+    \begin{itemize}
+        \item nagłówka (\textit{ang. header}) - zawierającego informacje o typie klucza JWT oraz sposobie jego szyfrowania,
+        \item ładunku (\textit{ang. payload}) - jak sama nazwa wskazuje, przechowującego informacje na temat praw dostępów, czy np. czasu ważności tokenu,
+        \item podpisu (\textit{ang. signature}) - do którego utworzenia konieczne są dwie pozostałe części, które zabezpieczone są poprzez sekretny klucz aplikacji i szyfr ustalony w nagłówku.
+    \end{itemize}
+    Klucz generowany jest po stronie serwera aplikacji i zwracany do warstwy klienckiej, w której może być przetrzymywany, np. w pamięci lokalnej. W momencie odwołania się użytkownika do zabezpieczonej warstwy biznesowej, wraz z zapytaniem przesyła on klucz JWT, który jest jedynie weryfikowany i w razie sukcesu otwiera dostęp do zasobów / funkcjonalności lub w razie niepowodzenia serwer zwraca odpowiedź z kodem błędu 403.\\
+\\
+Zastosowanie kluczy JWT rozwiązuje dwa wcześniej wymienione problemy pojawiające się w momencie korzystania z modułu \textit{Identity}. Po pierwsze ciężar zapamiętania sesji logowania przerzuca na aplikację kliencką, odciążając w te sposób serwer, który nie musi już przetrzymywać w swojej pamięci bazy zalogowanych użytkowników. Po drugie mechanizm autoryzacji może zostać zaimplementowany na jednym z obsługujących aplikację serwerów, do którego użytkownik zawsze będzie się odnosił wyłącznie w momencie logowania. Pozostałe moduły będą musiały jedynie sprawdzić poprawność otrzymanego klucza i udostępnić swoje zasoby. Opisaną sytuację doskonale przedstawia diagram (\textit{rys. 3.6}):
+    
+    
+    \begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\linewidth]{graphics/jwt-identity-diagram.png}
+	\caption{Weryfikacja użytkownika z użyciem ASP.NET Identity i JSON Web Token}
+	\label{fig:jwt-identity-diagram}
+    \end{figure}
+
+
+
+
+\section{Warstwa danych - baza danych}
+    Ostatnim elementem modelu trójwarstwowego aplikacji jest warstwa danych.
+    Najczęściej można ją opisać jako swoisty pojemnik na informacje. Powinien on zapewniać bezpieczeństwo i trwałość swojej zawartości oraz łatwą i szybką jej dostępność. \\
+    \\
+    Istnieje obecnie wiele rodzajów baz danych, które różnią się względem siebie sposobem przetrzymywania informacji. Wybrane z nich to bazy:
+    \begin{itemize}
+        \item Proste (kartotekowe) - tablica danych skonstruowana jest jako samodzielny dokument, który nie może wchodzić w związki z innymi tablicami. Przykładami implementacji takiej bazy mogą być: książki telefoniczne, książki kucharskie czy różnego rodzaju spisy.
+        \item Relacyjne (RDB) - dane przetrzymywane w postaci encji umieszczonych w tabelach, które z kolei mogą wchodzi w relacje między sobą. Posiadają predefiniowane typy oraz wewnętrzne języki programowania (\textit{SQL}). Przykładami są bazy: \textit{Oracle}, \textit{Ingress}, \textit{Access}, \textit{MySQl} czy \textit{MS SQL}. Obecnie dominujący typ danych w zastosowaniach komercyjnych (ok. 95\% rynku).
+        \item Obiektowe (ODB) - nie zdefiniowane żadnym oficjalnym standardem. Ich podstawowym zadaniem jest odwzorowanie obiektów i powiązań wchodzących w skład aplikacji na identyczne w bazie danych. Łączą one właściwości obiektowości i obiektowych języków programowania wraz z możliwościami systemów bazodanowych.
+        \item Nierelacyjne (NoSQL) - nie posiadają ściśle zdefiniowanej struktury. Dane składowane jako dokumenty - np. w formie \textit{JSON}. Charakteryzują się dużą skalowalnością i wydajnością. Przykładamy implementacji tego typu baz są: \textit{MongoDB} oraz \textit{Apache Cassandra}.
+    \end{itemize}
+    Najbardziej naturalnym i najczęstszym wyborem w przypadku konstruowania warstwy pośredniej w technologii \textit{ASP.NET} jest zbudowanie środowiska bazodanowego w oparciu o produkt pochodzący z tej samej rodziny - firmy Microsoft - jakim jest \textbf{\textit{Microsoft SQL Server}}. Połączenie, dodatkowo wzbogacone o narzędzie klasy \textbf{\textit{ORM}} - \textit{\textbf{Entity Framework}} - stawowi doskonały pakiet zapewniający najlepsze możliwe połączenie warstwy aplikacji i warstwy danych modelu trójwarstwowego.
+    
+    Wykorzystanie relacyjnej bazy danych daje wszystkie możliwe korzyści wynikające z przechowywania danych w takiej strukturze tj.: możliwość stosowania złożonych kryteriów wyszukiwania, bardzo dobre mechanizmy dostępu do danych, a także pewną i sprawdzoną strukturę przetestowaną w wielu możliwych scenariuszach i przypadkach. Nie jest być może to struktura najszybsza, ani najbardziej podatna na skalowalność, jednakże w aplikacji \textit{PhotoLab} nie są to kryteria najważniejsze. Bardzo dużą zaletą i ułatwieniem w operowaniu na bazie relacyjnej typu \textit{MS SQL}, gdzie reprezentacja danych nie zawsze jest przyjazna i naturalna, jest narzędzie służące do mapowania obiektowo-relacyjnego. Zdecydowania ułatwia to pracę nad aplikacją oraz przyspiesza jej rozwój. Wykorzystując narzędzia typu \textit{ORM}, czasami mogą pojawiać się problemy wydajnościowe, jednak w przypadku projektowanej aplikacji nie przewiduje się takowych, tak więc liczba zalet zdecydowanie przewyższa wady wprowadzenia tego rozwiązania.
+    
+\subsection{Microsoft SQL Server}
+    System służący do zarządzania bazą danych, którego twórcą jest firma \textit{Microsoft}. Jest to flagowy produkt tej korporacji w zakresie operacyjnych systemów zarządzania bazami danych (\textit{ang. Operational Database Management Systems (ODBMS)}.\\
+    \\
+    Podstawą platformy \textit{SQL Server} jest usługa serwera (\textit{ang. database engine}), który realizuje wszystkie zadania dotyczące obsługi i utrzymania bazy danych. Całe środowisko \textit{SQL Server} jest skalowalne, w zależności od potrzeb i wymagań może składać się z wielu różnych komponentów. Na jednym serwerze (fizycznym, bądź wirtualnym)  możliwa jest instalacja wielu \textit{instancji} środowiska \textit{SQL Server}. Ta z kolei może zarządzać wieloma \textit{bazami danych}. Zazwyczaj jednak poprzez względy wydajnościowe na jednym serwerze instaluje się jedną instancję z maksymalnie dwoma lub trzema bazami danych.\\
+    \\
+    Kilka najbardziej podstawowych i oferowanych przez \textit{SQL Serwer} komponentów to:
+    \begin{itemize}
+        \item Wspomniany wcześniej \textit{silnik bazy danych}.
+        \item \textit{Usługi raportujące} jako gotowy system oparty o technologię .NET do generowania raportów z bazy danych.
+        \item \textit{Usługi analityczne} w skład których wchodzi kilka narzędzie analitycznych głównie z zakresu \textit{Business Intelligence}, czyli przetwarzania danych w informacje, by następnie wyciągnąć z nich odpowiednie wnioski i wiedzę.
+        \item \textit{Usługi integracji danych} oferujące możliwość zbierania i analizy danych z różnych źródeł. 
+    \end{itemize}
+    Omawiając pakiet bazodanowy Microsoft należy również wspomnieć o udostępnionych w ramach niego narzędziach takich jak: \textbf{SQL Server Profiler} i \textit{\textbf{SQL Server Management Studio}}. Drugie przedstawione narzędzie zostanie wykorzystane w ramach wdrożenia projektu w celu: administracji, przeglądu i edycji danych w \textit{graficznym środowisku użytkownika} (\textit{GUI}).
+    
+    \subsection{Entity Framework Core}
+    Entity Framework podobnie jak \textit{SQL Server Management Studio} należy do technologii z rodziny \textit{.NET}, a konkretnie \textit{ADO.NET}, a więc jest doskonale zintegrowane do obsługi bazy danych \textit{Microsoft SQL} oraz aplikacji \textit{ASP.NET}.
+    \\
+    \\
+    Jest to narzędzie typu ORM (ang. Object-relational mapping), czyli takie, które odwzorowuje obiekty architektury obiektowej na tabele i encje w relacyjnej bazie danych. Odwzorowanie takie ma bardzo dobre zastosowanie w przypadku tworzenia systemu zorientowanego na podejście obiektowe, natomiast baza danych operuje na relacjach. Programiści w momencie zajmowania się danymi, mogą pracować na wyższym poziomie abstrakcji, przez co generują mniejszą ilość redundantnego kodu i ciągle pozostają w sferze programowania obiektowego, a nie zorientowanego na tabele i encje.

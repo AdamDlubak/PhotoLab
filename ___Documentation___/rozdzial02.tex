@@ -1,8 +1,130 @@
 \chapter{Ogólna analiza systemu}
+
+{\em \quad W pierwszej fazie projektu zostały ustalone cele projektowe, które w ramach pracy należy osiągnąć aby móc ją uznać jako zakończoną sukcesem. Dodatkowo określono funkcjonalności, które aplikacja \textit{PhotoLab} powinna posiadać. Możliwości te zostały podzielone na podstawowe oraz rozszerzone, czyli takie które nie są krytyczne dla założonego funkcjonowania systemu jednak ich zaimplementowanie
+jest dodatkową wartością i będzie dużym udogodnieniem (lub rozszerzeniem możliwości) dla osób z niego korzystających. }
+
 \section{Cel projektu}
+\quad Celem projektu jest stworzenie aplikacji internetowej dla laboratorium fotograficznego świadczącego usługi wydruku zdjęć. Projekt zakłada zbudowanie systemu spełniającego cztery podstawowe warunki:
+\begin{enumerate}
+    \item Aplikacja ma być bardzo prosta w użytkowaniu i dostępna dla każdej osoby chcącej skorzystać z usług laboratorium.
+    \item Koszt utrzymania i wdrożenia serwisu ma być przystępny dla właściciela niewielkiego zakładu fotograficznego obsługującego rynek o lokalnym zasięgu.
+    \item Bardzo ważne jest zapewnienie wszystkim klientom możliwości bezpiecznego korzystania z serwisu. Rozumie się przez to zapewnienie bezpieczeństwa przetrzymywanych danych osobowych, wykonywanych transakcji pieniężnych oraz przesyłanych zdjęć. Każdy użytkownik systemu (wykluczając administratora) ma posiadać dostęp jedynie do własnych danych i zasobów.
+    \item Strona ma zapewniać obsługę online wszystkich usług pełnionych przez laboratorium w formie stacjonarnej (z wykluczeniem wykonywania zdjęć legitymacyjnych).
+\end{enumerate}
+
+
+
 \section{Funkcjonalności podstawowe}
+\quad W celu zdefiniowania i skonkretyzowania wymagań stawianych aplikacji, wspólnie ze zleceniodawcą została opracowana lista funkcjonalności, które powinny zostać zaimplementowane aby aplikacja spełniała zdefiniowane w poprzednim punkcie cele. \\
+\\
+Do wymagań określonych jako podstawowe czyli niezbędne do poprawnego funkcjonowania aplikacji należą:
+
+
+\begin{itemize}
+    \item \textbf{System identyfikacji, uwierzytelniania i autoryzacji
+    użytkownika.}
+    
+    Spełnienie celu nr 3, jaki został postawiony aplikacji, wymaga zaawansowanego i bezpiecznego dostępu do danych. Aby warunek ten został spełniony system musi umożliwiać:
+    \begin{itemize}
+        \item rejestrację nowych użytkowników oraz weryfikację poprawności adresu mailowego,
+        \item logowanie użytkowników przy każdorazowej wizycie
+        \item możliwość zmiany lub przypomnienia hasła,
+        \item zarządzenie użytkownikami systemu z poziomu panelu administracyjnego,
+        \item wygaszanie sesji w przypadku określonego czasu braku aktywności na koncie użytkownika.
+    \end{itemize}
+
+    \item \textbf{Podział na stronę internetową dostępną dla klientów oraz panel administracyjny do zarządzania aplikacją.}
+    
+    Serwis ma zostać podzielony na dwie części różniące się względem siebie: funkcjonalnościami, prawami dostępu oraz szablonem graficznym (\textit{ang. layout}). Część administracyjna (z większą restrykcją dostępu - dostępna jedynie dla użytkownika z prawami administratora) ma również posiadać odrębną, własną stronę logowania, uniezależniając się w ten sposób od strony klienckiej dostępnej dla wszystkich użytkowników z pewnymi ograniczeniami dostępu jedynie dla użytkowników zarejestrowanych.
+    
+    \item \textbf{Statyczne podstrony będące wizytówką firmy.}
+    
+    Z racji wymogu aby serwis był nie tylko aplikacją służącą do zamawiania zdjęć online ale również internetową wizytówką firmy konieczne jest zaimplementowanie kilku statycznych stron. Mają one za zadanie dać użytkownikowi możliwość zapoznania się z firmą, jej ofertą i sposobami kontaktu. W tym celu należy stworzyć następujące podstrony:
+    \begin{itemize}
+        \item \textbf{Strona Główna} - pierwsza strona dostępna dla użytkownika po przejściu pod adres witryny. Ma zachęcić użytkownika do dokładniejszego zapoznania się ze stroną oraz wypromować najważniejsze zalety i możliwości laboratorium.
+        \item \textbf{O Nas} - krótka historia firmy wraz z przedstawieniem pracujących tam osób.
+        \item \textbf{Oferta} - przedstawienie zakresu usług świadczonych przez laboratorium. 
+        \item \textbf{Galeria} - estetyczna prezentacja zdjęć zakładu oraz oferowanych przez niego usług i produktów.
+        \item \textbf{Kontakt} - podstawowe dane o firmie (w tym również kontaktowe), lokalizacja wraz z interaktywną mapą oraz formularzem kontaktowym.
+    \end{itemize}
+    
+    \item \textbf{Panel klienta z możliwością edycji danych i przeglądania zleceń.}
+    
+    Zalogowany użytkownik ma posiadać dostęp do panelu, w którym będzie miał możliwość edycji wszystkich wprowadzonych przez siebie danych tj. danych podstawowych (imię, nazwisko, mail, numer telefonu i hasło), danych do wysyłki oraz danych do faktury. Ponadto panel musi umożliwiać klientowi pełny wgląd w historię swoich zleceń, wraz z ich wszystkimi dostępnymi szczegółami.
+    
+    \item \textbf{Zlecanie zdjęć do wydruku.}
+
+    Zalogowany użytkownik ma mieć możliwość zlecania nieograniczonej liczby zdjęć do wydruku wraz z możliwością dostosowywania parametrów dla każdego zdjęcia z osobna. Poprzez parametry rozumie się: typ dopasowania zdjęcia, format i rodzaj papieru odbitki oraz ilość sztuk danego formatu. Ponadto użytkownik ma mieć możliwość wyboru rodzaju dostarczenia / odbioru zamówienia, dokumentu potwierdzającego zakup i sposobu płatności.
+    
+    \item \textbf{Przeglądanie i edycja kont użytkowników systemu przez administratora.}
+    
+    Użytkownik z prawami administratora z poziomu panelu sterowania ma mieć możliwość wglądu w listę wszystkich użytkowników systemu. Dodatkowo ma mieć prawo edycji danych (w tym zmiany hasła - bez poznawania uprzednio ustawionego przez klienta) i poglądu zleceń.
+    \item \textbf{Przyznawanie praw administratorskich.}
+    
+    Administrator ma mieć możliwość nadania i odebrania praw administratora dowolnemu zarejestrowanemu w systemie użytkownikowi.
+    
+    \item \textbf{Przeglądanie oraz zmiana statusu zleceń.}
+    
+    Panel administracyjny ma zapewniać wgląd w pełną listę zleceń, zarówno aktualnych jak i historycznych. Ponadto ma gwarantować możliwość zmiany statusu zlecenia, jednakże nie ma prawa umożliwiać edycji parametrów zlecenia: np. zmiany formatu czy ilości odbitek.
+    
+    \item \textbf{Zarządzania parametrami serwisu.}
+    
+    Z poziomu panelu sterowania (administratora) ma istnieć możliwość zarządzania podstawowymi parametrami zleceń takimi jak:
+    \begin{itemize}
+        \item zbiór dostępnych formatów, rodzajów papieru i ich cen,
+        \item domyślne wartości zleceń,
+        \item sposób i ceny dostarczenia gotowego produktu.
+    \end{itemize}
+    
+    \item \textbf{Zapewnienie pełnej historii serwisu.}
+    
+    W celu zachowania pełnej historii wszystkich zleceń dokonanych w serwisie, konieczne jest ograniczenia możliwości usuwania niektórych jego składowych (np. formatów zdjęć). W momencie kiedy w systemie istnieje co najmniej jedno zlecenie zawierające dany parametr, niemożliwe ma być jego usunięcie. Jedyną dostępną opcją ma być jego dezaktywacja dla nowych zleceń.
+\end{itemize}
+
+
 \section{Funkcjonalności rozszerzone}
+\quad Poza funkcjonalnościami podstawowymi czyli kluczowymi dla działania serwisu, zostały również zdefiniowane funkcjonalności dodatkowe. Ich implementacja nie jest krytyczna, jednak z pewnością rozszerzy możliwości serwisu oraz zwiększy jego użyteczność. Moduły te mają zostać zaimplementowane w przypadku sprawnego postępu prac i wystarczającej ilości pozostałego czasu, który został przeznaczony na wdrożenie aplikacji.\\
+\\
+Lista funkcjonalności rozszerzonych przedstawia się następująco:
+
+
+\begin{itemize}
+    \item \textbf{Statystyki zrealizowanych zleceń.}
+    
+    Automatyczne generowanie statystyk zrealizowanych przez serwis zleceń wraz z prezentacją danych w formie tabelarycznej oraz graficznej.
+    
+    \item \textbf{Miesięczne statystyki laboratorium.}
+    
+    Administrator ma mieć możliwość wprowadzania comiesięcznego podsuwania liczby i rodzaju wykonanych przez zakład odbitek. Dane mają być przechowywane w bazie danych i prezentowane w panelu administracyjnym w formie tabelarycznej i graficznej.
+    
+    \item \textbf{Dzienne statystyki zdjęć legitymacyjnych.}
+    
+    Podobnie jak w przypadku miesięcznych statystyk laboratorium, administrator ma mieć możliwość prowadzenia codziennych statystyk dotyczących liczby wykonanych zdjęć legitymacyjnych.
+
+    \item \textbf{Automatyczne porządkowanie serwera.}
+
+    Z racji ograniczonych zasobów dyskowych na przetrzymywanie przesyłanych przez klientów laboratorium zdjęć konieczne może okazać się usuwanie plików już zrealizowanych zleceń. Aplikacja ma zapewniać automatyczne porządkowanie serwera przetrzymującego pliki według ustalonych założeń i parametrów.
+    
+    \item \textbf{Dokonywanie płatności za pomocą zewnętrznego systemu \textit{PayU}.}
+    
+    Jedną z opcji płatności za zamówienie ma być zewnętrzny system płatności \textit{PayU}. Należy zaimplementować możliwość dokonywania bezpiecznej płatności z wykorzystaniem tego systemu oraz automatycznej zmiany status zlecenia zgodnie ze zwracaną przez system informacją o statusie płatności.
+    
+\end{itemize}
+
+\section{Architektura aplikacji}
+\quad W ramach realizacji projektu należało podjąć decyzję dotyczącą ogólnej architektury aplikacji. Zanim jednak przystąpiono do tej czynności, stwierdzono, iż tworzony serwis jest aplikacją klasy biznesowej, tj. takiej, która zawiera grupę funkcjonalności wspierających bezpośrednio procesy biznesowe firmy oraz jest widoczna przez pracowników lub klientów, dla których przetwarza ona konkretne dane biznesowe. \cite{patterns-of-architecture} \\
+\\
+Posiadając już wiedzę na temat typu budowanej aplikacji łatwo było stwierdzić na podstawie zarówno ogólnie panujących trendów jak i doskonalej książki autorstwa Martina Fowlera - \textit{"Patterns of eneterprise application architecture"} \cite{patterns-of-architecture}, w której szczegółowo omawia on możliwe do wykorzystania wzorce projektowe dla aplikacji klasy \textit{enterprise}, że najlepszym wyborem architektury dla aplikacji \textit{PhotoLab} będzie \textbf{architektura trójwarstwowa}. \\
+\\
+W skład takiej architektury jak sama nazwa wskazuje wchodzą 3 warstwy, gdzie każda z nich odpowiedzialna jest za osobne zadania:
+\begin{itemize}
+    \item Warstwa \textbf{prezentacji} - obsługa interfejsu użytkownika.
+    \item Warstwa \textbf{aplikacji} - nazywana również warstwą logiki biznesowej. Odpowiedzialna za wykonywanie kluczowych dla działania systemu zadań.
+    \item Warstwa \textbf{źródła danych} - odpowiedzialna za składowanie i udostępnianie danych koniecznych do funkcjonowania aplikacji.
+\end{itemize}
 \section{Wymagania technologiczne}
-\section{Architektura}
-	\subsection{Serwer i API}
-	\subsection{Klient}
+\quad Poza określeniem wymagań funkcjonalnych, bardzo ważnym aspektem przed rozpoczęciem implementacji systemu jest wyznaczenie technologi w jakich ma on zostać stworzony. W sekcji tej, zostaną jedynie wymienione technologie odpowiedzialne za poszczególne elementy aplikacji. W kolejnym rozdziale zostanie szczegółowo omówiona każda z wybranych technologii, uwzględniając przy tym przesłanki i podstawy teoretyczne dla jej zastosowania.\\
+\\
+Aplikacja kliencka powinna zostać zbudowana w oparciu o \textit{framework} \textbf{Angular 4}, w formie aplikacji typu \textit{Single Page Application}. Za formatowanie prezentowanych treści ma być odpowiedzialny \textit{framework CSS} - \textbf{Bootstrap} w wersji \textbf{4}. Do wygenerowania i dalszej obsługi projektu aplikacji klienckiej zostanie wykorzystany interfejs \textbf{Angular CLI}. Obsługą przesyłania zdjęć na serwer za zająć się gotowy i dostosowany do wymagań komponent \textbf{ng2-file-upload}.\\
+\\
+Serwer aplikacji zostanie zaimplementowany w oparciu o wieloplatformową technologię firmy \textit{Microsoft} - \textbf{ASP.NET Core}. Dane aplikacji przetrzymywane będą w relacyjnej bazie danych \textbf{Microsoft SQL Server}, która będzie obsługiwana z poziomu \textit{frameworka} \textbf{Entity Framework Core} wspierającego mapowanie obiektów na tabele bazy danych oraz odtworzenie obiektów na podstawie tabel bazy. W celu zapewnienia wysokiego bezpieczeństwa aplikacji, do uwierzytelniania użytkowników zastosowany zostanie standard \textbf{JSON Web Token}.

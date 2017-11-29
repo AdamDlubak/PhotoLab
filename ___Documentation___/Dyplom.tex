@@ -114,8 +114,8 @@
 %%  Pakiety i komendy zastosowane tylko do zamieszczenia informacji o użytych komendach i fontach
 %%  Normalnie nie są potrzebne, można je zamarkować podczas redakcji pracy
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{memlays}     % extra layout diagrams, zastosowane w szblonie do 'debuggowania', używa pakietu layouts
-%\usepackage{layouts}
+%\usepackage{memlays}     % extra layout diagrams, zastosowane w szblonie do 'debuggowania', używa pakietu layouts
+% \usepackage{layouts}
 \usepackage{printlen} % pakiet do wyświetlania wartości zdefiniowanych długości, stosowany do 'debuggowania'
 \uselengthunit{pt}
 \makeatletter
@@ -136,7 +136,7 @@
 %    \DeclareTextCommandDefault{\textperiodcentered}{\ensuremath{\cdot}}
 % Jednak jeszcze lepszym pomysłem jest zdefiniowanie otoczeń z wykorzystaniem enumitem
 \usepackage{enumitem} % pakiet pozwalający zarządzać formatowaniem list wyliczeniowych
-\setlist{noitemsep,topsep=4pt,parsep=0pt,partopsep=4pt,leftmargin=*} % zadeklarowane parametry pozwalają uzyskać 'zwartą' postać wypunktowania bądź wyliczenia
+% \setlist{noitemsep,topsep=4pt,parsep=0pt,partopsep=4pt,leftmargin=*} % zadeklarowane parametry pozwalają uzyskać 'zwartą' postać wypunktowania bądź wyliczenia
 \setenumerate{labelindent=0pt,itemindent=0pt,leftmargin=!,label=\arabic*.} % można zmienić \arabic na \alph, jeśli wyliczenia mają być z literkami
 \setlistdepth{4} % definiujemy głębokość zagnieżdżenia list wyliczeniowych do 4 poziomów
 \setlist[itemize,1]{label=$\bullet$}  % definiujemy, jaki symbol ma być użyty w wyliczeniu na danym poziomie
@@ -185,8 +185,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Pakiet do generowania indeksu (ważne, aby wstawić przed hyperref)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DisemulatePackage{imakeidx}
-\usepackage[makeindex,noautomatic]{imakeidx} % tutaj mówimy, żeby indeks nie generował się automatycznie, 
+% \DisemulatePackage{imakeidx}
+% \usepackage[makeindex,noautomatic]{imakeidx} % tutaj mówimy, żeby indeks nie generował się automatycznie, 
 
 %\usepackage[noautomatic]{imakeidx} 
 \makeindex
@@ -466,14 +466,14 @@ SPECJALNOŚĆ: & \@specjalnosc\\
 %%  Metadane dokumentu 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{System do obsługi laboratorium fotograficznego z możliwością sprzedaży foto usług online.}
-\titleShort{System do obsługi laboratorium fotograficznego}
+\titleShort{System obsługi laboratorium fotograficznego}
 \titleEN{Photographic laboratory servicing system with the possibility of online photo services selling.}
 \author{Adam Dłubak}
 \uczelnia{POLITECHNIKA WROCŁAWSKA}
 \wydzial{WYDZIAŁ ELEKTRONIKI}
 \kierunek{INFORMATYKA}
 \specjalnosc{INŻYNIERIA INTERNETOWA}
-\promotor{Dr inż. Marek Woda}
+\promotor{Dr inż. Marek Woda W4/K9}
 \date{WROCŁAW, 2017}
 
 % Ustawienie odstępu od góry w nienumerowanych rozdziałach oraz wykazach:
@@ -515,6 +515,7 @@ SPECJALNOŚĆ: & \@specjalnosc\\
 \tableofcontents* 
 
 
+
 \chapterstyle{default}
 \include{rozdzial01}
 \include{rozdzial02}
@@ -528,14 +529,10 @@ SPECJALNOŚĆ: & \@specjalnosc\\
 \include{dodatekA}
 
 
-%\bibliographystyle{plalpha}
-\bibliographystyle{plabbrv}
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
 
-%UWAGA: bibliotekę referencji należy przygotować samemu. Dobrym do tego narzędziem jest JabRef.
-%       Nazwę przygotowanej biblioteki wpisuje się poniżej bez rozszerzenia 
-%       (w tym przypadku jest to "dokumentacja.bib")
-\addcontentsline{toc}{chapter}{Bibliography}
-\bibliography{dokumentacja}
 
 \chapterstyle{noNumbered}
 \phantomsection % sets an anchor

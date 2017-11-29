@@ -1,4 +1,60 @@
-\chapter{Wstęp}
-\section{Pomysł, motywacja, stan rynku}
+\chapter{Wprowadzenie} \label{rozdz.Wprowadzenie} 
+{\em \quad Niniejsza praca zawiera dokumentację projektową aplikacji stworzonej w ramach inżynierskiego projektu dyplomowego zakładającego zbudowanie internetowego systemu do obsługi małego laboratorium fotograficznego wraz z możliwością sprzedaży foto usług online. Platforma ta, w dalszej części dokumentu zwana jako \textbf{PhotoLab}, została stworzona na podstawie wymagań i funkcjonalności przedstawionych przez właściciela małego zakładu świadczącego usługi fotograficzne zlokalizowanego w jednej z miejscowości środkowej Polski.
+}
+
+\section{Pomysł i motywacja}
+\quad Pomysł stworzenia \textit{PhotoLab} zrodził się w głowie autora poprzez obserwację zachowań klientów zaprzyjaźnionego laboratorium fotograficznego - aby wydrukować materiały, klient musiał dwukrotnie odwiedzić zakład. Pierwsza wizyta to przyniesienie zdjęć na nośniku oraz ustalenie parametrów wydruku. Druga, już po odbiór odbitek, jest niezbędna ze względu na długi czas trwania procesu wywoływania zdjęć, uniemożliwiającego oczekiwanie przez klienta na zdjęcia w laboratorium.\\
+\\
+Chcąc usprawnić proces, warto podjąć próbę maksymalnego zminimalizowania konieczności wizyt klienta w zakładzie. Zlecenie takiego zamówienia może odbyć się wirtualnie, przy pomocy strony internetowej, co samo w sobie ogranicza liczbę wizyt do jednej. Podobnie wygląda kwestia odbioru, klient może otrzymać zdjęcia jako przesyłkę pocztową i w ten sposób uzyskać produkt końcowy bez wychodzenia z domu. W czasach, kiedy wszystko próbuje się automatyzować, przyspieszać i optymalizować, taka zmiana sposobu funkcjonowania zakładu może przynieść wiele korzyści w postaci zwiększenia liczby klientów oraz częstszego ich korzystania z usług zakładu, co bezpośrednio przekłada się na wzrost zysków, a więc główny cel funkcjonowania firmy. \\
+\\
+Podsumowując, można stwierdzić, iż pomysłem i motywacją realizacji projektu \textit{PhotoLab} jest chęć usprawnienia procesu zlecania zamówień na wydruk odbitek, co ma bezpośrednio przełożyć się na pozyskanie nowych klientów, których tradycyjna oferta firmy do tej pory nie zainteresowała. Zmiana ma także zachęcić dotychczasowych użytkowników do częstszego i wygodniejszego korzystania z oferowanych usług. Ma to rozszerzyć działalność firmy, zwiększyć ruch, a w rezultacie podnieść dochody firmy, przy stosunkowo niskim nakładzie kosztów wdrożenia i utrzymania.
+
+
+\section{Stan rynku}
+\quad Analiza polskiego rynku internetowych usług fotograficznych została podzielona na dwie kategorie:
+\begin{itemize}
+    \item Obecnie funkcjonujące serwisy - potencjalna konkurencja.
+    \item Zakup gotowego oprogramowania - potencjalny produkt zastępczy dla aplikacji \textit{PhotoLab}. 
+\end{itemize}
+W czasie badań skupiono się jedynie na rynku polskim ze względu na fakt, iż z założenia aplikacja \textit{PhotoLab} kierowana jest właśnie do tej grupy docelowej. \\
+\\
+Odnosząc się do pierwszej z badanych kategorii stwierdzono, że obecnie funkcjonujące systemy obsługi laboratorium dotyczą jedynie dużych firm i korporacji. Przykładami takich witryn mogą być: \textit{EmpikFoto.pl}, \textit{Foto.Rossmann.pl}, \textit{Fotolab.pl} czy \textit{Fotako.pl}. Portale te obsługują wiele rodzajów usług fotograficznych, takich jak: wydruki kalendarzy ze zdjęciami, nadruk fotografii na wszelkiego rodzaju przedmiotach i materiałach, tworzenie i druk foto-książek czy wydruki wielkoformatowe. Firmy te dodatkowo mają zasięg ogólnopolski, często nawet międzynarodowy, co wyklucza je z obszaru konkurencyjności dla lokalnego fotografa. 
+\\
+Stworzone dla nich aplikacje to skomplikowane systemy klasy \textit{Enterprise}, gdzie nakład kosztów oraz osób odpowiedzialnych za utrzymanie jest bardzo wysoki. Są to strony zbyt rozbudowane, posiadające zbyt wiele funkcjonalności, a przede wszystkim zbyt drogie we wdrożeniu i utrzymaniu dla klienta tego projektu.\\
+\\
+Drugą kategorią badania rynku były gotowe oprogramowania, które w relatywnie przystępnej cenie może zakupić każde małe i średnie laboratorium w celu obsługi swoich klientów online. Na rynku polskim obecnie dostępnych jest kilka takich rozwiązań, które są do siebie bardzo zbliżone. W ramach analizy sprawdzone zostały dwa najpopularniejsze oprogramowania, które dają możliwość zobrazować cały obecny rynek w tej kategorii.\\
+\\
+Obydwa programy - \textit{WebPhoto.pl} i \textit{FotoLabus.pl} - chociaż są ciągle rozwijane i regularnie pojawią się ich nowe aktualizacje, posiadają mało przyjazny i niedostosowany do obecnie panujących standardów interfejs użytkownika. Aplikacje te, co prawda posiadają bardzo wiele funkcjonalności, ustawień i parametrów do konfiguracji, co jest niewątpliwie ich dużą zaletą, jednak fakt ten sprawia również, iż kupując takie oprogramowanie nie otrzymuje się gotowego do działania produktu, jednak program, który należy dostosować do konkretnych wymogów i możliwości. Powoduje to, iż zaleta zakupu ,,gotowego oprogramowania'' zmienia się w zakup stworzonego, lecz nie w pełni gotowego produktu. \\
+Bardzo ważna wadą jednego z analizowanych programów jest brak interfejsu dostępnego z poziomu aplikacji. Klient chcący skorzystać z usług zakładu zmuszony jest do pobrania \textit{desktopowej} aplikacji klienckiej, jej instalacji (często wraz z dodatkowym oprogramowaniem - np. \textit{.NET Frameworkiem} i dopiero wówczas rozpoczęcia procesu rejestracji oraz zlecania zamówienia. Wadą takiego rozwiązania jest ograniczenie dostępności dla dużego grona użytkowników. Grona, do którego można zaliczyć osoby, które nie potrafią dokonać instalacji oprogramowania, oraz tzw. klientów mobilnych, czyli osób korzystających wyłącznie z urządzeń takich jak smartphony, czy tablety. Ostatnim argumentem przemawiającym przeciwko tego typu oprogramowaniu jest jego uniwersalność, która sprawia, iż aplikacja próbuje sprostać wszystkim wymaganiom mając zaimplementowane wiele funkcjonalności, których konkretne laboratorium nie potrzebuje. Większości z tych opcji nie da się wyłączyć, co powoduje niepotrzebne skomplikowanie interfejsu oraz obciążenie aplikacji i serwera zupełnie niepotrzebnymi, nieużywanymi funkcjami.
+
+
 \section{Zarys projektu}
-\section{Przeznaczenie projektu}
+
+\quad \textit{PhotoLab} to aplikacja internetowa oparta o najnowsze dostępne technologie. Projekt zakłada stworzenie systemu spełniającego cztery podstawowe warunki: \textbf{prostota} i użyteczność, \textbf{niski koszt} utrzymania i wdrożenia, \textbf{bezpieczeństwo} danych oraz pełne \textbf{pokrycie usług} oferowanych przez laboratorium.\\
+\\
+Aplikacja ma zostać zbudowana jako strona typu \textit{\textbf{Single Page Application}} (\textit{\textbf{SPA}}) z trzema głównymi widokami: stroną logowania administratora, panelem administracyjnym oraz stroną laboratorium z podstawowymi danymi o firmie oraz możliwością rejestracji i składania zleceń.\\
+\\
+System ma uwzględniać podział użytkowników systemu na dwie role: klienta i administratora.
+Każdy nowy użytkownik ma mieć automatycznie przydzielaną rolę klienta wraz z możliwością edycji swojego profilu, w którego skład wchodzą: podstawowe informacje o kliencie, dane do wysyłki oraz dane do wystawienia faktury. Klient ma również posiadać możliwość wglądu w historię swoich zleceń wraz ze wszystkimi szczegółami ich realizacji.\\
+\\
+Administrator to użytkownik z pełnymi prawami wglądu do wszystkich zleceń oraz klientów laboratorium. Ponadto ma on możliwość edycji domyślnych parametrów nowych zleceń, ustalania dostępnych formatów i rodzajów papieru. W założeniach dodatkowych administrator ma również możliwość prowadzenia statystyk swojego laboratorium.
+
+
+\section{Przeznaczenie}
+
+\quad Projekt przeznaczony jest dla małego laboratorium fotograficznego chcącego posiadać internetową wizytówkę firmy w postaci strony www, a jednocześnie w ramach jednego systemu móc obsługiwać swoich klientów online zapewniając im możliwość zlecania zamówień na wydruk zdjęć. \\
+\\
+Interfejs aplikacji ma być na tyle prosty, by do celów jego obsługi wystarczyły jedynie podstawowe informacje z zakresu znajomości i obsługi komputera. Ma to spowodować szeroką dostępność dla wszystkich klientów chcących skorzystać z usług zakładu fotograficznego. Aplikacja będąc umieszczona na zewnętrznym serwerze ma być dostępna dla każdego użytkownika internetu bez względu na lokalizację, z której będzie się chciał z nią połączyć.
+
+\section{Zawartość pracy}
+\quad Dokumentacja składa się z 6 rozdziałów, które dzielą ją tematycznie i chronologicznie, uwzględniając przy tym wszystkie etapy przebiegu pracy nad aplikacją \textit{Photolab}.
+
+\begin{itemize}
+\item \textbf{Rozdział 1} zawiera podstawowe informacje o projekcie: jego skrócony opis, a także genezę powstania oraz przeznaczenie. Omawia także obecny stan polskiego rynku
+w zakresie podobnych rozwiązań.
+\item \textbf{Rozdział 2} to zbiór wszystkich założeń, ustaleń i funkcjonalności, które mają cechować finalny produkt. Dodatkowo omawiana jest tam ogólna architektura aplikacji z podziałem na część serwerową oraz kliencką.
+\item \textbf{Rozdział 3} składa się na opis technologii, które zostały wybrane jako podstawa do stworzenia projektu. W rozdziale tym znajduje się krótkie omówienie każdego z zastosowanych systemów, \textit{frameworków} czy architektur oraz uzasadnienie ich wyboru w ramach implementacji.
+\item \textbf{Rozdział 4} przeznaczony został na dokładny opis całego systemu \textit{PhotoLab}, rozpoczynając od dokładnego omówienia struktury aplikacji, stopniowo przechodząc przez każdy jej moduł, aż do opisu procesu instalacji, uruchomienia i krótkiej instrukcji użytkowania.
+\item \textbf{Rozdział 5} omawia sposoby testowania i walidacji poprawności projektu zarówno na etapie jego budowy jak i efektu finalnego. Zawarte są w nim również dokładne informacje na temat zgodności produktu końcowego z początkowymi założeniami projektowymi.
+\item \textbf{Rozdział 6} to podsumowanie całej pracy składającej się na realizację projektu. Uwzględnia on również sekcję poświęconą na przedstawienie możliwości dalszego rozwoju i rozbudowy aplikacji.
+\end{itemize}
