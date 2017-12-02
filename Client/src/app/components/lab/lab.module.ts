@@ -18,10 +18,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
 import { LoginModalComponent } from "./login-modal/login-modal.component";
-import { BootstrapModalModule } from "ng2-bootstrap-modal";
 import { UserPanelComponent } from "./user-panel/user-panel.component";
 import { RegisterModalComponent } from './register-modal/register-modal.component';
 import { EqualValidator} from "../../directives/equal.validator.directive";
+import { OrderSummaryComponent } from "./order-summary/order-summary.component";
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,6 @@ import { EqualValidator} from "../../directives/equal.validator.directive";
     FileUploadModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
-    BootstrapModalModule
   ],
   declarations: [
     LabLayoutComponent,
@@ -43,12 +43,14 @@ import { EqualValidator} from "../../directives/equal.validator.directive";
     ImagePreview,
     CartComponent,
     OrderDetailedDataComponent,
+    OrderSummaryComponent,
     LoginModalComponent,
     RegisterModalComponent,
     UserPanelComponent,
     EqualValidator
 ,
-    RegisterModalComponent
+    RegisterModalComponent,
+    ContactComponent
 ],
   exports: [],
   providers: [UserService, FileService],

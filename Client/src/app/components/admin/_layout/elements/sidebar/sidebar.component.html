@@ -70,9 +70,9 @@
     <footer class="sidebar-footer">
         <ul class="sidebar-menu metismenu" id="customize-menu">
 
-            <li class="active">
-                <a href="https://github.com/modularcode/modular-admin-html">
-                    Nowe Zlecenia: 2
+            <li class="active" *ngIf="newOrdersAmount > 0">
+                <a href="./admin/orders">
+                    Nowe Zlecenia: {{ newOrdersAmount }}
                     <i class="fa fa-flag" aria-hidden="true"></i>
                 </a>
             </li>

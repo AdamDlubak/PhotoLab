@@ -8,7 +8,7 @@ namespace Server.Models
   {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-
+    public int OrdersAmount { get; set; }
     public int? DeliveryDataId { get; set; }
     public virtual DeliveryData DeliveryData { get; set; }
     public int? InvoiceDataId { get; set; }

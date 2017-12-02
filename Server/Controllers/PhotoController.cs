@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Helpers;
@@ -27,38 +28,118 @@ namespace Server.Controllers
   {
     private readonly PhotoLabContext _context;
     private readonly IHostingEnvironment _hostingEnvironment;
+    private readonly UserManager<Models.User> _userManager;
 
-    public PhotoController(PhotoLabContext appDbContext, IHostingEnvironment environment)
+    public PhotoController(PhotoLabContext appDbContext, IHostingEnvironment environment, UserManager<Models.User> userManager)
     {
       _context = appDbContext;
       _hostingEnvironment = environment;
-
+      _userManager = userManager;
     }
+    // POST api/photo/setOrderStatus/id
+    [HttpPost("setorderstatus/{id}")]
+    public async Task<IActionResult> SetOrderStatus([FromBody] int statusId, int id)
+    {
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+      var order = _context.Orders.FirstOrDefault(x => x.Id == id);
 
+      order.Status = statusId;
+      await _context.SaveChangesAsync();
 
+      return new OkResult();
+    }
+    // POST api/photo/setOrderNewStatus/id
+    [HttpPost("setordernewstatus/{id}")]
+    public async Task<IActionResult> SetOrderNewStatus([FromBody] bool newStatus, int id)
+    {
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+      var order = _context.Orders.FirstOrDefault(x => x.Id == id);
 
+      order.IsNew = newStatus;
+      await _context.SaveChangesAsync();
+
+      return new OkResult();
+    }
+    // POST api/photo/submitOrderDate/id
+    [HttpPost("submitOrderDate/{id}")]
+    public async Task<IActionResult> SubmitOrderDate([FromBody] DateViewModel dateViewModel, int id)
+    {
+      if (!ModelState.IsValid) return BadRequest(ModelState);
+      if (dateViewModel.DateTime != null)
+      {
+        TimeSpan ts = new TimeSpan(1, 0, 0);
+        dateViewModel.DateTime = dateViewModel.DateTime.Value + ts;
+      }
+
+      var order = _context.Orders.FirstOrDefault(x => x.Id == id);
+        switch (dateViewModel.DateType)
+        {
+          case 0:
+            order.OrderDate = dateViewModel.DateTime;
+            break;
+          case 1:
+            order.PaymentDate = dateViewModel.DateTime;
+            break;
+          case 2:
+            order.ShippingDate = dateViewModel.DateTime;
+            break;
+          case 3:
+            order.EndDate = dateViewModel.DateTime;
+            break;
+          default:
+            return BadRequest("Wrong date type!");
+        }
+    
+      await _context.SaveChangesAsync();
+
+      return new OkResult();
+    }
     // POST api/photo/submitOrder
     [HttpPost("submitOrder")]
     public async Task<IActionResult> SubmitOrder([FromBody] OrderViewModel orderViewModel)
      {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
+       if (orderViewModel.DeliveryDataId == null && orderViewModel.DeliveryTypeId != 1)
+       {
+         _context.DeliveryDatas.Add(orderViewModel.DeliveryData);
+         _context.SaveChanges();
+         orderViewModel.DeliveryDataId = orderViewModel.DeliveryData.Id;
+         orderViewModel.DeliveryData = null;
+       }
+       if (orderViewModel.InvoiceDataId == null && orderViewModel.IsInvoice)
+       {
+         _context.InvoiceDatas.Add(orderViewModel.InvoiceData);
+         _context.SaveChanges();
+         orderViewModel.InvoiceDataId = orderViewModel.InvoiceData.Id;
+         orderViewModel.InvoiceData = null;
+      }
       var order = Mapper.Map<Order>(orderViewModel);
+       order.PaymentStatusId = 1;
       foreach (var photo in order.Photos)
       {
         _context.Photos.Add(photo);
       }
       _context.Orders.Add(order);
+
+       var client = await _userManager.Users.Where(e => e.Id == orderViewModel.UserId).FirstOrDefaultAsync();
+       client.OrdersAmount = client.OrdersAmount + 1;
       await _context.SaveChangesAsync();
 
       return new OkObjectResult("Order added correctly!");
     }
-
+    // GET api/photo/getnewordersamount
+    [HttpGet("getNewOrdersAmount")]
+    public IActionResult GetNewOrdersAmount()
+    {
+      var ordersAmt = _context.Orders.Count(x => x.IsNew);
+      return new OkObjectResult(ordersAmt);
+    }
     // GET api/photo/getorder/id
-   [HttpGet("getOrder/{id}")]
+    [HttpGet("getOrder/{id}")]
     public IActionResult GetOrder(int id)
     {
-      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).Include(c => c.User).FirstOrDefault(o => o.Id == id);
+      var orders = _context.Orders.Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).Include(c => c.User).Include(i => i.InvoiceData).Include(p => p.PaymentStatus).Include(pt => pt.PaymentType).FirstOrDefault(o => o.Id == id);
       return new OkObjectResult(orders);
     }
     // GET api/photo/getorders
@@ -83,7 +164,8 @@ namespace Server.Controllers
           TotalOrderPrice = order.TotalOrderPrice,
           Delivery = delivery,
           Bill = order.IsInvoice,
-          Status = order.Status
+          Status = order.Status,
+          IsNew = order.IsNew
         });
       }
       return new OkObjectResult(ordersViewModelList);
@@ -224,8 +306,21 @@ namespace Server.Controllers
       var deliveryTypes = _context.DeliveryTypes.ToList();
       return new OkObjectResult(deliveryTypes);
     }
+    // GET api/photo/getpaymenttypes
+    [HttpGet("getPaymentTypes")]
+    public IActionResult GetPaymentTypes()
+    {
+      var paymentTypes = _context.PaymentTypes.ToList();
+      return new OkObjectResult(paymentTypes);
+    }
 
-
+    // GET api/photo/getdeliverydata
+    [HttpGet("getDeliveryData/{id}")]
+    public IActionResult GetDeliveryData(int id)
+    {
+      var deliveryData = _context.DeliveryDatas.Where(x => x.Id == id).FirstOrDefault();
+      return new OkObjectResult(deliveryData);
+    }
 
 
     [HttpPost("Upload")]

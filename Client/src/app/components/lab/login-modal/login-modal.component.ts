@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
 import { UserLogin } from "../../../models/user.login.interface";
 import { UserService } from "../../../services/user.service";
 import { Subscription } from "rxjs";
@@ -13,8 +12,7 @@ export interface ConfirmModel {
   templateUrl: "./login-modal.component.html",
   styleUrls: ["./login-modal.component.scss"]
 })
-export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
-  implements ConfirmModel, OnInit, OnDestroy {
+export class LoginModalComponent implements OnInit, OnDestroy {
   title: string;
   message: string;
 
@@ -26,17 +24,12 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
   userLogin: UserLogin = { email: "", password: "" };
 
   constructor(
-    dialogService: DialogService,
     private userService: UserService,
     private router: Router,
   ) {
-    super(dialogService);
   }
   ngOnInit() { }
-  confirm() {
-    this.result = true;
-    this.close();
-  }
+
   ngOnDestroy() {
 
   }
@@ -51,7 +44,6 @@ export class LoginModalComponent extends DialogComponent<ConfirmModel, boolean>
         .subscribe(result => {
           if (result) {
             this.userService.client = result;
-            this.close();
           }
         }, error => (this.errors = error));
     }

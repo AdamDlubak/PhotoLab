@@ -8,32 +8,23 @@ body {
     }
   }
   
-  .carousel-item {
-    height: 65vh;
-    min-height: 300px;
-    background: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-  
-  .portfolio-item {
-    margin-bottom: 30px;
+
+  .background-footer {
+      background: linear-gradient( rgba(30, 30, 30, 0.95), rgba(30, 30, 30, 0.95) ), url("../../../../assets/images/backgrounds/footer.jpg") no-repeat center center scroll;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
   }
 
-  .bg-dark {
-      background-color: #1b1a1a !important;
-  }
-
-
-  .brand {
-    color: #fff;
-    text-align: left;
+.footer-padding {
+  padding-top: 2rem;
+}
+  .footer-brand {
+    display: inline-block;
     height: 49px;
-    font-size: 16px;
-    width: 189px;
-    background: url("../../../../assets/images/logo-lab.png") no-repeat
+    width: 225px;
+    background: url("../../../../assets/images/logo.png") no-repeat
       center center;
   }
 
@@ -42,4 +33,32 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
 
+}
+.footer-header {
+  padding-bottom: 0.6rem;
+  margin-right: 0.5rem;
+}
+.footer-font {
+  color: #fff;
+}
+.flex-direction-row {
+  flex-direction: row;
+}
+.footer-author {
+  font-size: 1rem;
+  margin-bottom: 0;
+  opacity: 0.8;
+}
+.footer-author:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.footer-social-icon {
+  font-size: 1.5rem;
+  padding: 1rem;
+  opacity: 0.8;
+}
+.footer-social-icon:hover {
+  opacity: 1;
+  cursor: pointer;
 }

@@ -1,8 +1,10 @@
+import { UserEditDelivery } from './../models/user.edit.delivery.interface';
 import { Order } from "../models/order.class";
 import { Format } from "../models/format.class";
 import { Cart } from "../models/cart.class";
 import { Paper } from "../models/paper.class";
 import { DeliveryType } from "../models/deliveryType.class";
+import { PaymentType } from "../models/paymentType.class";
 import { DefaultParam } from "../models/default-param.class";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { Injectable } from "@angular/core";
@@ -26,6 +28,7 @@ export class FileService extends BaseService {
   formats: Format[];
   papers: Paper[];
   deliveryTypes: DeliveryType[];
+  paymentTypes: PaymentType[];
   uploader: FileUploader;
   fileItemDetails: Array<FileItemDetails>;
   order: Order;
@@ -34,6 +37,42 @@ export class FileService extends BaseService {
   constructor(private http: Http, private configService: ConfigService) {
     super();
     this.baseUrl = configService.getApiURI();
+  }
+  getNewOrdersAmount() : Observable <number> {
+    return this.http
+    .get(this.baseUrl + "/photo/getnewordersamount")
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
+  setDate(orderId: number, dateTime: Date, dateType: number) {
+    let body = JSON.stringify({dateTime, dateType});
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    
+    return this.http
+      .post(this.baseUrl + "/photo/submitorderdate/" + orderId, body, options)
+      .catch(this.handleError);  
+  }
+  public setOrderStatus(orderId: number, stateId: number) {
+    let body = JSON.stringify(stateId);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/setorderstatus/" + orderId, body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+  
+  public setOrderNewStatus(orderId: number, newStatus: boolean) {
+    let body = JSON.stringify(newStatus);
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(this.baseUrl + "/photo/setordernewstatus/" + orderId, body, options)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
   }
   public submitOrder() {
     this.order.photos = this.fileItemDetails;
@@ -52,7 +91,12 @@ export class FileService extends BaseService {
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
-
+  getDeliveryData(id : number) : Observable<UserEditDelivery> {
+    return this.http
+    .get(this.baseUrl + "/photo/getdeliverydata/" + id)
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
   getPapers(): Observable<Paper[]> {
     return this.http
       .get(this.baseUrl + "/photo/getpapers")
@@ -71,7 +115,12 @@ export class FileService extends BaseService {
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
-
+  getPaymentTypes(): Observable<PaymentType[]> {
+    return this.http
+      .get(this.baseUrl + "/photo/getpaymenttypes")
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
   getOrders() : Observable<Order[]> {
     return this.http
     .get(this.baseUrl + "/photo/getorders")

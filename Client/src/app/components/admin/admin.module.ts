@@ -20,8 +20,9 @@ import { FileService } from "../../services/file.service";
 import { ToastrModule } from 'ngx-toastr';
 import { OrderComponent } from './Order/Order.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
-  imports: [CommonModule, FormsModule, Routing, SharedModule, ToastrModule.forRoot()],
+  imports: [CommonModule, FormsModule, Routing, SharedModule, ToastrModule.forRoot(), NgbModule],
   declarations: [
     RegistrationFormComponent,
     UserEditComponent,

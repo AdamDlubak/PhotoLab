@@ -8,6 +8,7 @@ import { Routing } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { ConfigService } from "./utils/config.service";
 import { EmailValidator } from "./directives/email.validator.directive";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, EmailValidator],
@@ -16,7 +17,8 @@ import { EmailValidator } from "./directives/email.validator.directive";
     FormsModule,
     HttpModule,
     Routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     ConfigService,

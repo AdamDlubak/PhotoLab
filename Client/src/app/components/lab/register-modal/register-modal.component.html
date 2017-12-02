@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-flex-login">
+<ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-content modal-flex-content">
         <div class="left-login">
 
@@ -125,4 +125,6 @@
         </div>
 
     </div>
-</div>
+</ng-template>
+
+<pre>{{closeResult}}</pre>

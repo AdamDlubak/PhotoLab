@@ -43,7 +43,7 @@ export class OrderPhotoUploadComponent implements OnInit {
       this.fileService.order.deliveryTypeId = this.fileService.defaultParam.deliveryTypeId;
       localStorage.setItem('fileItemDetails', JSON.stringify(this.fileService.fileItemDetails));
       localStorage.setItem('order', JSON.stringify(this.fileService.order));
-      this.router.navigate(["order-deitaled-data"]);
+      this.router.navigate(["order-detailed-data"]);
 
     };
   }

@@ -1,7 +1,18 @@
 <!-- Control Panel Header -->
 <div class="title-block" *ngIf="order">
   <h3 class="title" style="font-family: 'Comfortaa', cursive">
-    Szczegóły zamówienia nr {{ order.id }}
+    <span style="font-size: 1.2rem">
+      <span *ngIf="order.isNew" class="status status-new">Nowe</span> 
+      <span *ngIf="order.status == 0" class="status status-0">{{ getStatusName(order.status) }}</span>      
+      <span *ngIf="order.status == 1" class="status status-1">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 2" class="status status-2">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 3" class="status status-3">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 4" class="status status-4">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 5" class="status status-5">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 6" class="status status-6">{{ getStatusName(order.status) }}</span>
+      <span *ngIf="order.status == 7" class="status status-7">{{ getStatusName(order.status) }}</span>
+    </span>
+      Szczegóły zamówienia nr {{ order.id }}
   </h3>
   <p class="title-description" style="font-family: 'Roboto', sans-serif;">
     Poniżej przedstawione są wszystkie szczegóły zlecenia wraz z możliwością edycji i zmiany stanu.
@@ -36,24 +47,86 @@
         <!-- Papers Section Body -->
         <section *ngIf="order">
           <div class="paragraph-padding">
-            <p class="paragraph-key">Imię i nazwisko:</p>
-            <p class="paragraph-value">
-              <i class="fa fa-user-circle" aria-hidden="true"></i> {{ order.user.firstName}} {{ order.user.lastName }}</p>
-            <p class="paragraph-key">Adres e-mail:</p>
-            <p class="paragraph-value">
-              <i class="fa fa-envelope-o" aria-hidden="true"></i> {{ order.user.email }}</p>
-            <p class="paragraph-key">Telefon:</p>
-            <p class="paragraph-value">
-              <i class="fa fa-phone" aria-hidden="true"></i> +48 {{ order.user.phoneNumber | slice:0:3 }} {{ order.user.phoneNumber | slice:3:6 }} {{ order.user.phoneNumber
-              | slice:6:9 }}</p>
-            <p>
-              <b>Złożonych zamówień:</b> 9</p>
+            <p class="paragraph-key">
+              <i class="fa fa-user-circle" aria-hidden="true"></i> Imię i nazwisko:
+              <span class="paragraph-value">{{ order.user.firstName}} {{ order.user.lastName }}</span>
+            </p>
+            <p class="paragraph-key">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i> Adres e-mail:
+              <span class="paragraph-value">
+                {{ order.user.email }}</span>
+            </p>
+            <p class="paragraph-key">
+              <i class="fa fa-phone" aria-hidden="true"></i> Telefon:
+              <span class="paragraph-value">
+                +48 {{ order.user.phoneNumber | slice:0:3 }} {{ order.user.phoneNumber | slice:3:6 }} {{ order.user.phoneNumber | slice:6:9
+                }}
+              </span>
+            </p>
+            <p class="paragraph-key">
+              <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> Złożonych zamówień:
+              <span class="paragraph-value">
+                {{ order.user.ordersAmount }}
+              </span>
+            </p>
+
+
+
           </div>
         </section>
 
       </div>
 
+      <div class="card sameheight-item">
 
+        <!-- Papers Section Header -->
+        <div class="card-block">
+          <div class="card-title-block">
+            <div class="container">
+              <div class="row">
+                <div class="col-12 col-md-12 title-flex-container">
+                  <h3 class="title box-title">
+                    Dostawa i Faktura
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Papers Section Body -->
+        <section>
+          <div class="paragraph-padding" *ngIf="order">
+            <p class="paragraph-key">
+              Dostawa:
+              <span *ngIf="order.deliveryData" class="paragraph-value">
+                <br />{{ order.deliveryData.deliveryFirstName }} {{ order.deliveryData.deliveryLastName }}
+                <br /> {{ order.deliveryData.deliveryPostCode }} {{ order.deliveryData.deliveryCity }}
+                <br /> {{ order.deliveryData.deliveryAddress }}
+              </span>
+              <span *ngIf="!order.deliveryData" class="paragraph-value"> Brak danych dostawy</span>
+            </p>
+            <p class="paragraph-key">
+              Faktura:
+              <span *ngIf="order.invoiceData" class="paragraph-value">
+                <span *ngIf="!order.invoiceData.invoiceType">
+                  <br />{{ order.invoiceData.invoiceFirstName }} {{ order.invoiceData.invoiceLastName }}
+                  <br />
+                </span>
+                <span *ngIf="order.invoiceData.invoiceType">{{ order.invoiceData.invoiceCompany }}
+                  <br />{{ order.invoiceData.invoiceNip }}
+                  <br />
+                </span>
+                {{ order.invoiceData.invoicePostCode }} {{ order.invoiceData.invoiceCity }}
+                <br /> {{ order.invoiceData.invoiceAddress }}
+              </span>
+              <span *ngIf="!order.invoiceData" class="paragraph-value"> Brak danych do faktury</span>
+            </p>
+          </div>
+        </section>
+
+
+      </div>
       <!-- Formats Section -->
 
     </div>
@@ -67,16 +140,10 @@
           <div class="card-title-block">
             <div class="container">
               <div class="row">
-                <div class="col-12 col-md-7 title-flex-container">
+                <div class="col-12 col-md-12 title-flex-container">
                   <h3 class="title box-title">
                     Szczegóły zamówienia
                   </h3>
-                </div>
-                <div class="col-12 col-md-5 flex-container">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-success new-button" data-toggle="modal" data-target="#submitPaperModal" (click)="selectPaper(false, 0)">
-                    Dodaj nowy
-                  </button>
                 </div>
               </div>
             </div>
@@ -86,51 +153,96 @@
         <!-- Papers Section Body -->
         <section *ngIf="order">
           <div class="paragraph-padding">
+              <div class="d-flex flex-column justify-content-around align-items-center">
+                  <div>
+              <button type="button" class="btn btn-sm" [ngClass]="order.isNew ? 'btn-success' : 'btn-outline-success'" (click)="changeNewStatus(true)">
+                  <span *ngIf="!order.isNew">Oznacz jako nowe</span>
+                  <span *ngIf="order.isNew">Oznacz jako otwarte</span>
+                </button>
+                    <span class="btn btn-info dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Zmień status zlecenia
+                    </span>
+                  
+                    <div *ngIf="orderState.states" class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+                      <span class="dropdown-item" (click)="setOrderStatus(state.id)" *ngFor="let state of orderState.states">{{ state.name }}</span>
+                    </div>
+                </div>
+                </div>
+              <hr/>
+
             <p class="paragraph-data">Numer zamówienia:
               <span style="font-weight: bold">{{ order.id }}</span>
             </p>
             <p class="paragraph-data">Data złożenia:
               <span style="font-weight: bold">{{ order.orderDate | date: 'dd.MM.yyyy' }}</span> o godzinie
-              <span style="font-weight: bold"> {{ order.orderDate | date: 'HH:mm:ss' }} </span>
+              <span style="font-weight: bold"> {{ order.orderDate | date: 'HH:mm' }} </span>
             </p>
-            <p *ngIf="order.paymentDate" class="paragraph-data">Data zapłaty:
-              <span style="font-weight: bold">{{ order.paymentDate | date: 'dd.MM.yyyy' }}</span> o godzinie
-              <span style="font-weight: bold"> {{ order.paymentDate | date: 'HH:mm:ss' }} </span>
-            </p>
-            <p *ngIf="!order.paymentDate" class="paragraph-data">Data zapłaty:
+            <p class="paragraph-data">
+              <button type="button" class="btn btn-sm new-button" [ngClass]="order.paymentDate ? 'btn-outline-success' : 'btn-success'"  (click)="open(changeDate, 1)">
+                <span *ngIf="order.paymentDate">Zmień</span>
+                <span *ngIf="!order.paymentDate">Ustaw</span>
+              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm new-button" (click)="openRemoveDate(removeDate, 1)">
+                Skasuj
+              </button> Data zapłaty:
+              <span *ngIf="order.paymentDate">
+                <span style="font-weight: bold">{{ order.paymentDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+                <span style="font-weight: bold"> {{ order.paymentDate | date: 'HH:mm' }} </span>
+              </span>
               <span *ngIf="!order.paymentDate" style="font-weight: bold">Brak</span>
             </p>
-            <p *ngIf="order.endDate" class="paragraph-data">Data wykonania:
-              <span style="font-weight: bold">{{ order.endDate | date: 'dd.MM.yyyy' }}</span> o godzinie
-              <span style="font-weight: bold"> {{ order.endDate | date: 'HH:mm:ss' }} </span>
-            </p>
-            <p *ngIf="!order.endDate" class="paragraph-data">Data wykonania:
+
+            <p class="paragraph-data">
+              <button type="button" class="btn btn-sm new-button" [ngClass]="order.endDate ? 'btn-outline-success' : 'btn-success'" (click)="open(changeDate, 3)">
+                <span *ngIf="order.endDate">Zmień</span>
+                <span *ngIf="!order.endDate">Ustaw</span>
+              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm new-button" (click)="openRemoveDate(removeDate, 3)">
+                Skasuj
+              </button> Data wykonania:
+              <span *ngIf="order.endDate">
+                <span style="font-weight: bold">{{ order.endDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+                <span style="font-weight: bold"> {{ order.endDate | date: 'HH:mm' }} </span>
+              </span>
               <span *ngIf="!order.endDate" style="font-weight: bold">Brak</span>
             </p>
 
-            <p *ngIf="order.shippingDate" class="paragraph-data">Data wysyłki / odbioru:
-              <span style="font-weight: bold">{{ order.shippingDate | date: 'dd.MM.yyyy' }}</span> o godzinie
-              <span style="font-weight: bold"> {{ order.shippingDate | date: 'HH:mm:ss' }} </span>
-            </p>
-            <p *ngIf="!order.shippingDate" class="paragraph-data">Data wysyłki / odbioru:
+            <p class="paragraph-data">
+              <button type="button" class="btn btn-sm new-button" [ngClass]="order.shippingDate ? 'btn-outline-success' : 'btn-success'" (click)="open(changeDate, 2)">
+                <span *ngIf="order.shippingDate">Zmień</span>
+                <span *ngIf="!order.shippingDate">Ustaw</span>
+              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm new-button" (click)="openRemoveDate(removeDate, 2)">
+                Skasuj
+              </button> Data odbioru / wysyłki:
+              <span *ngIf="order.shippingDate">
+                <span style="font-weight: bold">{{ order.shippingDate | date: 'dd.MM.yyyy' }}</span> o godzinie
+                <span style="font-weight: bold"> {{ order.shippingDate | date: 'HH:mm' }} </span>
+              </span>
               <span *ngIf="!order.shippingDate" style="font-weight: bold">Brak</span>
             </p>
+
             <hr/>
             <p class="paragraph-data">Wartość odbitek:
               <span style="font-weight: bold">{{ order.totalPrintsPrice | number:'1.2-2' }} zł</span>
             </p>
-            <p class="paragraph-data">Cena dostarczenia:
+            <p class="paragraph-data">Cena dostarczenia i obsługi:
               <span style="font-weight: bold">{{ order.totalOrderPrice - order.totalPrintsPrice | number:'1.2-2' }} zł</span>
             </p>
             <p class="paragraph-data">Całkowita wartość zamówienia:
               <span style="font-weight: bold">{{ order.totalOrderPrice | number:'1.2-2' }} zł</span>
             </p>
             <p class="paragraph-data">Forma płatności:
-              <span *ngIf="order.isTraditionalTransfer" style="font-weight: bold">Tradycyjny przelew na konto</span>
-              <span *ngIf="!order.isTraditionalTransfer" style="font-weight: bold">Płatność elektroniczna poprzez PayU</span>
+              <span style="font-weight: bold">{{ order.paymentType.name }}</span>
             </p>
             <p class="paragraph-data">Status płatności:
-              <span style="font-weight: bold">{{ order.paymentStatus }} </span>
+              <span style="font-weight: bold">{{ order.paymentStatus.name }} </span>
+            </p>
+            <p class="paragraph-data">Dodatkowe informacje:
+
+              <span *ngIf="order.additionalInfo" style="font-weight: bold">
+                <br />{{ order.additionalInfo }} </span>
+              <span *ngIf="!order.additionalInfo" style="font-weight: bold">Brak</span>
             </p>
           </div>
         </section>
@@ -150,12 +262,12 @@
         <!-- Papers Section Header -->
         <div class="card-block">
           <div class="card-title-block">
-                <div class="col-12 col-md-7 title-flex-container">
-                  <h3 class="title box-title">
-                    Szczegóły zdjęć:
-                  </h3>
-                </div>
+            <div class="col-12 col-md-7 title-flex-container">
+              <h3 class="title box-title">
+                Szczegóły zdjęć:
+              </h3>
             </div>
+          </div>
         </div>
 
         <!-- Papers Section Body -->
@@ -167,15 +279,15 @@
               {{ photo.name }}
               <ul style="margin: 0">
                 <ng-container *ngFor="let print of photo.prints">
-                <li *ngIf="print.amount != 0" class="paragraph-print">
-                  Format
-                  <span class="color-box alert-info">{{ getFormatNameById(print.format) }}</span>
-                  Papier:
-                  <span class="color-box alert-success">{{ getPaperNameById(print.paper) }}</span>
-                  Odbitek:
-                  <span class="color-box alert-secondary">{{ print.amount }} </span>
-                </li>
-              </ng-container>
+                  <li *ngIf="print.amount != 0" class="paragraph-print">
+                    Format
+                    <span class="color-box alert-info">{{ getFormatNameById(print.format) }}</span>
+                    Papier:
+                    <span class="color-box alert-success">{{ getPaperNameById(print.paper) }}</span>
+                    Odbitek:
+                    <span class="color-box alert-secondary">{{ print.amount }} </span>
+                  </li>
+                </ng-container>
               </ul>
             </li>
 
@@ -183,3 +295,60 @@
         </section>
       </div>
     </div>
+
+
+    <ng-template #removeDate let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Skasuj datę</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Czy jesteś pewien, że chcesz skasować tę datę?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="d('Cross click')">Anuluj</button>
+          <button type="button" (click)="d('Cross click'); setDate(true)" class="btn btn-danger">Skasuj</button>
+        </div>
+      </ng-template>
+  
+    <ng-template #changeDate let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Ustaw datę i czas</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-row justify-content-around align-items-center">
+          <div class="p-2">
+            <ngb-datepicker #dp [(ngModel)]="date" (navigate)="date = $event.next"></ngb-datepicker>
+          </div>
+          <div class="p-2">
+            <ngb-timepicker [(ngModel)]="time" [seconds]="seconds"></ngb-timepicker>
+          </div>
+        </div>
+        <hr/>
+        <div class="d-flex flex-column justify-content-around align-items-center">
+          <div class="p-2">
+            <p class="text-center mb-0">Ustawiona data:
+              <span class="font-weight-bold">{{ date.day | number:'2.0' }}.{{ date.month | number:'2.0' }}.{{ date.year }}</span>
+            </p>
+
+            <p class="text-center mb-0">Ustawiony czas:
+              <span class="font-weight-bold">{{ time.hour | number:'2.0'}}:{{ time.minute | number:'2.0'}}:{{ time.second | number:'2.0'}}</span>
+            </p>
+          </div>
+          <div class="p-2">
+            <button class="btn btn-sm btn-outline-primary" (click)="selectToday()">Obecna data i czas</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="c('Close click'); setDate()">Ustaw</button>
+      </div>
+    </ng-template>
+
+    <pre>{{closeResult}}</pre>

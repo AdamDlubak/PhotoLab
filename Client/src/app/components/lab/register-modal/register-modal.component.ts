@@ -2,11 +2,10 @@ import { UserRegister } from "./../../../models/user.register.interface";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 import { UserService } from "./../../../services/user.service";
-import { DialogService } from "ng2-bootstrap-modal";
 import { OnDestroy } from "@angular/core";
 import { ConfirmModel } from "./../login-modal/login-modal.component";
 import { Subscription } from "rxjs";
-import { DialogComponent } from "ng2-bootstrap-modal";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -14,10 +13,7 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./register-modal.component.html",
   styleUrls: ["./register-modal.component.scss"]
 })
-export class RegisterModalComponent extends DialogComponent<
-  ConfirmModel,
-  boolean
-> implements ConfirmModel, OnInit, OnDestroy {
+export class RegisterModalComponent implements OnInit, OnDestroy {
   title: string;
   message: string;
 
@@ -34,25 +30,39 @@ export class RegisterModalComponent extends DialogComponent<
     lastName: ""
   };
 
-  constructor(
-    dialogService: DialogService,
-    private userService: UserService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {
-    super(dialogService);
-  }
   ngOnInit() {
     // subscribe to router event
   }
-  confirm() {
-    // we set dialog result as true on click on confirm button,
-    // then we can get dialog result from caller code
-    this.result = true;
-    this.close();
-  }
+
   ngOnDestroy() {
   }
+
+
+  closeResult: string;
+  
+    constructor(
+      private modalService: NgbModal,
+      private userService: UserService,
+      private router: Router,
+      private activatedRoute: ActivatedRoute) {}
+  
+    open(content) {
+      this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+  
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return  `with: ${reason}`;
+      }
+    }
 
   register() {
     this.isRequesting = true;
@@ -61,7 +71,6 @@ export class RegisterModalComponent extends DialogComponent<
       .finally(() => (this.isRequesting = false))
       .subscribe(result => {
         if (result) {
-          this.close();
           this.router.navigate(["/home"]);
         }
       }, error => (this.errors = error));

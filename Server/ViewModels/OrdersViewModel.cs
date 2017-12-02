@@ -15,5 +15,6 @@ namespace Server.ViewModels
     public bool Delivery { get; set; }
     public bool Bill { get; set; }
     public int Status { get; set; }
+    public bool IsNew { get; set; }
   }
 }

@@ -57,10 +57,10 @@ form.full-width select {
 }
 
 .paragraph-padding {
-    padding: 0 3rem;
+    padding: 0 3rem 1rem 3rem;
 }
 .paragraph-key {
-    margin-bottom: 0;
+    margin-bottom: 0.7rem;
     font-weight: bold;
 }
 .paragraph-photo {
@@ -71,7 +71,9 @@ form.full-width select {
     margin-bottom: 0.5rem;
 }
 .paragraph-value {
-    padding: 0 0 0 2rem;
+    padding: 0 0 0 0rem;
+    
+    font-weight: normal;
 }
 .paragraph-print {
     padding: 1rem 0 0 2rem;
@@ -84,4 +86,37 @@ form.full-width select {
     border: 1px solid transparent;
     border-radius: 0.25rem;
     font-weight: bold;
+}
+.status {
+    color: #fff;
+    padding: 0.5rem 0.5rem 0.4rem 0.5rem;
+    border-radius: 0.25rem;  
+}
+.status-new {
+    background-color: #28a745;
+    margin-right: 5px;
+}
+.status-0 {
+    background-color: #868e96;
+}
+.status-1 {
+    background-color: #868e96; 
+}
+.status-2 {
+    background-color: #868e96;
+}
+.status-3 {
+    background-color: #007bff;
+}
+.status-4 {
+    background-color: #dc3545;
+}
+.status-5 {
+    background-color: #dc3545;
+}
+.status-6 {
+    background-color: #17a2b8;
+}
+.status-7 {
+    background-color: #17a2b8;
 }

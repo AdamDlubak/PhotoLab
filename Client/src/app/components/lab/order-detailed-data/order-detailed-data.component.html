@@ -1,130 +1,296 @@
-<div class="container" style="width: 100%">
-    
-      
-    
-<h2 style="margin-top: 20px;">Podsumowanie Zlecenia</h2>
-<hr/>
+<header>
+    <div class="background-photo">
+      <div class="container height-100 d-flex align-items-center">
+  
+            <div class="title ">
+              Szczegóły zlecenia
+            </div>
+  
+      </div>
+    </div>
+  </header>
+  
+  <!-- Page Content -->
+  <div class="container container-margins">
+  
 
-<div class="row">
-<div class="col-md-8">
-    
-Liczba odbitek: {{ getTotalPrints() }} szt. <br />
-Cena: {{ getTotalPrintsPrice() | number:'1.2-2' }} zł<br />
-Status zlecenia: Realizacja wstrzymana - oczekiwanie na zapłatę<br />
-<h3 style="margin-top: 20px">Sposób dostawy</h3>
-<hr/>
-Przesyłka
-Odbiór osobisty
-<div class="col-2">
-    <label for="printsAmount">Sposób dostawy:</label>
-    <select *ngIf="fileService.deliveryTypes" class="custom-select d-block" (change)="calculateTotalOrderPrice()" name="selectPaper" [(ngModel)]="fileService.order.deliveryTypeId">
-        <option *ngFor="let deliveryType of fileService.deliveryTypes" [ngValue]="deliveryType.id">{{deliveryType.name}}</option>
-        
-    </select>
-  </div>
-<h3 style="margin-top: 20px">Dane do wysyłki</h3>
-<hr/>
-<div class="row">
+
+
+  <h2 style="margin-top: 20px;">1. Podsumowanie Zlecenia</h2>
+  <hr/>
+  <div class="row">
     <div class="col-md-8">
-      <form class="form-horizontal" *ngIf="client" role="form">
-        <fieldset>
-<button (click)="klik()">asdasdas</button>
 
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="textinput">Imię</label>
-            <div class="col-sm-10">
-              <input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="client.deliveryData.deliveryFirstName" class="form-control">
-            </div>
+
+      <div class="row" style="padding-left: 15px;">
+
+        <div class="col-12 basic-info">
+          <p>
+            <b>Liczba odbitek:</b> {{ getTotalPrints() }} szt.</p>
+
+          <p>
+            <b>Cena odbitek:</b> {{ getTotalPrintsPrice() | number:'1.2-2' }} zł</p>
+
+          <p>
+            <b>Status zlecenia:</b> Realizacja wstrzymana - oczekiwanie na zapłatę</p>
+        </div>
+      </div>
+      <h3 style="margin-top: 20px">2. Sposób dostawy lub odbioru</h3>
+      <hr/>
+      <div class="col-12" *ngIf="fileService.deliveryTypes">
+        <div class="d-flex flex-row justify-content-center">
+          <div *ngFor="let deliveryType of fileService.deliveryTypes" style="margin: 1rem;">
+
+            <a (click)='calculateTotalOrderPrice(deliveryType.id); checkDeliveryData()' [class.active]='fileService.order.deliveryTypeId == deliveryType.id'>
+              <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + deliveryType.iconActive + ')', false: 'url(' + deliveryType.icon + ')' }[fileService.order.deliveryTypeId == deliveryType.id] }">
+                <p class="type">{{ deliveryType.name }}</p>
+                <p>{{ deliveryType.price | number:'1.2-2' }} zł</p>
+
+              </div>
+            </a>
           </div>
+        </div>
+      </div>
+      <div *ngIf="fileService.order.deliveryTypeId != 1">
+        <h3 style="margin-top: 20px">Dane do wysyłki</h3>
+        <hr/>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9">
+                <div class="row" style="padding-left: 15px;">
 
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="textinput">Nazwisko</label>
-            <div class="col-sm-10">
-              <input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="client.deliveryData.deliveryLastName" class="form-control">
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="textinput">Miasto</label>
-            <div class="col-sm-10">
-              <input type="text" name="clientDeliveryCity" placeholder="Miasto" [(ngModel)]="client.deliveryData.deliveryCity" class="form-control">
-            </div>
-          </div>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="textinput">Ulica</label>
-            <div class="col-sm-4">
-              <input type="text" name="clientDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="client.deliveryData.deliveryAddress" class="form-control">
-            </div>
-
-            <label class="col-sm-2 control-label" for="textinput">Kod Pocztowy</label>
-            <div class="col-sm-4">
-              <input type="text" name="clientDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="client.deliveryData.deliveryPostCode" class="form-control">
-            </div>
-          </div>
-
-
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="textinput">Nr telefonu</label>
-            <div class="col-sm-10">
-              <input type="text" name="clientPhoneNumber" placeholder="+48 --- --- ---" [(ngModel)]="client.phoneNumber" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <div class="pull-right">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                  <div class="col-12 basic-info">
+                    <p>{{ client.deliveryData.deliveryFirstName }} {{client.deliveryData.deliveryLastName }}</p>
+                    <p>{{ client.deliveryData.deliveryPostCode }} {{ client.deliveryData.deliveryCity }}</p>
+                    <p>{{ client.deliveryData.deliveryAddress }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <a (click)='setAnotherDeliveryData()' [class.active]='anotherDeliveryData == true'>
+                  <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + anotherDeliveryDataIconActive + ')', false: 'url(' + anotherDeliveryDataIcon + ')' }[anotherDeliveryData == true] }">
+                    <p class="type"></p>
+                    <p>Chcę podać inne dane do wysyłki</p>
+                  </div>
+                </a>
               </div>
             </div>
+
+            <form [class.display-box]='anotherDeliveryData == true' class="form-horizontal hidden-box" role="form">
+              <fieldset>
+
+                <div class="row">
+
+                  <div class="form-group col-6">
+                    <label class="control-label" for="textinput">Imię</label>
+                    <input type="text" name="orderFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="fileService.order.deliveryData.deliveryFirstName"
+                      class="form-control">
+                  </div>
+
+                  <div class="form-group col-6">
+                    <label class="control-label" for="textinput">Nazwisko</label>
+                    <input type="text" name="orderLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="fileService.order.deliveryData.deliveryLastName"
+                      class="form-control">
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="form-group col-5 col-lg-3">
+                    <label class="control-label" for="textinput">Kod Pocztowy</label>
+                    <input type="text" name="orderDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="fileService.order.deliveryData.deliveryPostCode"
+                      class="form-control">
+                  </div>
+
+                  <div class="form-group col-7 col-lg-9">
+                    <label class="control-label" for="textinput">Miasto</label>
+                    <input type="text" name="orderDeliveryCity" placeholder="Miasto" [(ngModel)]="fileService.order.deliveryData.deliveryCity" class="form-control">
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="form-group col-8">
+                    <label class="control-label" for="textinput">Adres</label>
+                    <input type="text" name="orderDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="fileService.order.deliveryData.deliveryAddress"
+                      class="form-control">
+                  </div>
+
+
+                </div>
+
+              </fieldset>
+            </form>
+
           </div>
 
-        </fieldset>
-      </form>
-    </div><!-- /.col-lg-8 -->
 
 
-    
-</div><!-- /.row -->
-<div class="checkbox">
-    <label><input type="checkbox" value="">Tę przesyłke chcę przesłać na inny adres</label>
-  </div>
-  <div class="checkbox">
-      <label><input type="checkbox" value="">chcę podać inne dane do faktury</label>
+        </div>
+      </div>
+
+
+      <h3>3. Dodatkowe uwagi do zlecenia</h3>
+      <hr/>
+
+      <div class="row">
+        <div class="form-group col-12">
+          <textarea class="form-control" rows="5" id="comment" [(ngModel)]="fileService.order.additionalInfo"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-check" style="margin-left: 15px;">
+          <label class="form-check-label">
+            <input style="margin-top: 6px;" class="form-check-input" type="checkbox" [(ngModel)]="fileService.order.isInvoice" name="isInvoice" (change)="wantInvoice()"> Chcę otrzymać fakturę
+          </label>
+        </div>
+      </div>
+
+      <div *ngIf="fileService.order.isInvoice == true">
+        <h3 style="margin-top: 20px">Dane do faktury</h3>
+        <hr/>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9">
+                <div class="row" style="padding-left: 15px;">
+
+                  <div class="col-12 basic-info">
+                    <p>{{ client.invoiceData.invoiceFirstName }} {{ client.invoiceData.invoiceLastName }}</p>
+                    <p>{{ client.invoiceData.invoicePostCode }} {{ client.invoiceData.invoiceCity }}</p>
+                    <p>{{ client.invoiceData.invoiceAddress }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <a (click)='setAnotherInvoiceData()' [class.active]='anotherInvoiceData == true'>
+                  <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + anotherInvoiceDataIconActive + ')', false: 'url(' + anotherInvoiceDataIcon + ')' }[anotherInvoiceData == true] }">
+                    <p class="type"></p>
+                    <p>Chcę podać inne dane do faktury</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <form [class.display-box]='anotherInvoiceData == true' class="form-horizontal hidden-box" role="form" *ngIf="fileService.order.invoiceData">
+              <div class="row" style="margin-left: 0; justify-content: center; margin-bottom: 1rem;">
+
+                <div class="btn-group" role="group">
+                  <button type="button" (click)="onCompanyChange(false)" [ngClass]="fileService.order.invoiceData.invoiceType ? 'invoice-type-no-active' : 'invoice-type-active'"
+                    class="btn">Osoba prywatna</button>
+                  <button type="button" (click)="onCompanyChange(true)" [ngClass]="fileService.order.invoiceData.invoiceType ? 'invoice-type-active' : 'invoice-type-no-active'"
+                    class="btn">Firma</button>
+                </div>
+              </div>
+              <fieldset>
+                <div class="row">
+
+                  <div *ngIf="!fileService.order.invoiceData.invoiceType" class="form-group col-6">
+                    <label class="control-label" for="textinput">Imię:</label>
+                    <input type="text" name="clientFirstName" placeholder="Podaj imię" [(ngModel)]="fileService.order.invoiceData.invoiceFirstName"
+                      class="form-control">
+                  </div>
+
+                  <div *ngIf="fileService.order.invoiceData.invoiceType" class="form-group col-6">
+                    <label class="control-label" for="textinput">Nazwa firmy:</label>
+                    <input type="text" name="clientFirstName" placeholder="Podaj nazwę firmy" [(ngModel)]="fileService.order.invoiceData.invoiceCompany"
+                      class="form-control">
+                  </div>
+
+                  <div *ngIf="!fileService.order.invoiceData.invoiceType" class="form-group col-6">
+                    <label class="control-label" for="textinput">Nazwisko:</label>
+                    <input type="text" name="clientLastName" placeholder="Podaj nazwisko" [(ngModel)]="fileService.order.invoiceData.invoiceLastName"
+                      class="form-control">
+                  </div>
+
+                  <div *ngIf="fileService.order.invoiceData.invoiceType" class="form-group col-6">
+                    <label class="control-label" for="textinput">NIP:</label>
+                    <input type="text" name="clientLastName" placeholder="Wprowadź NIP" [(ngModel)]="fileService.order.invoiceData.invoiceNip"
+                      class="form-control">
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="form-group col-5 col-lg-3">
+                    <label class="control-label" for="textinput">Kod Pocztowy</label>
+                    <input type="text" name="clientDeliveryPostCode" placeholder="Kod pocztowy" [(ngModel)]="fileService.order.invoiceData.invoicePostCode"
+                      class="form-control">
+                  </div>
+
+                  <div class="form-group col-7 col-lg-9">
+                    <label class="control-label" for="textinput">Miasto</label>
+                    <input type="text" name="clientDeliveryCity" placeholder="Miasto" [(ngModel)]="fileService.order.invoiceData.invoiceCity" class="form-control">
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="form-group col-12">
+                    <label class="control-label" for="textinput">Adres</label>
+                    <input type="text" name="clientDeliveryAddress" placeholder="Ulica i numer domu / mieszkania" [(ngModel)]="fileService.order.invoiceData.invoiceAddress"
+                      class="form-control">
+                  </div>
+
+
+
+                </div>
+
+              </fieldset>
+            </form>
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <h2 style="margin-top: 20px;">4. Forma płatności</h2>
+      <hr/>
+      <div class="col-12" *ngIf="fileService.paymentTypes">
+        <div class="d-flex flex-row justify-content-center">
+          <div *ngFor="let paymentType of fileService.paymentTypes" style="margin: 1rem;">
+
+            <a (click)='calculateTotalOrderPricebyPayment(paymentType.id)' [class.active]='fileService.order.paymentTypeId ==  paymentType.id'>
+              <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + paymentType.iconActive + ')', false: 'url(' + paymentType.icon + ')' }[fileService.order.paymentTypeId == paymentType.id] }">
+                <p class="type">{{ paymentType.name }}</p>
+                <p>{{ paymentType.price | number:'1.2-2' }} zł</p>
+
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="d-flex flex-row justify-content-end align-items-center">
+        <div class="p-2 align-self-center">
+          <p *ngIf="fileService.deliveryTypes && fileService.order" style="margin: 0">Łącznie do zapłaty:
+            <span style="font-size: 1.4rem; font-weight: bold">{{ getTotalOrderPrice() | number:'1.2-2' }}</span> zł</p>
+
+        </div>
+        <div class="p-2">
+          <button type="button" class="btn btn-success" (click)="submitOrder()">
+            <span class="glyphicon glyphicon-upload"></span> Potwierdzam i płacę
+          </button>
+        </div>
+      </div>
+
+
+
     </div>
-<h3>Dodatkowe uwagi do zlecenia</h3>
-<hr/>
-<div class="form-group">
-    <textarea class="form-control" rows="5" id="comment" [(ngModel)]="fileService.order.additionalInfo"></textarea>
-  </div>
-<h3 style="margin-top: 20px">Forma płatności</h3>
-
-  <div class="btn-group" role="group" *ngIf="fileService.order">
-      <button type="button" (click)="setTransferType(false)" [ngClass]="fileService.order.isTraditionalTransfer ? 'no-active' : 'active'"
-       class="btn">Bezpieczny przelew przez PayU</button>
-      <button type="button" (click)="setTransferType(true)" [ngClass]="fileService.order.isTraditionalTransfer ? 'active' : 'no-active'"
-       class="btn">Tradycyjny przelew na konto</button>
+    <div class="col-md-4">
+      <div class="col-12 sidebar">
+        <h3 style="margin-top: 20px;">Sidebar</h3>
+        <hr/>
+      </div>
     </div>
-
-
-<p *ngIf="fileService.deliveryTypes && fileService.order">Łącznie do zapłaty: {{ getTotalOrderPrice() }} zł</p>
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#approvalModal" (click)="showOrder()">
-    <span class="glyphicon glyphicon-upload"></span> Płacę
-  </button>
-
+    <!-- /.col-lg-4 -->
 
   </div>
-  <div class="col-md-4">
-      Hahah<br/>
-      Hehe
-    </div><!-- /.col-lg-4 -->
-
-  </div>
-  </div>
+</div>

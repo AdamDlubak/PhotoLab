@@ -163,6 +163,8 @@ namespace Server.Migrations
 
                     b.Property<string>("Icon");
 
+                    b.Property<string>("IconActive");
+
                     b.Property<string>("Name");
 
                     b.Property<float>("Price");
@@ -239,13 +241,15 @@ namespace Server.Migrations
 
                     b.Property<bool>("IsInvoice");
 
-                    b.Property<bool>("IsTraditionalTransfer");
+                    b.Property<bool>("IsNew");
 
                     b.Property<DateTime?>("OrderDate");
 
                     b.Property<DateTime?>("PaymentDate");
 
-                    b.Property<int>("PaymentStatus");
+                    b.Property<int>("PaymentStatusId");
+
+                    b.Property<int>("PaymentTypeId");
 
                     b.Property<DateTime?>("ShippingDate");
 
@@ -265,6 +269,10 @@ namespace Server.Migrations
 
                     b.HasIndex("InvoiceDataId");
 
+                    b.HasIndex("PaymentStatusId");
+
+                    b.HasIndex("PaymentTypeId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
@@ -280,6 +288,42 @@ namespace Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Papers");
+                });
+
+            modelBuilder.Entity("Server.Models.PaymentStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentStatuses");
+                });
+
+            modelBuilder.Entity("Server.Models.PaymentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("IconActive");
+
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("Operative");
+
+                    b.Property<float>("Price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentTypes");
                 });
 
             modelBuilder.Entity("Server.Models.Photo", b =>
@@ -385,6 +429,8 @@ namespace Server.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
+                    b.Property<int>("OrdersAmount");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
@@ -479,6 +525,16 @@ namespace Server.Migrations
                     b.HasOne("Server.Models.InvoiceData", "InvoiceData")
                         .WithMany()
                         .HasForeignKey("InvoiceDataId");
+
+                    b.HasOne("Server.Models.PaymentStatus", "PaymentStatus")
+                        .WithMany()
+                        .HasForeignKey("PaymentStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.PaymentType", "PaymentType")
+                        .WithMany()
+                        .HasForeignKey("PaymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Server.Models.User", "User")
                         .WithMany("Orders")

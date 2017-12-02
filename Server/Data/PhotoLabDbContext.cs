@@ -14,6 +14,8 @@ namespace Server.Helpers
     public DbSet<PrintsParam> PrintsParam { get; set; }
     public DbSet<DeliveryType> DeliveryTypes { get; set; }
     public DbSet<DeliveryData> DeliveryDatas { get; set; }
+    public DbSet<PaymentType> PaymentTypes { get; set; }
+    public DbSet<PaymentStatus> PaymentStatuses { get; set; }
     public DbSet<InvoiceData> InvoiceDatas { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Print> Prints { get; set; }
