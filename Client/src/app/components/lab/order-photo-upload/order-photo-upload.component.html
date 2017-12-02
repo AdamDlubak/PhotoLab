@@ -1,185 +1,182 @@
-<!-- style="pointer-events: none; opacity: 0.4" -->
-
-
-<!-- Control Panel Header -->
-<div class="title-block">
-	<h2 class="title" style="font-family: 'Comfortaa', cursive">
-		Złóż zlecenie wywołania zdjęć
-	</h2>
-	<hr/>
-</div>
-<div class="row">
-	<div class="col-12 all-photos-info">
-		<div class="col-1 number-col">
-			<p class="number">1</p>
+<header>
+		<div class="background-photo">
+		  <div class="container height-100 d-flex align-items-center">
+	  
+			<div class="title">
+			  <h1>Zleć wywołanie zdjęć</h1>
+			</div>
+	  
+		  </div>
 		</div>
-		<div class="col-9" *ngIf="fileService.defaultParam">
-			<p class="header">Nadaj predefiniowane ustawienia dla wszystkich nowo dodawanych zdjęć!</p>
-			<p class="content">Zdefiniuj początkowe ustawienia dla wszystkich zdjęć, by następnie dostosowywać je do poszczegolnych odbitek.</p>
-			<div class="row">
-				<div class="col-3">
-					<label for="selectFormat">Format zdjęć:</label>
-					<select *ngIf="fileService.formats && fileService.defaultParam" class="custom-select d-block" name="selectFormat" [(ngModel)]="fileService.defaultParam.formatId">
-						<option *ngFor="let format of fileService.formats" [ngValue]="format.id">{{format.name}}</option>
-					</select>
-				</div>
-				<div class="col-3">
-					<label for="fileService.selectPaper && fileService.defaultParam">Rodzaj papieru:</label>
-					<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.paperId">
-						<option *ngFor="let paper of fileService.papers" [ngValue]="paper.id">{{paper.name}}</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<label for="printsAmount">Liczba odbitek:</label>
-					<input type="number" min="1" max="999" step="1" name="printsAmount" [(ngModel)]="fileService.defaultParam.amount" class="form-control"
-					 id="inlineFormInputGroup">
-				</div>
-				<div class="col-2">
-					<label for="printsAmount">Dopasowanie:</label>
-					<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.isHorizontal">
-						<option [ngValue]="true">Wypełnij</option>
-						<option [ngValue]="false">Paski</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<label for="printsAmount">Ułożenie:</label>
-					<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.isContain">
-						<option [ngValue]="true">Poziome</option>
-						<option [ngValue]="false">Pionowe</option>
-					</select>
+	  </header>
+
+<!-- Page Content -->
+<div class="container container-margins">
+
+
+	<div class="row">
+		<div class="col-12 all-photos-info">
+			<div class="col-1 number-col">
+				<p class="number">1</p>
+			</div>
+			<div class="col-9" *ngIf="fileService.defaultParam">
+				<p class="header">Nadaj predefiniowane ustawienia dla wszystkich nowo dodawanych zdjęć!</p>
+				<p class="content">Zdefiniuj początkowe ustawienia dla wszystkich zdjęć, by następnie dostosowywać je do poszczegolnych odbitek.</p>
+				<div class="row">
+					<div class="col-3">
+						<label for="selectFormat">Format zdjęć:</label>
+						<select *ngIf="fileService.formats && fileService.defaultParam" class="custom-select d-block" name="selectFormat" [(ngModel)]="fileService.defaultParam.formatId">
+							<option *ngFor="let format of fileService.formats" [ngValue]="format.id">{{format.name}}</option>
+						</select>
+					</div>
+					<div class="col-3">
+						<label for="fileService.selectPaper && fileService.defaultParam">Rodzaj papieru:</label>
+						<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.paperId">
+							<option *ngFor="let paper of fileService.papers" [ngValue]="paper.id">{{paper.name}}</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<label for="printsAmount">Liczba odbitek:</label>
+						<input type="number" min="1" max="999" step="1" name="printsAmount" [(ngModel)]="fileService.defaultParam.amount" class="form-control"
+						 id="inlineFormInputGroup">
+					</div>
+					<div class="col-2">
+						<label for="printsAmount">Dopasowanie:</label>
+						<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.isHorizontal">
+							<option [ngValue]="true">Wypełnij</option>
+							<option [ngValue]="false">Paski</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<label for="printsAmount">Ułożenie:</label>
+						<select *ngIf="fileService.papers" class="custom-select d-block" name="selectPaper" [(ngModel)]="fileService.defaultParam.isContain">
+							<option [ngValue]="true">Poziome</option>
+							<option [ngValue]="false">Pionowe</option>
+						</select>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-2 printsAmount">
-			<span>Wgranych zdjęć</span>
-			<span>{{ fileService.uploader?.queue?.length }}</span>
+			<div class="col-2 printsAmount">
+				<span>Wgranych zdjęć</span>
+				<span>{{ fileService.uploader?.queue?.length }}</span>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
+	<div class="row">
 
 		<div class="col-12 drop-box" draggable="false">
-		<div class="col-1 number-col">
-			<p class="number">2</p>
-		</div>
-		<div ng2FileDrop (fileOver)="fileOverBase($event)" [uploader]="fileService.uploader" class="col-11 well my-drop-zone">
+			<div class="col-1 number-col">
+				<p class="number">2</p>
+			</div>
+			<div ng2FileDrop (fileOver)="fileOverBase($event)" [uploader]="fileService.uploader" class="col-11 well my-drop-zone">
 
-			<div (click)="clickInputFile()" [ngClass]="hasBaseDropZoneOver ? 'is-dragover-padding' : 'is-empty-padding'">
-				<div [ngClass]="hasBaseDropZoneOver ? 'is-dragover' : 'is-empty'">
-					<div class="upload-icon">
-						<img src="../../../../assets/images/icons/outbox.svg" />
+				<div (click)="clickInputFile()" [ngClass]="hasBaseDropZoneOver ? 'is-dragover-padding' : 'is-empty-padding'">
+					<div [ngClass]="hasBaseDropZoneOver ? 'is-dragover' : 'is-empty'">
+						<div class="upload-icon">
+							<img src="../../../../assets/images/icons/outbox.svg" />
+						</div>
+						<p class="drop-text">Przeciągnij i upuść zdjęcia, które chcesz wywołać lub po prostu kliknij tutaj!</p>
+						<input type="file" (click)="fileOverBase($event); fileOverBase(false)" ng2FileSelect [uploader]="fileService.uploader" id="uploader-input"
+						 style="display: none;" multiple />
+
 					</div>
-					<p class="drop-text">Przeciągnij i upuść zdjęcia, które chcesz wywołać lub po prostu kliknij tutaj!</p>
-					<input type="file" (click)="fileOverBase($event); fileOverBase(false)" ng2FileSelect [uploader]="fileService.uploader" id="uploader-input"
-					 style="display: none;" multiple />
-
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 
 
 
 
-<div class="row" *ngIf="fileService.formats && fileService.defaultParam">
+	<div class="row" *ngIf="fileService.formats && fileService.defaultParam">
 
 
-	<div class="col-9 drop-box" draggable="false">
+		<div class="col-9 drop-box" draggable="false">
 
 
-		<div *ngIf="fileService.uploader.queue == 0" class="flex-box-full">
-		
-			<div class="flex-item icon-waiting-photo">
-				<i class="fa fa-picture-o" aria-hidden="true"></i>
+			<div *ngIf="fileService.uploader.queue == 0" class="flex-box-full">
+
+				<div class="flex-item icon-waiting-photo">
+					<i class="fa fa-picture-o" aria-hidden="true"></i>
+				</div>
+				<div class="flex-item text-waiting-photo">
+					To miejsce czeka na Twoje zdjęcia! :)
+				</div>
 			</div>
-			<div class="flex-item text-waiting-photo">
-				To miejsce czeka na Twoje zdjęcia! :)
-			</div>
+
+
+
+
+			<table class="table photos-table" *ngIf="fileService.uploader.queue != 0">
+				<thead>
+					<tr>
+						<th>
+							<div class="flex-box">
+								<div class="flex-item-left">
+									Zdjęcie
+								</div>
+								<div class="flex-item-center">
+									Opcje
+								</div>
+								<div class="flex-item-right">
+									Wybór formatu i papieru
+								</div>
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+
+
+					<tr *ngFor="let item of fileService.uploader.queue">
+
+						<div class="flex-box item-height" style="border-bottom: 1px solid #eee">
+							<div *ngIf="fileService" class="flex-item flex-item-left">
+								<p class="file-name">{{ item?.file?.name }}</p>
+								<div *ngIf="fileService" class="photo-frame" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'photo-horizontal' : 'photo-vertical'">
+									<img src="" imgPreview [image]="item?._file" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'photo-cover' : 'photo-contain'"
+									 id="image3" class="media-object previewImg" />
+
+
+
+								</div>
+							</div>
+							<div class="flex-item flex-item-center">
+								<div class="btn-group" role="group">
+
+									<button type="button" (click)="onProfitSelectionChange(item, true)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'active' : 'no-active'"
+									 class="btn">Wypełnij</button>
+									<button type="button" (click)="onProfitSelectionChange(item, false)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'no-active' : 'active'"
+									 class="btn">Paski</button>
+								</div>
+								<div class="btn-group" role="group">
+									<button type="button" (click)="rotate(item, true)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'active' : 'no-active'"
+									 class="btn">Poziomo</button>
+									<button type="button" (click)="rotate(item, false)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'no-active' : 'active'"
+									 class="btn">Pionowo</button>
+								</div>
+								<button type="button" class="btn btn-danger btn-xs button-remove" (click)="removeElement(getFileItemDetails(item), item); item.remove()">
+									<i class="fa fa-trash" aria-hidden="true"></i> Usuń</button>
+							</div>
+							<div class="flex-item flex-item-right">
+								<div class="container">
+
+									<app-print-type [item]="item" (myEvent)="cart.calculate($event)" [itemDetail]="getFileItemDetails(item)" [defaultParams]="defaultParams"
+									 [formats]="fileService.formats" [papers]="fileService.papers"></app-print-type>
+								</div>
+							</div>
+						</div>
+				</tbody>
+			</table>
+
+
+
 		</div>
 
-
-
-
-		<table class="table photos-table" *ngIf="fileService.uploader.queue != 0">
-			<thead>
-				<tr>
-					<th>
-						<div class="flex-box">
-							<div class="flex-item-left">
-								Zdjęcie
-							</div>
-							<div class="flex-item-center">
-								Opcje
-							</div>
-							<div class="flex-item-right">
-								Wybór formatu i papieru
-							</div>
-						</div>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-
-
-				<tr *ngFor="let item of fileService.uploader.queue">
-		
-					<div class="flex-box item-height" style="border-bottom: 1px solid #eee">
-						<div *ngIf="fileService" class="flex-item flex-item-left">
-							<p class="file-name">{{ item?.file?.name }}</p>
-							<div *ngIf="fileService" class="photo-frame" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'photo-horizontal' : 'photo-vertical'">
-								<img src="" imgPreview [image]="item?._file" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'photo-cover' : 'photo-contain'"
-								 id="image3" class="media-object previewImg" />
-
-
-
-							</div>
-						</div>
-						<div class="flex-item flex-item-center">
-							<div class="btn-group" role="group">
-		
-								<button type="button" (click)="onProfitSelectionChange(item, true)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'active' : 'no-active'"
-								 class="btn">Wypełnij</button>
-								<button type="button" (click)="onProfitSelectionChange(item, false)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isContain ? 'no-active' : 'active'"
-								 class="btn">Paski</button>
-							</div>
-							<div class="btn-group" role="group">
-								<button type="button" (click)="rotate(item, true)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'active' : 'no-active'"
-								 class="btn">Poziomo</button>
-								<button type="button" (click)="rotate(item, false)" [ngClass]="fileService.fileItemDetails[fileService.uploader.getIndexOfItem(item)].isHorizontal ? 'no-active' : 'active'"
-								 class="btn">Pionowo</button>
-							</div>
-							<button type="button" class="btn btn-danger btn-xs button-remove" (click)="removeElement(getFileItemDetails(item), item); item.remove()">
-								<i class="fa fa-trash" aria-hidden="true"></i> Usuń</button>
-						</div>
-						<div class="flex-item flex-item-right">
-							<div class="container">
-
-								<app-print-type [item]="item" (myEvent)="cart.calculate($event)" [itemDetail]="getFileItemDetails(item)" [defaultParams]="defaultParams"
-								 [formats]="fileService.formats" [papers]="fileService.papers"></app-print-type>
-							</div>
-						</div>
-					</div>
-			</tbody>
-		</table>
-
-
-
-
-
-
-
-
-
-
-
-
+		<div class="col-3 padding-right-0">
+			<app-cart #cart></app-cart>
+		</div>
 
 	</div>
-
-	<div class="col-3 padding-right-0">
-		<app-cart #cart></app-cart>
-	</div>
-
 </div>

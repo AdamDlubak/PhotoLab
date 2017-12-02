@@ -14,15 +14,18 @@ import { AngularCropperjsModule } from "angular-cropperjs";
 import { FileUploadModule } from "ng2-file-upload";
 import { ImagePreview } from "../../directives/image-preview.directive";
 
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from "ngx-toastr";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
 import { LoginModalComponent } from "./login-modal/login-modal.component";
 import { UserPanelComponent } from "./user-panel/user-panel.component";
-import { RegisterModalComponent } from './register-modal/register-modal.component';
-import { EqualValidator} from "../../directives/equal.validator.directive";
+import { RegisterModalComponent } from "./register-modal/register-modal.component";
+import { EqualValidator } from "../../directives/equal.validator.directive";
 import { OrderSummaryComponent } from "./order-summary/order-summary.component";
-import { ContactComponent } from './contact/contact.component';
+import { ContactComponent } from "./contact/contact.component";
+import { AboutUsComponent } from "./about-us/about-us.component";
+import { OfferComponent } from "./offer/offer.component";
+import { GalleryComponent } from "./gallery/gallery.component";
 
 @NgModule({
   imports: [
@@ -33,7 +36,7 @@ import { ContactComponent } from './contact/contact.component';
     AngularCropperjsModule,
     FileUploadModule,
     NgbModule.forRoot(),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   declarations: [
     LabLayoutComponent,
@@ -47,11 +50,13 @@ import { ContactComponent } from './contact/contact.component';
     LoginModalComponent,
     RegisterModalComponent,
     UserPanelComponent,
-    EqualValidator
-,
-    RegisterModalComponent,
-    ContactComponent
-],
+    EqualValidator,
+    RegisterModalComponent,
+    ContactComponent,
+    AboutUsComponent,
+    OfferComponent,
+    GalleryComponent
+  ],
   exports: [],
   providers: [UserService, FileService],
   entryComponents: [LoginModalComponent, RegisterModalComponent]

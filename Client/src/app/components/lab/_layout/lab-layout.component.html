@@ -1,42 +1,39 @@
 <!-- Navigation -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-color fixed-top">
   <div class="container">
+
     <a class="navbar-brand brand" href="./home"></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto navbar-font d-flex align-items-center">
         <li class="nav-item">
-          <a class="nav-link" href="about.html">Strona Główna</a>
+          <a class="nav-link" href="./home">Strona Główna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="services.html">O Nas</a>
+          <a class="nav-link" href="./about-us">O Nas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact.html">Oferta</a>
+          <a class="nav-link" href="./offer">Oferta</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact.html">Pomoc</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./order-photo-upload">Zamów Zdjęcia</a>
+          <a class="nav-link" href="./gallery">Galeria</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./contact">Kontakt</a>
         </li>
         <li class="nav-item">
         </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showConfirm()">Zaloguj</a>
-          <a class="nav-link" *ngIf="isLoggedIn()" href="./user-panel">Witaj {{ userService.client.firstName }}</a>
+        <li *ngIf="!isLoggedIn()" class="nav-item">
+          <a class="nav-link" (click)="showConfirm()">Zaloguj</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!isLoggedIn()" (click)="showRegisterModal()">Rejestracja</a>
+        <li *ngIf="!isLoggedIn()" class="nav-item">
+          <a class="nav-link" (click)="showRegisterModal()">Rejestracja</a>
         </li>
 
-        <li *ngIf="isLoggedIn()" class="nav-item dropdown">
+        <li *ngIf="isLoggedIn()" class="nav-item dropdown" style="cursor: pointer">
           <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Moje Konto
           </a>
@@ -47,6 +44,11 @@
             <a class="dropdown-item" href="./user-panel#list-messages">Historia Zamówień</a>
             <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Wyloguj Mnie</a>
           </div>
+        </li>
+        <li class="nav-item" style="padding-top: 0;">
+          <a class="nav-link" href="./order-photo-upload">
+            <button class="btn btn-danger" style="cursor: pointer">Zamów Zdjęcia</button>
+          </a>
         </li>
       </ul>
     </div>
@@ -64,36 +66,43 @@
   <div class="container">
     <div class="row flex-direction-row ">
       <div class="col-3 d-flex justify-content-start align-items-center">
-          <a class="footer-brand" href="./home"></a>
+        <a class="footer-brand" href="./home"></a>
       </div>
       <div class="col-4">
         <h4 class="footer-header">Adres</h4>
-        <p>Sklep Przemysłowy i Usługi Fotograficzne<br/>
-           ul. Kościuszki 27<br/>
-           98-330 Pajęczno</p>
+        <p>Sklep Przemysłowy i Usługi Fotograficzne
+          <br/> ul. Kościuszki 27
+          <br/> 98-330 Pajęczno</p>
 
       </div>
       <div class="col-3">
-          <h4 class="footer-header">Kontakt</h4>
-          <p>Email: <span style="padding-left: 0.9rem;">sklep@fotodlubak.pl</span><br/>
-             Telefon: +48 603 430 209<br />
-            <span style="padding-left: 3.7rem;">+48 693 314 873</span></p>
-  
+        <h4 class="footer-header">Kontakt</h4>
+        <p>Email:
+          <span style="padding-left: 0.9rem;">sklep@fotodlubak.pl</span>
+          <br/> Tel.
+          <span style="padding-left: 2rem;"></span>+ 48 603 430 209
+          <br />
+          <span style="padding-left: 3.8rem;">+ 48 693 314 873</span>
+        </p>
+
       </div>
       <div class="col-2 d-flex justify-content-end align-items-center">
-          <a href="./order-photo-upload"><button class="btn btn-lg btn-danger" style="cursor: pointer" >Zamów zdjęcia</button></a>
+        <a href="./order-photo-upload">
+          <button class="btn btn-lg btn-danger" style="cursor: pointer">Zamów zdjęcia</button>
+        </a>
       </div>
     </div>
     <div class="row flex-direction-row">
       <div class="col-12">
-          <hr/>          
+        <hr style="border-top-color: rgb(58, 58, 58)" />
       </div>
       <div class="col-8 d-flex justify-content-start align-items-center">
-        <p class="footer-author">Created with&nbsp;<i class="fa fa-heart-o" style="color: crimson"aria-hidden="true"></i>&nbsp;by Adam Dłubak</p>
+        <p class="footer-author">Created with&nbsp;
+          <i class="fa fa-heart-o" style="color: crimson" aria-hidden="true"></i>&nbsp;by Adam Dłubak</p>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">
-          <i class="fa fa-facebook footer-social-icon" aria-hidden="true"></i>
-          <i class="fa fa-google-plus footer-social-icon" aria-hidden="true"></i>
+        <i class="fa fa-facebook footer-social-icon" aria-hidden="true"></i>
+        <i class="fa fa-google-plus footer-social-icon" aria-hidden="true"></i>
       </div>
     </div>
   </div>

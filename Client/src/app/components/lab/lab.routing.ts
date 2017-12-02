@@ -1,3 +1,4 @@
+import { AboutUsComponent } from './about-us/about-us.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule } from "@angular/router";
@@ -8,6 +9,8 @@ import { OrderPhotoUploadComponent } from "./order-photo-upload/order-photo-uplo
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { ContactComponent } from './contact/contact.component';
+import { OfferComponent } from './offer/offer.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 export const Routing: ModuleWithProviders = RouterModule.forChild([
   {
@@ -20,6 +23,9 @@ export const Routing: ModuleWithProviders = RouterModule.forChild([
       { path: "order-photo-upload", component: OrderPhotoUploadComponent},
       { path: "order-detailed-data", component: OrderDetailedDataComponent},
       { path: "order-summary", component: OrderSummaryComponent},
+      { path: "about-us", component: AboutUsComponent},
+      { path: "offer", component: OfferComponent},
+      { path: "gallery", component: GalleryComponent},
       { path: "user-panel", component: UserPanelComponent},
       { path: "**", redirectTo: "login", pathMatch: "full" }      
     ]

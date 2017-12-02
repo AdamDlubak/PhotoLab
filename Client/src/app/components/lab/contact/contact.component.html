@@ -2,38 +2,158 @@
   <div class="background-photo">
     <div class="container height-100 d-flex align-items-center">
 
-          <div class="title ">
-            Kontakt
-          </div>
+      <div class="title">
+        <h1>Kontakt</h1>
+      </div>
 
     </div>
   </div>
 </header>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container container-margins">
+
+  <div class="row">
+    <div class="col-5">
+      <h3 class="section-header">Dane Kontaktowe</h3>
+      <p>
+        <b>Sklep Przemysłowy i Usługi Fotograficzne Ryszard Dłubak
+          <br/>ul. Kościuszki 27
+          <br/>98-330 Pajęczno</b>
+      </p>
+      <p>
+        E-mail:
+        <b>sklep@fotodlubak.pl</b>
+        <br/> Strona:
+        <b>www.Sklep.FotoDlubak.pl</b>
+        <br/> tel.
+        <b>+48 603 430 209</b>
+
+      </p>
+      <p>
+        <b>Nazwa banku:</b> PKO Bank Polski
+        <br/>
+        <b>Nr konta:</b> 04 1020 3958 0000 9602 0123 8724
+        <br/>
+        <b>NIP:</b> 574 103 09 13
+      </p>
+    </div>
+    <div class="col-7">
+      <h3 class="section-header">Formularz Kontaktowy</h3>
+
+      <form class="well form-horizontal" action=" " method="post" id="contact_form">
+        <fieldset>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-7 control-label contact-form-label">Imię i nazwisko:</label>
+            <div class="col-md-7 inputGroupContainer">
+              <div class="input-group">
+                <span class="input-group-addon group-addon-width">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+                <input name="first_name" placeholder="Prosimy podać imię i nazwisko" class="form-control" type="text">
+              </div>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-7 control-label contact-form-label">Adres e-mail:</label>
+            <div class="col-md-7 inputGroupContainer">
+              <div class="input-group">
+                <span class="input-group-addon group-addon-width">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+                <input name="email" placeholder="Prosimy podać adres e-mail" class="form-control" type="text">
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Text input-->
+
+          <div class="form-group">
+            <label class="col-md-7 control-label contact-form-label">Telefon:</label>
+            <div class="col-md-7 inputGroupContainer">
+              <div class="input-group">
+                <span class="input-group-addon group-addon-width">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                </span>
+                <input name="phone" placeholder="+48 --- --- ---" class="form-control" type="text">
+              </div>
+            </div>
+          </div>
 
 
 
-  <div class="card">
-    <div class="card-block">
-      <h3>Welcome Contact!</h3>
-      <p>From Labe Page</p>
+          <!-- Select Basic -->
+
+          <div class="form-group">
+            <label class="col-md-7 control-label contact-form-label">Temat:</label>
+            <div class="col-md-7 selectContainer">
+              <div class="input-group">
+                <span class="input-group-addon group-addon-width">
+                  <i class="fa fa-quora" aria-hidden="true"></i>
+                </span>
+                <select name="state" class="form-control selectpicker">
+                  <option value=" ">Wybierz temat</option>
+                  <option>Wywołanie zdjęć</option>
+                  <option>Asortyment</option>
+                  <option>Działalność laboratorium</option>
+                  <option>Zdjęcia legitymacyjne</option>
+                  <option>Usługi fotografa</option>
+                  <option>Problem ze stroną</option>
+                  <option>Inne</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Text area -->
+
+          <div class="form-group">
+            <label class="col-md-10 control-label contact-form-label">Treść wiadomości:</label>
+            <div class="col-md-10 inputGroupContainer">
+              <div class="input-group">
+                <span class="input-group-addon group-addon-width">
+                  <i class="fa fa-comment" aria-hidden="true"></i>
+                </span>
+                <textarea class="form-control" name="comment" rows="6" placeholder="Prosimy wprowadzić treść wiadmości"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success message -->
+          <div class="alert alert-success" role="alert" id="success_message">Success
+            <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <div class="col-md-10 d-flex justify-content-end align-items-start">
+              <button type="submit" class="btn btn-success">Wyślij wiadomość
+                <span class="glyphicon glyphicon-send"></span>
+              </button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
+
+
+
+
+
     </div>
   </div>
-
-  <hr>
-
-  <!-- Call to Action Section -->
-  <div class="row mb-4">
-    <div class="col-md-8">
-      <p>Gorąco zachęcam do zapisania się do naszej listy mailgowej. Co tydzień zniżki, rabaty i promocje dla stałych klient.
-        Nie zwklekaj - zapisz się już teraz i ciesz się wspaniałymi zdjęciami za najniższą cenę!</p>
-    </div>
-    <div class="col-md-4">
-      <a class="btn btn-lg btn-secondary btn-block" href="#">Zapisz mnie do newslettera!</a>
-    </div>
-  </div>
-
 </div>
 <!-- /.container -->
+<hr/>
+
+<div class="map-frame">
+  <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2362.5295087871036!2d18.99724729181079!3d51.14511526186959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471a0a82a7a4f4bf%3A0xfb88941571dd76c!2sFotograf+-+Ryszard+D%C5%82ubak!5e0!3m2!1spl!2spl!4v1507072278850"
+    allowfullscreen></iframe>
+</div>

@@ -1,18 +1,19 @@
 
 header {
-  margin-top: 65px;
+  margin-top: 55px;
 }
 
 .background-photo {
-height: 280px;
-background: url("../../../../assets/images/backgrounds/contact.jpg") no-repeat center center scroll;
--webkit-background-size: cover;
--moz-background-size: cover;
--o-background-size: cover;
-background-size: cover;
+  height: 280px;
+  background: url("../../../../assets/images/backgrounds/order-photo-upload.jpg") no-repeat
+    center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .title {
-  font-family: 'Comfortaa', cursive;
+  font-family: "Comfortaa", cursive;
   text-shadow: 1px 1px #000;
   color: #fff;
   font-size: 3.5rem;
@@ -23,8 +24,8 @@ background-size: cover;
   height: 100%;
 }
 .container-margins {
-  margin-top: 70px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 .padding-right-0 {
@@ -43,7 +44,7 @@ background-size: cover;
   border: 1px solid #eee;
   border-left-width: 0.25rem;
   border-radius: 0.25rem;
-  border-left-color: #f0ad4e;
+  border-left-color: #78a33d;
   display: flex;
   flex-direction: row;
 }
@@ -92,7 +93,7 @@ background-size: cover;
 
 .drop-box {
   @extend .all-photos-info;
-  border-left-color: #e98d0c;
+  border-left-color: #78a33d;
   padding: 0;
   margin-top: 0;
 

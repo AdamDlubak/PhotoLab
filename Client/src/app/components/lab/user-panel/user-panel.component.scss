@@ -1,6 +1,31 @@
-.container-margin-top {
-    margin-top: 40px;
-}
+
+header {
+    margin-top: 65px;
+  }
+  
+  .background-photo {
+  height: 280px;
+  background: url("../../../../assets/images/backgrounds/user-panel.jpg") no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+  .title {
+    font-family: 'Comfortaa', cursive;
+    text-shadow: 1px 1px #000;
+    color: #fff;
+    font-size: 3.5rem;
+    margin-top: 8rem;
+    margin-left: 5%;
+  }
+  .height-100 {
+    height: 100%;
+  }
+  .container-margins {
+    margin-top: 70px;
+    margin-bottom: 50px;
+  }
 .list-group-item.active {
     background-color: #5ac0e1;
     border-color: #5ac0e1;
