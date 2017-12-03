@@ -26,29 +26,3 @@ header {
     margin-top: 70px;
     margin-bottom: 50px;
   }
-
-
-
-  .gal {
-	
-	
-	-webkit-column-count: 5; /* Chrome, Safari, Opera */
-    -moz-column-count: 5; /* Firefox */
-    column-count: 5;
-	  
-	
-	}	
-	.gal img{ width: 100%; padding: 7px 0;}
-@media (max-width: 500px) {
-		
-		.gal {
-	
-	
-	-webkit-column-count: 1; /* Chrome, Safari, Opera */
-    -moz-column-count: 1; /* Firefox */
-    column-count: 1;
-	  
-	
-	}
-		
-	}
