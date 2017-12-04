@@ -50,11 +50,11 @@ namespace Server
       services.AddSingleton<IJwtFactory, JwtFactory>();
       services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-      var jwtAppSettingOptions = Configuration["JWT:Issuer"];
+      var jwtAppSettingOptions = "SecretT0k3NforI$$u3R";
       // Configure JwtIssuerOptions
       services.Configure<JwtIssuerOptions>(options =>
       {
-        options.Issuer = Configuration["JWT:Issuer"];
+        options.Issuer = "SecretT0k3NforI$$u3R";
         options.Audience = Configuration["JWT:Audience"];
         options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
       });
@@ -92,10 +92,10 @@ namespace Server
           {
             
             ValidateIssuer = true,
-            ValidIssuer = Configuration["JWT:Issuer"],
+            ValidIssuer = "SecretT0k3NforI$$u3R",
 
             ValidateAudience = true,
-            ValidAudience = Configuration["JWT:Audience"],
+            ValidAudience = "http://localhost:57500/",
 
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = _signingKey,
@@ -136,7 +136,15 @@ namespace Server
       app.UseDefaultFiles();
       app.UseStaticFiles();
       app.UseAuthentication();
-      app.UseMvc();
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+          name: "default",
+          template: "{controller=Home}/{action=Index}/{id?}");
+        routes.MapSpaFallbackRoute(
+          name: "spa-fallback",
+          defaults: new { controller = "Home", action = "Index" });
+      });
     }
   }
 }
