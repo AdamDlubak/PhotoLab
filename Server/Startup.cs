@@ -39,7 +39,7 @@ namespace Server
       }
 
       Configuration = builder.Build();
-      _signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]));
+      _signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jwts-are_awesomeAs1ThinkS0"));
     }
 
     public void ConfigureServices(IServiceCollection services)
