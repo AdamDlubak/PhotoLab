@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>98de7952-8065-414f-a92c-b8d4a3e2d8c6</UserSecretsId>
+    <RetryAttemptsForDeployment>30</RetryAttemptsForDeployment>
   </PropertyGroup>
 
   <ItemGroup>
