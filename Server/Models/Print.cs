@@ -10,10 +10,8 @@ namespace Server.Models
   {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-//    public int FormatId { get; set; }
-    public int Format { get; set; }
-//    public int PaperId { get; set; }
-    public int Paper { get; set; }
+    public int FormatId { get; set; }
+    public int PaperId { get; set; }
     public int Amount { get; set; }
 
 //    public int PhotoId { get; set; }

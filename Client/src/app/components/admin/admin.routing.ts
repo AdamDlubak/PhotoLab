@@ -10,6 +10,7 @@ import { UserEditComponent } from "./user-edit/user-edit.component";
 import { UsersComponent } from "./users/users.component";
 
 import { AuthGuard } from "../../auth.guard";
+import { StatisticsComponent } from './statistics/statistics.component';
 
 export const Routing: ModuleWithProviders = RouterModule.forChild([
   {
@@ -25,6 +26,7 @@ export const Routing: ModuleWithProviders = RouterModule.forChild([
       { path: "orders", component : OrderComponent},
       { path: "order-details/:id", component : OrderDetailsComponent},
       { path: "control-panel", component: ControlPanelComponent},
+      { path: "statistics", component: StatisticsComponent},
       { path: "**", redirectTo: "home", pathMatch: "full" }    
     ]
   }

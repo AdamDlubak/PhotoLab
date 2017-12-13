@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -64,6 +65,31 @@ namespace Server.Controllers
       return new OkObjectResult("Account created");
     }
 
+    // DELETE api/auth/deleteUser/3
+    [HttpDelete("deleteUser/{id}")]
+    public IActionResult DeleteUser(string id)
+    {
+
+      if (ModelState.IsValid)
+      {
+        if (id == null)
+        {
+          return new BadRequestObjectResult("Wrong User Id!");
+        }
+
+        _context.UserLogins.RemoveRange(_context.UserLogins.Where(ul => ul.UserId == id));
+
+        _context.UserRoles.RemoveRange(_context.UserRoles.Where(ur => ur.UserId == id));
+
+        _context.Users.Remove(_context.Users.Single(usr => usr.Id == id));
+
+        _context.SaveChanges();
+
+        return new OkObjectResult("User removed correctly");
+      }
+      return new BadRequestObjectResult("Wrong User model!");
+
+    }
 
     // Get api/auth/users
     [HttpGet("users")]

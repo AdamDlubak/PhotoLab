@@ -1,63 +1,56 @@
 <aside class="sidebar">
     <div class="sidebar-container">
-            <a href="" class="collapse-btn toggle-button" id="sidebar-collapse-btn">
-                    <i class="fa fa-bars"></i>
-                </a>
+        <a href="" class="collapse-btn toggle-button" id="sidebar-collapse-btn">
+            <i class="fa fa-bars"></i>
+        </a>
         <div class="sidebar-header">
 
 
-                              
+
 
             <div class="brand">
 
             </div>
         </div>
 
-        <nav class="menu"  style="font-family: 'Roboto', sans-serif;">
-            <ul class="sidebar-menu metismenu" id="sidebar-menu"  style="font-size: 13px;">
+        <nav class="menu" style="font-family: 'Roboto', sans-serif;">
+            <ul class="sidebar-menu metismenu" id="sidebar-menu" style="font-size: 13px;">
 
                 <li>
-                    <a href="./admin/">
-                        Pulpit Nawigacyjny
+                    <a href="/admin/home">
+                        Kokpit
                         <i class="fa fa-desktop" aria-hidden="true"></i>
                     </a>
                 </li>
 
-
                 <li>
-
-                    <a href="">
+                    <a href="/admin/statistics">
                         Statystyki
                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
                     </a>
-
                 </li>
 
+
                 <li>
-                    <a href="./admin/orders">
+                    <a href="/admin/control-panel">
+                        Preferencje
+                        <i class="fa fa-sliders" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/users">
+                        Użytkownicy
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/orders">
                         Zamówienia
                         <i class="fa fa-tags" aria-hidden="true"></i>
                     </a>
                 </li>
-
-                <li>
-                    <a href="./admin/users">
-                        <i class="fa fa-table" aria-hidden="true"></i> Użytkownicy
-                    </a>
-                </li>
-                <li>
-                    <a href="./admin/control-panel">
-                        <i class="fa fa-desktop" aria-hidden="true"></i> Panel Sterowania
-                    </a>
-                </li>
-
-
-
-
-
             </ul>
         </nav>
-
     </div>
 
 
@@ -71,24 +64,29 @@
         <ul class="sidebar-menu metismenu" id="customize-menu">
 
             <li class="active" *ngIf="newOrdersAmount > 0">
-                <a href="./admin/orders">
+                <a href="/admin/orders">
                     Nowe Zlecenia: {{ newOrdersAmount }}
                     <i class="fa fa-flag" aria-hidden="true"></i>
                 </a>
             </li>
             <li>
-                <a href="./admin/user">
+                <a href="/admin/user">
                     Moje Konto
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                </a>
             </li>
+
             <li>
-                <a href="">
-                    Preferencje<i class="fa fa-sliders" aria-hidden="true"></i></a>
+                <a href="/home">
+                    Przejdź do laboratorium
+                    <i class="fa fa-flask" aria-hidden="true"></i>
+                </a>
             </li>
             <li>
                 <a href="#" (click)="logout()">
-                   Wyloguj
-                   <i class="fa fa-power-off" aria-hidden="true"></i></a>
+                    Wyloguj
+                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                </a>
             </li>
             <li class="footer">
                 <p>© 2017 PhotoLab. All Right Reserved</p>

@@ -33,19 +33,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
 
   }
-  login({ value, valid }: { value: UserLogin; valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors = "";
-    if (valid) {
-      this.userService
-        .login(value.email, value.password)
-        .finally(() => (this.isRequesting = false))
-        .subscribe(result => {
-          if (result) {
-            this.userService.client = result;
-          }
-        }, error => (this.errors = error));
-    }
+  close() {
+    
   }
+
 }

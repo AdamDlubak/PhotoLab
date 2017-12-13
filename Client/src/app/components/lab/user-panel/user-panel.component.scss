@@ -12,7 +12,7 @@ header {
   background-size: cover;
   }
   .title {
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Lato', Helvetica, sans-serif;
     text-shadow: 1px 1px #000;
     color: #fff;
     font-size: 3.5rem;
@@ -29,4 +29,40 @@ header {
 .list-group-item.active {
     background-color: #5ac0e1;
     border-color: #5ac0e1;
+}
+
+
+.status {
+  color: #fff;
+  padding: 0.3rem 0.4rem 0.4rem 0.4rem;
+  font-size: 0.9rem;
+  border-radius: 0.25rem;
+}
+.status-new {
+  background-color: #28a745;
+  margin-right: 5px;
+}
+.status-0 {
+  background-color: #868e96;
+}
+.status-1 {
+  background-color: #868e96;
+}
+.status-2 {
+  background-color: #868e96;
+}
+.status-3 {
+  background-color: #007bff;
+}
+.status-4 {
+  background-color: #dc3545;
+}
+.status-5 {
+  background-color: #dc3545;
+}
+.status-6 {
+  background-color: #17a2b8;
+}
+.status-7 {
+  background-color: #17a2b8;
 }

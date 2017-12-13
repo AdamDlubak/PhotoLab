@@ -12,7 +12,7 @@ background: url("../../../../assets/images/backgrounds/order-detailed-data.jpg")
 background-size: cover;
 }
 .title {
-  font-family: 'Comfortaa', cursive;
+  font-family: 'Lato', Helvetica, sans-serif;
   text-shadow: 1px 1px #000;
   color: #fff;
   font-size: 3.5rem;
@@ -57,7 +57,7 @@ background-size: cover;
 .active .deliveryIcon p {
   color: #128AE0;
 }
-.deliveryIcon p.type {
+.deliveryIcon p.choose-type {
   margin-top: 55%;
   margin-bottom: 0;
 }
@@ -96,7 +96,6 @@ background-size: cover;
 }
 
 .sidebar {
-  height: 100%;
   width: 100%;
   padding: 1.25rem;
   margin-bottom: 1.25rem;

@@ -1,74 +1,263 @@
+<div class="title-block">
+	<h3 class="title">
+		Moje Dane
+	</h3>
+	<p class="title-description" style="font-family: 'Roboto', sans-serif;">
+		W tej sekcji można dostosować wszystkie dane i parametry konta.
+	</p>
+</div>
 
-
-
-            <div class="title-block">
-					<h3 class="title" style="font-family: 'Comfortaa', cursive">
-						Moje Dane
-					</h3>
-					<p class="title-description" style="font-family: 'Roboto', sans-serif;">
-						W tej sekcji można dostosować wszystkie dane i parametry mojego konta!śćżźćłąśćńę
-					</p>
-				</div>
-	
-				<section class="section">
-					<div class="row sameheight-container">
-						<div class="col-xl-6">
-	
-	
-	
-	
-	
-	
-	
-	
-	
-							<div class="card sameheight-item">
-								<div class="card-block">
-									<!-- Nav tabs -->
-									<div class="card-title-block">
-										<h3 class="title" style="font-family: 'Comfortaa', cursive">
-											Podstawowe Dane
-										</h3>
-									</div>
-	
-								</div>
-								<!-- /.card-block -->
+<section class="section">
+	<div class="row sameheight-container">
+		<div class="col-3">
+			<div class="card sameheight-item">
+				<div class="card-block">
+					<div class="card-title-block">
+						<div class="row">
+							<div class="col-12 col-md-12 title-flex-container">
+								<h3 class="title box-title">
+									Podstawowe dane
+								</h3>
 							</div>
-							<!-- /.card -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 						</div>
-						<!-- /.col-xl-6 -->
-						<div class="col-xl-6">
-	
-							<div class="card sameheight-item">
-								<div class="card-block">
-									<!-- Nav tabs -->
-									<div class="card-title-block">
-										<h3 class="title" style="font-family: 'Comfortaa', cursive">
-											Dane do faktury
-										</h3>
-	
-										<h3 class="title" style="font-family: 'Comfortaa', cursive">
-											Dane do wysyłki
-										</h3>
-									</div>
-	
-								</div>
-								<!-- /.card-block -->
-							</div>
-							<!-- /.card -->
-	
-	
-						</div>
-						<!-- /.col-xl-6 -->
 					</div>
-				</section>
+				</div>
+
+				<form class="form-horizontal" role="form" *ngIf="userService.client">
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientFirstName">Imię:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEdit.firstName" class="form-control"
+							 autofocus>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientLastName">Nazwisko:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEdit.lastName" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientEmail">Adres e-mail:</label>
+						<div class="col-sm-12">
+							<input type="email" name="clientEmail" placeholder="Podaj swój adres e-mail" [(ngModel)]="userEdit.email" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientPhone">Numer telefonu:</label>
+						<div class="col-sm-12">
+							<input type="tel" name="clientPhone" placeholder="Podaj swój numer telefonu" [(ngModel)]="userEdit.phoneNumber" class="form-control">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-12 col-sm-12">
+							<div class="pull-right">
+								<button type="submit" class="btn btn-success" (click)="editProfile()" style="margin-bottom: 20px;">Zapisz zmiany</button>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="col-3">
+			<div class="card sameheight-item">
+				<div class="card-block">
+					<div class="card-title-block">
+						<div class="row">
+							<div class="col-12 col-md-12 title-flex-container">
+								<h3 class="title box-title">
+									Dane do wysyłki
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<form class="form-horizontal" role="form" *ngIf="userService.client && userEditDelivery">
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientDeliveryFirstName">Imię:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientDeliveryFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEditDelivery.deliveryFirstName"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientDeliveryLastName">Nazwisko:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientDeliveryLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEditDelivery.deliveryLastName"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientDeliveryAddress">Adres:</label>
+						<div class="col-sm-12">
+							<input type="email" name="clientDeliveryAddress" [(ngModel)]="userEditDelivery.deliveryAddress" placeholder="Ulica, numer domu / mieszkania"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientDeliveryPostCodeAndCity">Kod pocztowy i miejscowość:</label>
+						<div class="row col-12">
+							<div class="col-sm-5">
+								<input type="tel" name="clientDeliveryPostCode" [(ngModel)]="userEditDelivery.deliveryPostCode" placeholder="Kod pocztowy"
+								 class="form-control">
+							</div>
+							<div class="col-sm-7" style="padding-right: 0;">
+								<input type="tel" name="clientDeliveryCity" [(ngModel)]="userEditDelivery.deliveryCity" placeholder="Miejscowość" class="form-control">
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-12 col-sm-12">
+							<div class="pull-right">
+								<button type="submit" class="btn btn-success" (click)="editDeliveryData()" style="margin-bottom: 20px;">Zapisz zmiany</button>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="col-3">
+			<div class="card sameheight-item">
+				<div class="card-block">
+					<div class="card-title-block">
+						<div class="row">
+							<div class="col-12 col-md-12 title-flex-container">
+								<h3 class="title box-title">
+									Dane do faktury
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<form class="form-horizontal" role="form" *ngIf="userService.client && userEditInvoice">
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientInvoiceFirstName">Imię:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientInvoiceFirstName" placeholder="Wpisz swoje imię" [(ngModel)]="userEditInvoice.invoiceFirstName"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientInvoiceLastName">Nazwisko:</label>
+						<div class="col-sm-12">
+							<input type="text" name="clientInvoiceLastName" placeholder="Wpisz swoje nazwisko" [(ngModel)]="userEditInvoice.invoiceLastName"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientInvoiceAddress">Adres:</label>
+						<div class="col-sm-12">
+							<input type="email" name="clientInvoiceAddress" [(ngModel)]="userEditInvoice.invoiceAddress" placeholder="Ulica, numer domu / mieszkania"
+							 class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-12 control-label font-weight-bold" for="clientInvoicePostCodeAndCity">Kod pocztowy i miejscowość:</label>
+						<div class="row col-12">
+							<div class="col-sm-5">
+								<input type="tel" name="clientInvoicePostCode" [(ngModel)]="userEditInvoice.invoicePostCode" placeholder="Kod pocztowy" class="form-control">
+							</div>
+							<div class="col-sm-7" style="padding-right: 0;">
+								<input type="tel" name="clientInvoiceCity" [(ngModel)]="userEditInvoice.invoiceCity" placeholder="Miejscowość" class="form-control">
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-12 col-sm-12">
+							<div class="pull-right">
+								<button type="submit" class="btn btn-success" (click)="editInvoiceData()" style="margin-bottom: 20px;">Zapisz zmiany</button>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="col-3">
+				<div class="card sameheight-item">
+					<div class="card-block">
+						<div class="card-title-block">
+							<div class="row">
+								<div class="col-12 col-md-12 title-flex-container">
+									<h3 class="title box-title">
+										Zmiana hasła
+									</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<form class="form-horizontal" role="form" *ngIf="userService.client" #model="ngForm" novalidate (ngSubmit)="changePassword(model.value, model.valid)">
+							<div class="form-group">
+							  <label class="col-sm-12 control-label font-weight-bold" for="currentPassword">Obecne hasło:</label>
+							  <div class="col-sm-12">
+								<input type="password" name="currentPassword" required minlength="5" #currentPassword="ngModel" [ngModel]="userChangePassword.currentPassword"
+								  class="form-control">
+								<small [hidden]="currentPassword.valid || (currentPassword.pristine && !model.submitted)">
+								  Podanie poprawnego hasła jest wymagane.
+								</small>
+							  </div>
+							</div>
+				
+							<div class="form-group">
+							  <label class="col-sm-12 control-label font-weight-bold" for="newPassword">Nowe hasło:</label>
+							  <div class="col-sm-12">
+								<input type="password" name="newPassword" minlength="5" validateEqual="confirmPassword" reverse="true"  [ngModel]="userChangePassword.newPassword" required #newPassword="ngModel"
+								  class="form-control">
+								<small [hidden]="newPassword.valid || (newPassword.pristine && !model.submitted)">
+								  Nowe hasło powinno posiadać conajmniej 5 znaków.
+								</small>
+							  </div>
+							</div>
+							<div class="form-group">
+							  <label class="col-sm-12 control-label font-weight-bold" for="confirmPassword" required>Potwierdź nowe hasło:</label>
+							  <div class="col-sm-12">
+								<input type="password" [disabled]="!newPassword.valid" name="confirmPassword" minlength="5" validateEqual="newPassword" reverse="false" [ngModel]="userChangePassword.confirmPassword" required #confirmPassword="ngModel"
+								  class="form-control">
+								<small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !model.submitted)">
+								  Podane hasła nie są identyczne.
+								</small>
+							  </div>
+							</div>
+				
+				
+				
+							<div class="form-group">
+							  <div class="col-sm-offset-12 col-sm-12">
+								<div class="pull-right">
+								  <button type="submit" [disabled]="!model.valid" class="btn btn-success" style="margin-bottom: 20px;">Zmień hasło</button>
+								</div>
+							  </div>
+							</div>
+				
+						  </form>
+
+				</div>
+			</div>
+
+	</div>
+</section>

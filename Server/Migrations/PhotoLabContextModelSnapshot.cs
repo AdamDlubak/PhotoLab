@@ -174,6 +174,24 @@ namespace Server.Migrations
                     b.ToTable("DeliveryTypes");
                 });
 
+            modelBuilder.Entity("Server.Models.EvidenceStat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("Proceeds");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<DateTime>("StatDate");
+
+                    b.Property<DateTime>("SubmitDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EvidenceStats");
+                });
+
             modelBuilder.Entity("Server.Models.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -190,6 +208,26 @@ namespace Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Formats");
+                });
+
+            modelBuilder.Entity("Server.Models.FrontierStat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("FormatId");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<DateTime>("StatDate");
+
+                    b.Property<DateTime>("SubmitDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId");
+
+                    b.ToTable("FrontierStats");
                 });
 
             modelBuilder.Entity("Server.Models.InvoiceData", b =>
@@ -355,9 +393,9 @@ namespace Server.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<int>("Format");
+                    b.Property<int>("FormatId");
 
-                    b.Property<int>("Paper");
+                    b.Property<int>("PaperId");
 
                     b.Property<int?>("PhotoId");
 
@@ -394,6 +432,28 @@ namespace Server.Migrations
                     b.HasIndex("PaperId");
 
                     b.ToTable("PrintsParam");
+                });
+
+            modelBuilder.Entity("Server.Models.SystemStat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("FormatId");
+
+                    b.Property<int>("PaperId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId");
+
+                    b.HasIndex("PaperId");
+
+                    b.ToTable("SystemStats");
                 });
 
             modelBuilder.Entity("Server.Models.User", b =>
@@ -509,6 +569,13 @@ namespace Server.Migrations
                         .HasForeignKey("Server.Models.DeliveryData", "UserId");
                 });
 
+            modelBuilder.Entity("Server.Models.FrontierStat", b =>
+                {
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId");
+                });
+
             modelBuilder.Entity("Server.Models.InvoiceData", b =>
                 {
                     b.HasOne("Server.Models.User", "User")
@@ -563,6 +630,19 @@ namespace Server.Migrations
                         .HasForeignKey("DeliveryTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Server.Models.Format", "Format")
+                        .WithMany()
+                        .HasForeignKey("FormatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Server.Models.Paper", "Paper")
+                        .WithMany()
+                        .HasForeignKey("PaperId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.Models.SystemStat", b =>
+                {
                     b.HasOne("Server.Models.Format", "Format")
                         .WithMany()
                         .HasForeignKey("FormatId")

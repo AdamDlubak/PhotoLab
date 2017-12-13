@@ -1,0 +1,27 @@
+@mixin bg-cover() {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+$color-primary: #0a660a !default;
+$color-primary-light: lighten($color-primary, 10%) !default; 
+$color-primary-lighter: lighten($color-primary-light, 6%) !default; 
+
+.drop-box {
+  @extend .all-photos-info;
+  border-left-color: $color-primary;
+  padding: 0;
+  margin-top: 0;
+
+  .number-col {
+    margin: 1.25rem 0 1.25rem 1.25rem;
+  }
+  p.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+}

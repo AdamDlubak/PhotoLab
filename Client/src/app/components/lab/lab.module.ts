@@ -13,7 +13,6 @@ import { CartComponent } from "./order-photo-upload/cart/cart.component";
 import { AngularCropperjsModule } from "angular-cropperjs";
 import { FileUploadModule } from "ng2-file-upload";
 import { ImagePreview } from "../../directives/image-preview.directive";
-
 import { ToastrModule } from "ngx-toastr";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed-data.component";
@@ -25,7 +24,6 @@ import { OrderSummaryComponent } from "./order-summary/order-summary.component";
 import { ContactComponent } from "./contact/contact.component";
 import { AboutUsComponent } from "./about-us/about-us.component";
 import { OfferComponent } from "./offer/offer.component";
-import { GalleryComponent } from "./gallery/gallery.component";
 
 @NgModule({
   imports: [
@@ -54,8 +52,7 @@ import { GalleryComponent } from "./gallery/gallery.component";
     RegisterModalComponent,
     ContactComponent,
     AboutUsComponent,
-    OfferComponent,
-    GalleryComponent
+    OfferComponent
   ],
   exports: [],
   providers: [UserService, FileService],

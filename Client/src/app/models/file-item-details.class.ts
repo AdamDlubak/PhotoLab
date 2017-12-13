@@ -5,29 +5,32 @@ export class  FileItemDetails {
   isContain: boolean;
   prints: Print[];
   name: string;
+  path: string;
   isHorizontal: boolean;
 
   constructor(
     formats: Format[],
     name: string,
+    path: string,
     defaultParams: DefaultParam
   ) {
     this.isContain = defaultParams.isContain;
     this.name = name;
+    this.path = path;
     this.prints = [];
     this.isHorizontal = defaultParams.isHorizontal;
     for (let formatType of formats) {
       let print: Print;
       if (formatType.id == defaultParams.formatId) {
         print = {
-          format: formatType.id,
-          paper: defaultParams.paperId,
+          formatId: formatType.id,
+          paperId: defaultParams.paperId,
           amount: defaultParams.amount
         };
       } else {
         print = {
-          format: formatType.id,
-          paper: defaultParams.paperId,
+          formatId: formatType.id,
+          paperId: defaultParams.paperId,
           amount: 0
         };
       }
@@ -38,7 +41,7 @@ export class  FileItemDetails {
 }
 
 interface Print {
-  format: number;
-  paper: number;
+  formatId: number;
+  paperId: number;
   amount: number;
 }

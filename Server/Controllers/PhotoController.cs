@@ -171,7 +171,34 @@ namespace Server.Controllers
       return new OkObjectResult(ordersViewModelList);
     }
 
+    // GET api/photo/getUserorders/id
+    [HttpGet("getUserOrders/{id}")]
+    public IActionResult GetUserOrders(string id)
+    {
 
+      List<Order> ordersList = _context.Orders.Where(x => x.UserId == id).Include(x => x.Photos).ThenInclude(y => y.Prints).Include(p => p.DeliveryData).Include(c => c.User).ToList();
+      List<OrdersViewModel> ordersViewModelList = new List<OrdersViewModel>();
+
+      foreach (var order in ordersList)
+      {
+        bool delivery;
+        if (order.DeliveryDataId == 0) delivery = false;
+        else delivery = true;
+        ordersViewModelList.Add(new OrdersViewModel()
+        {
+          Id = order.Id,
+          UserName = order.User.FirstName + " " + order.User.LastName,
+          OrderDate = order.OrderDate,
+          PrintsAmt = order.TotalPrints,
+          TotalOrderPrice = order.TotalOrderPrice,
+          Delivery = delivery,
+          Bill = order.IsInvoice,
+          Status = order.Status,
+          IsNew = order.IsNew
+        });
+      }
+      return new OkObjectResult(ordersViewModelList);
+    }
     // GET api/photo/getformats
     [HttpGet("getFormats")]
     public IActionResult GetFormats()
@@ -324,7 +351,7 @@ namespace Server.Controllers
 
 
     [HttpPost("Upload")]
-    [EnableCors("CorsDevPolicy")]
+//    [EnableCors("CorsDevPolicy")]
     public async Task<IActionResult> Upload(List<IFormFile> files)
     {
       var files2 = Request.Form.Files;

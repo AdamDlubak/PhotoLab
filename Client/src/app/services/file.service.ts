@@ -127,6 +127,12 @@ export class FileService extends BaseService {
     .map((response: Response) => response.json())
     .catch(this.handleError);
   }
+  getUserOrders(id : string) : Observable<Order[]> {
+    return this.http
+    .get(this.baseUrl + "/photo/getuserorders/" + id)
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
   getOrder(id : number) : Observable<Order> {
     return this.http
     .get(this.baseUrl + "/photo/getorder/" + id)
@@ -156,7 +162,7 @@ export class FileService extends BaseService {
 
         for (let item of itemDetails) {
           for (var i: number = 0; i < item.prints.length; i++) {
-            if (item.prints[i].format == data.format) {
+            if (item.prints[i].formatId == data.format) {
               cart.amount += item.prints[i].amount;
               cart.price +=
                 item.prints[i].amount *
@@ -176,11 +182,11 @@ export class FileService extends BaseService {
   ) {
     for (let cart of carts) {
       for (var i: number = 0; i < item.prints.length; i++) {
-        if (cart.formatId == item.prints[i].format) {
+        if (cart.formatId == item.prints[i].formatId) {
           cart.amount -= item.prints[i].amount;
           cart.price -=
             item.prints[i].amount *
-            this.getFormatPrice(formats, item.prints[i].format);
+            this.getFormatPrice(formats, item.prints[i].formatId);
           cart.price = Math.round(cart.price * 100) / 100;
         }
       }
@@ -199,11 +205,11 @@ export class FileService extends BaseService {
 
         for (let item of itemDetails) {
           for (var i: number = 0; i < item.prints.length; i++) {
-            if (defaults.formatId == item.prints[i].format) {
+            if (defaults.formatId == item.prints[i].formatId) {
               cart.amount += item.prints[i].amount;
               cart.price +=
                 item.prints[i].amount *
-                this.getFormatPrice(formats, item.prints[i].format);
+                this.getFormatPrice(formats, item.prints[i].formatId);
               cart.price = Math.round(cart.price * 100) / 100;
             }
           }

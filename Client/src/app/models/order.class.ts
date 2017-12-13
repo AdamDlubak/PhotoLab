@@ -25,9 +25,7 @@ export class Order {
         public deliveryData : DeliveryData = null,
         
         public paymentTypeId : number = 0,
-        public paymentType: PaymentType = null,
         public paymentStatusId : number = 0,
-        public PaymentStatus : PaymentStatus = null,
         
         public isInvoice : boolean = false,        
         public invoiceDataId : number = null,

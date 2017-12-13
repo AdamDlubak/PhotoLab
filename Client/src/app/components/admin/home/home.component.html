@@ -1,35 +1,193 @@
-<div class="card">
-	<div class="card-block">
-		<h3>Welcome home!</h3>
-		<p>{{homeDetails?.message}}</p>
+<!-- Control Panel Header -->
+<div class="title-block">
+		<h3 class="title">
+			Kokpit panelu administratora
+		</h3>
+		<p class="title-description">
+			W tej sekcji można podejrzeć wszystkie najważniejsze elementy panelu administratora.
+		</p>
 	</div>
+	<hr/>
+	
+	<!-- Control Panel Body Section -->
+	<section class="section">
+		<div class="row sameheight-container">
+	
+			<!-- Default and Format Section -->
+			<div class="col-xl-8" style="max-width: 850px;">
+	
+				<div class="card sameheight-item">
+	
+					<!-- Papers Section Header -->
+					<div class="card-block">
+						<div class="card-title-block">
+							<div class="container">
+								<div class="row">
+									<div class="col-12 col-md-7 title-flex-container">
+										<h3 class="title box-title">
+											Statystyki maszyny Frontier
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row">
+							
+						<div class="col-md-12">
+							<div style="display: block;" *ngIf="frontierData">
+								<canvas baseChart height="100" [datasets]="frontierData" [labels]="frontierLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+									[legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12" style="margin-bottom: 10px">
+							<div class="table-responsive table-padding stat-table">
+		
+		
+		
+								<table class="table  table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Data</th>
+											<th >9x13</th>
+											<th >10x15</th>
+											<th >13x18</th>
+											<th >15x21</th>
+											<th >21x30</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let label of frontierLabels; let j=index">
+											<td>{{ label }}</td>
+											<td *ngFor="let datas of frontierData; let l=index"> {{ frontierData[j].data[l] }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+	
+	
+				<!-- Formats Section -->
+				<div class="card sameheight-item">
+	
+					<!-- Formats Section Header -->
+					<div class="card-block">
+						<div class="card-title-block">
+							<div class="container">
+								<div class="row">
+									<div class="col-12 col-md-12 title-flex-container">
+										<h3 class="title box-title">
+											Najnowsze zlecenia
+										</h3>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Formats Section Body -->
+					<section *ngIf="orders">
+						<div class="table-responsive table-padding">
+						
 
+								<table class="table table-striped table-bordered table-hover ">
+										<thead>
+											<tr class="text-center">
+												<th>Klient</th>
+												<th>Zlecono</th>
+												<th>Odbitek</th>
+												<th>Wartość</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let order of orders" class="text-center">
+												<td>{{ order.userName }}</td>
+												<td>{{ order.orderDate | date: 'dd.MM.yyyy' }} godz. {{ order.orderDate | date: 'HH:mm' }}</td>
+												<td>{{ order.printsAmt }}</td>
+												<td>{{ order.totalOrderPrice | number:'1.2-2' }} zł</td>
+												<td>
+													<span *ngIf="order.isNew" class="status status-new">Nowe</span>
+													<span *ngIf="order.status == 0" class="status status-0">{{ getStatusName(order.status) }}</span>      
+													<span *ngIf="order.status == 1" class="status status-1">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 2" class="status status-2">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 3" class="status status-3">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 4" class="status status-4">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 5" class="status status-5">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 6" class="status status-6">{{ getStatusName(order.status) }}</span>
+													<span *ngIf="order.status == 7" class="status status-7">{{ getStatusName(order.status) }}</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+							
+						</div>
+					</section>
+	
+				</div>
+			</div>
+	
+			<!-- Papers Section -->
+			<div class="col-xl-4" style="max-width: 500px;">
+				<div class="card sameheight-item">
+	
+					<!-- Papers Section Header -->
+					<div class="card-block">
+						<div class="card-title-block">
+							<div class="container">
+								<div class="row">
+									<div class="col-12 col-md-12 title-flex-container">
+										<h3 class="title box-title">
+											Najnowsi użytkownicy
+										</h3>
+									</div>
 
-	<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-		Launch demo modal
-	  </button>
-	  
-	  <!-- Modal -->
-	  <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<!-- Papers Section Body -->
+					<section *ngIf="usersA">
+						<div class="table-responsive table-padding">
+
+											<table class="table table-striped table-bordered table-hover ">
+												<thead>
+													<tr class="text-center">
+														<th>Imię</th>
+														<th>Nazwisko</th>
+														<th>E-mail</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let user of usersA" class="text-center">
+														<td>{{ user.firstName }}</td>
+														<td>{{ user.lastName }}</td>
+														<td>{{ user.email }}</td>
+					
+									
+													</tr>
+												</tbody>
+											</table>
+									
+						</div>
+					</section>
+	
+				</div>
 			</div>
-			<div class="modal-body">
-			  ...
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			  <button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		  </div>
+	
+	
+	
+	
+	
 		</div>
-	  </div>
-
-
-</div>
+	</section>
+	
+	

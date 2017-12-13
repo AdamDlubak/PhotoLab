@@ -1,6 +1,6 @@
 <!-- Control Panel Header -->
 <div class="title-block" *ngIf="order">
-  <h3 class="title" style="font-family: 'Comfortaa', cursive">
+  <h3 class="title">
     <span style="font-size: 1.2rem">
       <span *ngIf="order.isNew" class="status status-new">Nowe</span> 
       <span *ngIf="order.status == 0" class="status status-0">{{ getStatusName(order.status) }}</span>      
@@ -281,9 +281,9 @@
                 <ng-container *ngFor="let print of photo.prints">
                   <li *ngIf="print.amount != 0" class="paragraph-print">
                     Format
-                    <span class="color-box alert-info">{{ getFormatNameById(print.format) }}</span>
+                    <span class="color-box alert-info">{{ getFormatNameById(print.formatId) }}</span>
                     Papier:
-                    <span class="color-box alert-success">{{ getPaperNameById(print.paper) }}</span>
+                    <span class="color-box alert-success">{{ getPaperNameById(print.paperId) }}</span>
                     Odbitek:
                     <span class="color-box alert-secondary">{{ print.amount }} </span>
                   </li>
@@ -351,4 +351,6 @@
       </div>
     </ng-template>
 
-    <pre>{{closeResult}}</pre>
+    <!-- <pre>{{closeResult}}</pre> -->
+
+    

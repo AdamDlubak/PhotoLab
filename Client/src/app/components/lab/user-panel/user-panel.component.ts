@@ -1,3 +1,5 @@
+import { FileService } from './../../../services/file.service';
+import { FileSelectDirective } from 'ng2-file-upload';
 import { UserChangePassword } from './../../../models/user.change.password.interface';
 import { User } from "./../../../models/user.interface";
 import { UserService } from "./../../../services/user.service";
@@ -6,6 +8,8 @@ import { UserEdit } from "../../../models/user.edit.interface";
 import { ToastrService } from "ngx-toastr";
 import { UserEditDelivery } from "../../../models/user.edit.delivery.interface";
 import { UserEditInvoice } from "../../../models/user.edit.invoice.interface.ts";
+import { Order } from '../../../models/order.class';
+import { OrderState } from '../../../models/order-state.class';
 @Component({
   selector: "app-user-panel",
   templateUrl: "./user-panel.component.html",
@@ -16,11 +20,15 @@ export class UserPanelComponent implements OnInit {
   userEditDelivery: UserEditDelivery;
   userEditInvoice: UserEditInvoice;
   userChangePassword : UserChangePassword;
+  orders : Array<Order>;
   errorMessage: any;
+  orderState : OrderState = new OrderState();
   constructor(
-    private userService: UserService,
-    public toastrService: ToastrService
+    public userService: UserService,
+    public toastrService: ToastrService,
+    public fileService : FileService
   ) {}
+  
   userEditTab() {
       (this.userEdit.firstName = this.userService.client.firstName),
       (this.userEdit.lastName = this.userService.client.lastName),
@@ -44,6 +52,18 @@ export class UserPanelComponent implements OnInit {
     }, error => {this.errorMessage = error, 
       this.toastrService.error("Błąd: Hasło nie zostało zmienione!");      
     });
+  }
+  getUserOrders() {
+    console.log(this.userService.client.id);
+    this.fileService
+    .getUserOrders(this.userService.client.id)
+    .subscribe(
+      data => { this.orders = data; },
+      error => (this.errorMessage = error)
+    );
+  }
+  getStatusName(status: number){
+    return this.orderState.states.find(x => x.id == status).name;
   }
   ngOnInit() {
     this.userEdit = {
@@ -77,8 +97,10 @@ export class UserPanelComponent implements OnInit {
       newPassword: "",
       confirmPassword: ""
     }
-
+    this.userService.getClient();
     this.userEditTab();
+    this.getUserOrders();
+
   }
 
   logout() {

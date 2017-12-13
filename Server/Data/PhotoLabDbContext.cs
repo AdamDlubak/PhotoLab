@@ -19,27 +19,30 @@ namespace Server.Helpers
     public DbSet<InvoiceData> InvoiceDatas { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Print> Prints { get; set; }
+    public DbSet<SystemStat> SystemStats { get; set; }
+    public DbSet<FrontierStat> FrontierStats { get; set; }
+    public DbSet<EvidenceStat> EvidenceStats { get; set; }
 
 
-//    protected override void OnModelCreating(ModelBuilder modelBuilder)
-//    {
-//      base.OnModelCreating(modelBuilder);
-//
-//      modelBuilder.Entity<PhotoPrint>()
-//        .HasKey(bc => new { bc.PhotoId, bc.PrintId });
-//
-//      modelBuilder.Entity<PhotoPrint>()
-//        .HasOne(bc => bc.Photo)
-//        .WithMany(b => b.PhotoPrints)
-//        .HasForeignKey(bc => bc.PhotoId);
-//
-//      modelBuilder.Entity<PhotoPrint>()
-//        .HasOne(bc => bc.Print)
-//        .WithMany(c => c.PhotoPrints)
-//        .HasForeignKey(bc => bc.PrintId);
-//    }
+    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //    {
+    //      base.OnModelCreating(modelBuilder);
+    //
+    //      modelBuilder.Entity<PhotoPrint>()
+    //        .HasKey(bc => new { bc.PhotoId, bc.PrintId });
+    //
+    //      modelBuilder.Entity<PhotoPrint>()
+    //        .HasOne(bc => bc.Photo)
+    //        .WithMany(b => b.PhotoPrints)
+    //        .HasForeignKey(bc => bc.PhotoId);
+    //
+    //      modelBuilder.Entity<PhotoPrint>()
+    //        .HasOne(bc => bc.Print)
+    //        .WithMany(c => c.PhotoPrints)
+    //        .HasForeignKey(bc => bc.PrintId);
+    //    }
   }
 
 
- 
+
 }

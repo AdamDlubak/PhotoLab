@@ -24,7 +24,7 @@ namespace Server.ViewModels
     public DeliveryData DeliveryData { get; set; }
 
     public int PaymentTypeId { get; set; }
-    public int PaymentStatusId { get; set; }
+    public int? PaymentStatusId { get; set; }
 
     public bool IsInvoice { get; set; }
     public int? InvoiceDataId { get; set; }

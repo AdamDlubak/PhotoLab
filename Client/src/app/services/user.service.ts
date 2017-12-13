@@ -37,7 +37,8 @@ export class UserService extends BaseService {
   }
 
   register(registerModel: UserRegister): Observable<UserRegister> {
-    let body = JSON.stringify(registerModel);
+    console.log(registerModel);
+    let body = JSON.stringify( { firstName: registerModel.firstName, lastName: registerModel.lastName, email: registerModel.email, password: registerModel.password } );
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
 
@@ -149,5 +150,17 @@ export class UserService extends BaseService {
   }
   getClient(): User {
     return <User>JSON.parse(localStorage.getItem("user"));
+  }
+  setUser() {
+    this.client = <User>JSON.parse(localStorage.getItem("user"));
+  }
+  deleteUser(id : string) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    return this.http
+      .delete(this.baseUrl + "/auth/deleteuser/" + id)
+      .map(res => res.json())
+      .catch(this.handleError);
   }
 }

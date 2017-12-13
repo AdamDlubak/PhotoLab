@@ -43,7 +43,8 @@
 
             <a (click)='calculateTotalOrderPrice(deliveryType.id); checkDeliveryData()' [class.active]='fileService.order.deliveryTypeId == deliveryType.id'>
               <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + deliveryType.iconActive + ')', false: 'url(' + deliveryType.icon + ')' }[fileService.order.deliveryTypeId == deliveryType.id] }">
-                <p class="type">{{ deliveryType.name }}</p>
+                    
+                <p class="choose-type">{{ deliveryType.name }}</p>
                 <p>{{ deliveryType.price | number:'1.2-2' }} zł</p>
 
               </div>
@@ -70,7 +71,7 @@
               <div class="col-3">
                 <a (click)='setAnotherDeliveryData()' [class.active]='anotherDeliveryData == true'>
                   <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + anotherDeliveryDataIconActive + ')', false: 'url(' + anotherDeliveryDataIcon + ')' }[anotherDeliveryData == true] }">
-                    <p class="type"></p>
+                    <p class="choose-type"></p>
                     <p>Chcę podać inne dane do wysyłki</p>
                   </div>
                 </a>
@@ -167,8 +168,9 @@
               </div>
               <div class="col-3">
                 <a (click)='setAnotherInvoiceData()' [class.active]='anotherInvoiceData == true'>
-                  <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + anotherInvoiceDataIconActive + ')', false: 'url(' + anotherInvoiceDataIcon + ')' }[anotherInvoiceData == true] }">
-                    <p class="type"></p>
+                    <div class="deliveryIcon" style="background-image: url('../../../../assets/images/icons/blank-check-box.svg');">
+                  <!-- <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + anotherInvoiceDataIconActive + ')', false: 'url(' + anotherInvoiceDataIcon + ')' }[anotherInvoiceData == true] }"> -->
+                    <p class="choose-type"></p>
                     <p>Chcę podać inne dane do faktury</p>
                   </div>
                 </a>
@@ -258,7 +260,8 @@
 
             <a (click)='calculateTotalOrderPricebyPayment(paymentType.id)' [class.active]='fileService.order.paymentTypeId ==  paymentType.id'>
               <div class="deliveryIcon" [ngStyle]="{ 'background-image': {true: 'url(' + paymentType.iconActive + ')', false: 'url(' + paymentType.icon + ')' }[fileService.order.paymentTypeId == paymentType.id] }">
-                <p class="type">{{ paymentType.name }}</p>
+                    
+                <p class="choose-type">{{ paymentType.name }}</p>
                 <p>{{ paymentType.price | number:'1.2-2' }} zł</p>
 
               </div>
@@ -286,8 +289,23 @@
     </div>
     <div class="col-md-4">
       <div class="col-12 sidebar">
-        <h3 style="margin-top: 20px;">Sidebar</h3>
-        <hr/>
+        
+          <h4 style="margin-top: 20px; font-size: 1.3rem"><i class="fa fa-question" style="padding-right: 5px;" aria-hidden="true"></i> Najczęstsze pytania</h4>
+          <p style="font-size: 0.9rem">W przypadku problemów lub dodatkowych pytań w pierwszej kolejności zapraszamy do zapoznania się z naszym działem FAQ:</p>
+          <p style="font-size: 0.9rem">+ <a href="#">Pytania i odpowiedzi</a></p>
+          <p style="font-size: 0.9rem">+ <a href="#">Przesyłki i płatności</a></p>
+
+          
+        <h4 style="margin-top: 20px; font-size: 1.3rem"><i class="fa fa-shopping-cart" style="padding-right: 5px;" aria-hidden="true"></i> Realizacja zamówień</h4>
+        <p style="font-size: 0.9rem">Realizacja przelewu on-line trwa kilka minut, platnosc kartą może potrwać kilka godzin. Jesli nie posiadasz karty i konta w banku możesz wybrać "Tradycyjny przelew".</p>
+
+    
+        <h4 style="margin-top: 20px; font-size: 1.3rem"><i class="fa fa-ambulance" style="padding-right: 5px;" aria-hidden="true"></i> Szybka pomoc</h4>
+        <p style="font-size: 0.9rem">Jeżeli potrzebujesz natychmiastowej pomocy, skorzystaj z możliwości bezpośredniego kontaktu telefonicznego lub mailowego:</p>
+        <p style="font-size: 0.9rem">+ <a href="#">tel. +48 603 430 209</a></p>
+        <p style="font-size: 0.9rem">+ <a href="./contact">Kontakt</a></p>
+
+
       </div>
     </div>
     <!-- /.col-lg-4 -->

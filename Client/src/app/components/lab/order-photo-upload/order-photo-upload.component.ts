@@ -106,6 +106,7 @@ export class OrderPhotoUploadComponent implements OnInit {
         new FileItemDetails(
           this.fileService.formats,
           fileItem._file.name,
+          "test",
           this.fileService.defaultParam
         )
       );

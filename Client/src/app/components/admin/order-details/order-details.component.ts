@@ -97,7 +97,6 @@ export class OrderDetailsComponent implements OnInit, OnDestroy  {
       return  `with: ${reason}`;
     }
   }
-
   getFormats() {
     this.fileService
       .getFormats()
@@ -146,6 +145,7 @@ changeNewStatus(status : boolean){
       );
     }
     getFormatNameById(id: number){
+      console.log(id);
       return this.fileService.formats.find(x => x.id == id).name;
     }
     getPaperNameById(id: number){

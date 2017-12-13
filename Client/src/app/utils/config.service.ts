@@ -6,6 +6,7 @@ export class ConfigService {
 
   constructor() {
     this._apiURI = "http://localhost:57500/api";
+    // this._apiURI = "http://fotodlubak-001-site1.itempurl.com/api";
   }
 
   getApiURI() {

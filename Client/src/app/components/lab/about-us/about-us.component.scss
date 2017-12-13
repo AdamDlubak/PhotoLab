@@ -1,28 +1,74 @@
-
 header {
-    margin-top: 65px;
-  }
-  
-  .background-photo {
+  margin-top: 65px;
+}
+
+.background-photo {
   height: 280px;
-  background: url("../../../../assets/images/backgrounds/about-us.jpg") no-repeat center center scroll;
+  background: url("../../../../assets/images/backgrounds/about-us.jpg")
+    no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+.title {
+  font-family: "Comfortaa", cursive;
+  text-shadow: 1px 1px #000;
+  color: #fff;
+  font-size: 3.5rem;
+  margin-top: 8rem;
+  margin-left: 5%;
+}
+.height-100 {
+  height: 100%;
+}
+.container-margins {
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.owner-photo {
+  width: 100%;
+  height: auto;
+  padding: 1px;
+}
+.owner-photo img {
+  border: 2px solid #000;
+}
+h3.header {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.5rem;
+}
+h3.owner-header {
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.5rem;
+  padding-top: 0.8rem;
+}
+p.owner-description {
+  font-weight: 400;
+  text-align: justify;
+  padding: 0.5rem 1rem;
+}
+
+.gal {
+  -webkit-column-count: 5; /* Chrome, Safari, Opera */
+  -moz-column-count: 5; /* Firefox */
+  column-count: 5;
+
+  -webkit-column-gap: 3px; /* Chrome, Safari, Opera */
+  -moz-column-gap: 3px; /* Firefox */
+  column-gap: 3px;
+}
+.gal img {
+  width: 100%;
+  padding: 0 0 3px 0;
+}
+@media (max-width: 500px) {
+  .gal {
+    -webkit-column-count: 1; /* Chrome, Safari, Opera */
+    -moz-column-count: 1; /* Firefox */
+    column-count: 1;
   }
-  .title {
-    font-family: 'Comfortaa', cursive;
-    text-shadow: 1px 1px #000;
-    color: #fff;
-    font-size: 3.5rem;
-    margin-top: 8rem;
-    margin-left: 5%;
-  }
-  .height-100 {
-    height: 100%;
-  }
-  .container-margins {
-    margin-top: 70px;
-    margin-bottom: 50px;
-  }
+}

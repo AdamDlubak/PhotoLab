@@ -50,7 +50,6 @@ namespace Server
       services.AddSingleton<IJwtFactory, JwtFactory>();
       services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-      var jwtAppSettingOptions = "SecretT0k3NforI$$u3R";
       // Configure JwtIssuerOptions
       services.Configure<JwtIssuerOptions>(options =>
       {

@@ -1,16 +1,136 @@
 <header>
-    <div class="background-photo">
-      <div class="container height-100 d-flex align-items-center">
-  
-        <div class="title ">
-          <h1>Oferta</h1>
-        </div>
-  
+  <div class="background-photo">
+    <div class="container height-100 d-flex align-items-center">
+
+      <div class="title ">
+        <h1>Oferta</h1>
       </div>
+
     </div>
-  </header>
-  
+  </div>
+</header>
+
+<!-- Page Content -->
+<div class="container container-margins">
+
+
   <!-- Page Content -->
   <div class="container container-margins">
-  
+    <div class="row">
+      <div class="col-3">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action text-center font-weight-bold disabled" id="list-home-list" data-toggle="list"
+            role="tab" aria-controls="home">Nasza oferta</a>
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab"
+            aria-controls="home">Usługi</a>
+          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-orders" role="tab"
+            aria-controls="current-orders">Cennik odbitek</a>
+
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" (click)="userEditDeliveryTab()"
+            role="tab" aria-controls="profile">Ramki i antyramy</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" (click)="userEditInvoiceTab()"
+            role="tab" aria-controls="messages">Akcesoria fotograficzne</a>
+          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab"
+            aria-controls="settings">Usługi Fotografa</a>
+          <a class="list-group-item list-group-item-action" id="list-wedding-list" data-toggle="list" href="#list-wedding" role="tab"
+            aria-controls="settings">Fotografia ślubna</a>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+
+
+
+            <h3>Usługi</h3>
+            <hr/>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+              Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+              lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+              Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+            </p>
+
+
+          </div>
+          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+
+
+            <h3>Cennik odbitek</h3>
+            <hr/>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+                Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+                lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+                Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+              </p>
+
+          </div>
+          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+
+
+            <h3>Ramki i antyramy</h3>
+            <hr/>
+
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+                Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+                lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+                Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+              </p>
+
+
+          </div>
+          <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+
+
+
+
+            <h3>Akcesoria fotograficzne</h3>
+            <hr/>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+                Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+                lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+                Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+              </p>
+
+
+
+
+
+          </div>
+          <div class="tab-pane fade" id="list-orders" role="tabpanel" aria-labelledby="list-current-orders">
+            <h3>Usługi fotografa</h3>
+            <hr/>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+                Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+                lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+                Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+              </p>
+          </div>
+
+          <div class="tab-pane fade" id="list-wedding" role="tabpanel" aria-labelledby="list-current-orders">
+            <h3>Fotografia ślubna</h3>
+            <hr/>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, faucibus quis lorem vel, pulvinar mattis diam.
+                Donec lobortis turpis non posuere cursus. Etiam cursus pharetra lorem, et ullamcorper massa tempus at. Etiam
+                lacinia mattis est, et faucibus neque aliquet vel. Duis suscipit mi lectus, ut ultrices turpis tempus vel.
+                Maecenas odio dolor, condimentum non quam vitae, congue mattis purus. Etiam vel imperdiet ex.
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
+
+
+</div>

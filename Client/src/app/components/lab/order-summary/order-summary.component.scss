@@ -12,7 +12,7 @@ header {
   background-size: cover;
   }
   .title {
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Lato', Helvetica, sans-serif;
     text-shadow: 1px 1px #000;
     color: #fff;
     font-size: 3.5rem;
@@ -25,4 +25,15 @@ header {
   .container-margins {
     margin-top: 70px;
     margin-bottom: 50px;
+  }
+  .bg-jumbotron {
+    margin-top: 2rem; 
+    background:     linear-gradient(
+      rgba(255, 255, 255, 0.3), 
+      rgba(255, 255, 255, 0.3)
+    ),url("../../../../assets/images/backgrounds/order-summary-jumbotron.jpg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }

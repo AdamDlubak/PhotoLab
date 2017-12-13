@@ -6,11 +6,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArnNkGY8h/0uNay9fy7ZxpwAAAAACAAAAAAAQZgAAAAEAACAAAAD7CclRrS3upUThoMBcQvlMpDu53kF4mYAWbbj6avankAAAAAAOgAAAAAIAACAAAACCBN9WPm2aL5FxGrg6vjywmcJBSxGIHTzlaUUa9AM6fSAAAAB1O3SJAm7SJpTGooRUCclV9qUrZLUj2mPdKU+zF0v9FkAAAABkrcf3C1okTPCmLMhRCWhIunfCzpyoSLJYX8LCtN1N5ttGUjUeLFF1/YzLJIvZ0l5o1r/IPedhXffIG5SL+A+E</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArnNkGY8h/0uNay9fy7ZxpwAAAAACAAAAAAAQZgAAAAEAACAAAAAbL85JsvhR7kZoNriRi3nqxITVxOgjS90pJ/OF8vgMBwAAAAAOgAAAAAIAACAAAAD7YkHWe8Ji201iNPGF7RQVJkrKN52BHsusyQe9Zv2X9SAAAADZwEXLy71RQ1Hev6z3aeK2RkvIG6DkaMggX1f1UAULDEAAAAAhqFHmelCPR0WmnkZWfGfhFVg67GCCWbr0rUfEd1xuUmbgcC5RSLxga1CN+7ApssxUc3foDM+gvg+O2hQadCN2</EncryptedPassword>
   </PropertyGroup>
-  <ItemGroup>
-    <DestinationConnectionStrings Include="ConnectionString">
-      <Value>Server=(localdb)\MSSQLLocalDB;Database=PhotoLab;Trusted_Connection=True;MultipleActiveResultSets=true;</Value>
-    </DestinationConnectionStrings>
-  </ItemGroup>
 </Project>

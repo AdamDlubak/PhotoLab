@@ -6,10 +6,10 @@ namespace Server.ViewModels.Validations
     {
         public RegistrationViewModelValidator()
         {
-            RuleFor(vm => vm.Email).NotEmpty().WithMessage("Email cannot be empty");
-            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Password cannot be empty");
-            RuleFor(vm => vm.FirstName).NotEmpty().WithMessage("FirstName cannot be empty");
-            RuleFor(vm => vm.LastName).NotEmpty().WithMessage("LastName cannot be empty");       
+            RuleFor(vm => vm.Email).NotEmpty().WithMessage("Pole email nie mo¿e byæ puste.");
+            RuleFor(vm => vm.Password).NotEmpty().WithMessage("Pole has³o nie mo¿e byæ puste.");
+            RuleFor(vm => vm.FirstName).NotEmpty().WithMessage("Pole imiê nie mo¿e byæ puste.");
+            RuleFor(vm => vm.LastName).NotEmpty().WithMessage("Pole nazwisko nie mo¿e byæ puste.");       
         }
     }
 }

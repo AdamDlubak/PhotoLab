@@ -1,7 +1,7 @@
 import { AboutUsComponent } from './about-us/about-us.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { ModuleWithProviders } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 
 import { LabLayoutComponent } from "./_layout/lab-layout.component";
 import { HomeComponent } from "./home/home.component";
@@ -10,7 +10,6 @@ import { OrderDetailedDataComponent } from "./order-detailed-data/order-detailed
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { ContactComponent } from './contact/contact.component';
 import { OfferComponent } from './offer/offer.component';
-import { GalleryComponent } from './gallery/gallery.component';
 
 export const Routing: ModuleWithProviders = RouterModule.forChild([
   {
@@ -25,7 +24,6 @@ export const Routing: ModuleWithProviders = RouterModule.forChild([
       { path: "order-summary", component: OrderSummaryComponent},
       { path: "about-us", component: AboutUsComponent},
       { path: "offer", component: OfferComponent},
-      { path: "gallery", component: GalleryComponent},
       { path: "user-panel", component: UserPanelComponent},
       { path: "**", redirectTo: "login", pathMatch: "full" }      
     ]

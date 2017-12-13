@@ -1,0 +1,306 @@
+<!-- Control Panel Header -->
+<div class="title-block">
+  <h3 class="title">
+    Statystyki
+  </h3>
+  <p class="title-description" style="font-family: 'Roboto', sans-serif;">
+    W tej sekcji można zarządzać wszystkimi statystykami przechowywanymi w systemie.
+  </p>
+</div>
+<hr/>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <!-- <li class="nav-item">
+    <a class="nav-link active font-color" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Serwis</a>
+  </li> -->
+  <li class="nav-item">
+    <a class="nav-link active font-color" id="profile-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Frontier</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link font-color" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Legitymacyjne</a>
+  </li>
+</ul>
+
+
+
+<!-- Control Panel Body Section -->
+
+
+<!-- Formats Section -->
+
+<div class="tab-content" id="myTabContent">
+
+  <!-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="card sameheight-item" style="border-top-left-radius: 0; border-top: 0;">
+
+      <div class="card-block">
+        <div class="card-title-block">
+          <div class="row">
+            <div class="col-12 col-md-12 title-flex-container">
+              <h3 class="title box-title">
+                Serwis PhotoLab
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div style="display: block;">
+            <canvas baseChart height="50" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="margin-bottom: 10px">
+          <table class="table table-responsive table-condensed">
+            <tr>
+              <th *ngFor="let item of lineChartData">{{item.label}}</th>
+            </tr>
+            <tr *ngFor="let d of lineChartData">
+              <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div> -->
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="card sameheight-item" style="border-top-left-radius: 0; border-top: 0;">
+
+
+      <!-- Formats Section Header -->
+      <div class="card-block">
+        <div class="card-title-block">
+          <div class="row">
+            <div class="col-6 col-md-6 title-flex-container">
+              <h3 class="title box-title">
+                Maszyna Frontier
+              </h3>
+            </div>
+            <div class="col-6 col-md-6 flex-container">
+            <button type="button" class="btn btn-success btn" style="margin: 0 auto 20px auto; display: flex" (click)="selectToday(0)"
+            data-toggle="modal" data-target="#editDefaultModal">
+            Dodaj nową statystykę
+          </button>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formats Section Body -->
+      <div class="row">
+          
+        <div class="col-md-12">
+          <div style="display: block;" *ngIf="frontierData">
+            <canvas baseChart height="50" [datasets]="frontierData" [labels]="frontierLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+              [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="margin-bottom: 10px">
+          <div class="table-responsive table-padding stat-table">
+
+
+
+            <table class="table  table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th >9x13</th>
+                  <th >10x15</th>
+                  <th >13x18</th>
+                  <th >15x21</th>
+                  <th >21x30</th>
+                  <th >Akcje</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let label of frontierLabels; let j=index">
+                  <td>{{ label }}</td>
+                  <td *ngFor="let datas of frontierData; let l=index"> {{ frontierData[j].data[l] }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" style="margin-right: 5px;" (click)="selectToday(datas.id[j])"
+                      data-toggle="modal" data-target="#editDefaultModal">
+                      Edytuj
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
+                      Usuń
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="row">
+
+
+      <!-- Default and Format Section -->
+      <div class="col-xl-4" style="max-width: 850px;">
+        <div class="card sameheight-item" style="border-top-left-radius: 0; border-top: 0;">
+
+          <!-- Formats Section Header -->
+          <div class="card-block">
+            <div class="card-title-block">
+              <div class="row">
+                <div class="col-12 col-md-12 title-flex-container">
+                  <h3 class="title box-title">
+                    Zdjęcia legitymacyjne
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Papers Section Body -->
+          <section>
+            <div class="table-responsive table-padding stat-table">
+
+
+              <button type="button" class="btn btn-success btn" style="margin: 0 auto 20px auto; display: flex" (click)="selectToday(0)"
+                data-toggle="modal" data-target="#editDefaultModal">
+                Dodaj nową statystykę
+              </button>
+              <table class="table table-fixed table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="col-3" style="border-right: 0;">Data</th>
+                    <th class="col-2" style="border-left: 0; border-right: 0;">Ilość</th>
+                    <th class="col-3" style="border-left: 0; border-right: 0;">Wartość</th>
+                    <th class="col-4" style="border-left: 0; padding-right: 10px;">Akcje</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let label of evidenceLabels; let j=index">
+                    <td class="col-3">{{ label }}</td>
+                    <td class="col-2" *ngFor="let datas of evidenceData"> {{ datas.data[j] }}</td>
+                    <td class="col-3" *ngFor="let datas of evidenceData"> {{ datas.proceeds[j] | number:'1.2-2' }} zł</td>
+                    <td class="col-4">
+                      <button type="button" *ngFor="let datas of evidenceData" class="btn btn-info btn-sm" style="margin-right: 5px;" (click)="selectToday(datas.id[j])"
+                        data-toggle="modal" data-target="#editDefaultModal">
+                        Edytuj
+                      </button>
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
+                        Usuń
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+
+        </div>
+      </div>
+
+
+      <!-- Papers Section -->
+      <div class="col-xl-8">
+        <div class="card sameheight-item  table-padding">
+
+          <!-- Formats Section Header -->
+          <div class="card-block">
+            <div class="card-title-block">
+              <div class="row">
+                <div class="col-12 col-md-12 title-flex-container">
+                  <h3 class="title box-title">
+                    Wykres danych
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section>
+
+            <div style="display: block;" *ngIf="evidenceData">
+              <canvas baseChart height="150" [datasets]="evidenceData" [labels]="evidenceLabels" [options]="evidenceChartOptions" [colors]="lineChartColors"
+                [legend]="evidenceLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+
+
+
+<!-- Default Edit Modal -->
+<div class="modal fade" id="editDefaultModal" tabindex="-1" role="dialog" aria-labelledby="editDefaultModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!-- Default Edit Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="editDefaultModalLabel">Dodaj nową statystykę</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Default Edit Modal Body -->
+      <form class="full-width">
+        <div class="modal-body">
+
+          <div class="d-flex flex-row justify-content-around align-items-center">
+            <div class="p-2">
+              <ngb-datepicker #dp [(ngModel)]="date" name="datapicker" (navigate)="date = $event.next"></ngb-datepicker>
+            </div>
+          </div>
+          <hr/>
+          <div class="d-flex flex-column justify-content-around align-items-center">
+            <div class="p-2">
+              <p class="text-center mb-0">Ustawiona data:
+                <span class="font-weight-bold">{{ date.day | number:'2.0' }}.{{ date.month | number:'2.0' }}.{{ date.year }}</span>
+              </p>
+            </div>
+            <div class="p-2">
+              <button class="btn btn-sm btn-outline-primary" (click)="selectToday()">Obecna data</button>
+            </div>
+          </div>
+
+
+          <div class="default-amount">
+            <label for="recipient-name" class="col-form-label">Ilość zdjęć:</label>
+            <input type="text" name="default-amount" [(ngModel)]="formData.quantity" class="form-control">
+          </div>
+
+
+          <div class="default-amount">
+            <label for="recipient-name" class="col-form-label">Całkowita wartość:</label>
+            <input type="text" name="default-proceeds" [(ngModel)]="formData.proceeds" class="form-control">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="button" (click)="submit()" data-dismiss="modal" class="btn btn-success btn-block">Dodaj</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

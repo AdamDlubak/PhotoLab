@@ -9,6 +9,9 @@ body {
       padding-top: 56px;
     }
   }
+  .cursor-pointer {
+    cursor: pointer;
+  }
   .brand {
     color: #fff;
     text-align: left;
@@ -97,4 +100,124 @@ body {
 .footer-social-icon:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.modal-flex-login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.modal-title {
+  margin: 15px 25px 0px 15px
+}
+.modal-flex-content {
+  width: 1000px;
+  height: 700px;
+  flex-direction: row;
+}
+.left-login {
+  width: 50%;
+  height: 100%;
+  background: url("../../../../assets/images/login-bg.jpg");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.right-login {
+  background-color: #fff;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+button.close {
+  margin: 0 5px 5px 15px;
+  padding: 0;
+}
+.login-form {
+  width: 100%;
+  padding: 10% 10% 0 10%;
+  color: #595959;
+}
+.login-form .form-group {
+    margin-bottom: 0;
+}
+.login-form .form-group .input-label {
+    margin-bottom: 0.2rem;
+}
+.not-first-label {
+  padding-top: 15px;
+}
+.login-form .form-control-feedback {
+    margin-bottom: 0.7rem;
+}
+.login-form .form-control {
+  border-radius: 0;
+}
+.login-form .form-control:focus {
+    border: 1px solid #ced4da;
+    box-shadow: 0 0 0 0.06rem rgba(0, 123, 255, 0.35) inset;
+}
+.login-form .btn-link {
+    padding: 0.20rem 0 0 0
+}
+.login-form .login-button {
+    text-align: right;
+    padding-top: 0.60rem;
+}
+.login-form .error-container {
+    height: 150px;
+    margin-top: 20px;
+    
+}
+.register-button {
+    padding: 10% 10% 10% 10%;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    p {
+        margin-bottom: 0.3rem;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    button {
+        width: 100%;
+        align-self: flex-end;
+    }
+}
+
+.login-form .forgot-pass {
+  padding-left: 20px;
+  color: #595959;
+  font-size: 12px;
+}
+.login-form .form-button {
+  border-radius: 0;
+  background-color: #5ce272;
+  color: #fff;
+  border: 1px solid rgba(34, 34, 34, 0.323);
+  width: 90px;
 }
