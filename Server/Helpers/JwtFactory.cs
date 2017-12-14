@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Server.Helpers.Interfaces;
 using Server.Models;
@@ -26,7 +27,8 @@ namespace Server.Helpers
         new Claim(JwtRegisteredClaimNames.Sub, email),
         new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
         new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-        identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.Rol),
+        identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.RolAdmin),
+        identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.RolUser),
         identity.FindFirst(JwtConstants.Strings.JwtClaimIdentifiers.Id)
       };
 
@@ -44,13 +46,27 @@ namespace Server.Helpers
       return encodedJwt;
     }
 
-    public ClaimsIdentity GenerateClaimsIdentity(string email, string id)
+    public async Task<ClaimsIdentity> GenerateClaimsIdentity(string email, User user, UserManager<User> userManager)
     {
+
+      if (await userManager.IsInRoleAsync(user, "Admin"))
+      {
+        return new ClaimsIdentity(new GenericIdentity(email, "Token"), new[]
+        {
+          new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Id, user.Id),
+          new Claim(JwtConstants.Strings.JwtClaimIdentifiers.RolAdmin, JwtConstants.Strings.JwtClaims.Admin ),
+          new Claim(JwtConstants.Strings.JwtClaimIdentifiers.RolUser, JwtConstants.Strings.JwtClaims.User )
+
+        });
+      }
+
       return new ClaimsIdentity(new GenericIdentity(email, "Token"), new[]
       {
-        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Id, id),
-        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess)
+        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.Id, user.Id),
+        new Claim(JwtConstants.Strings.JwtClaimIdentifiers.RolUser, JwtConstants.Strings.JwtClaims.User)
+        
       });
+      
     }
 
     private static long ToUnixEpochDate(DateTime date)

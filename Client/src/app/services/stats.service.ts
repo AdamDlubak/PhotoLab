@@ -48,7 +48,7 @@ export class StatsService extends BaseService {
     .catch(this.handleError);
   }
 
-  getFrontierStats(statParameters : StatParameters) : Observable <StatFrontierData[]> {
+  getFrontierStats(statParameters : StatParameters) : Observable <StatFrontierData> {
     let body = JSON.stringify(statParameters);
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });

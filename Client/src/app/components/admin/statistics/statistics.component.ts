@@ -1,3 +1,4 @@
+import { FileService } from './../../../services/file.service';
 import { StatData } from './../../../models/stat-data.class';
 import { StatParameters } from './../../../models/stat-parameters.class';
 import { Component, OnInit } from '@angular/core';
@@ -6,7 +7,8 @@ import { DatePipe } from '@angular/common'
 import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { StatEvidenceForm } from '../../../models/stat-evidence-form.class';
 import { StatEvidenceData } from '../../../models/stat-evidence-data.class';
-import { StatFrontierData } from '../../../models/stat-frontier-data.class';
+import { StatFrontierData, FrontierResultData } from '../../../models/stat-frontier-data.class';
+import { forEach } from '@angular/router/src/utils/collection';
 
 const now = new Date();
 
@@ -23,12 +25,13 @@ export class StatisticsComponent implements OnInit {
   rawEvidenceData : StatEvidenceData[]; 
   rawFrontierData : StatFrontierData[];
   elem : StatEvidenceData;
-  constructor(public statsService : StatsService, public datepipe: DatePipe) { }
+  constructor(public statsService : StatsService, public datepipe: DatePipe, public fileService : FileService) { }
 
   ngOnInit() {
     this.getEvidenceStats();
     this.getSystemStats();
     this.getFrontierStats();
+    this.getFormats();
   }
   selectToday(id : any) {
     this.date = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
@@ -59,7 +62,7 @@ export class StatisticsComponent implements OnInit {
   public evidenceData:Array<any>;
   public evidenceLabels:Array<any>;
 
-  public frontierData:Array<any>;
+  public frontierData:Array<FrontierResultData>;
   public frontierLabels:Array<any>;
 
   private submit() : void {
@@ -171,73 +174,41 @@ export class StatisticsComponent implements OnInit {
     );
   }
   public getFrontierStats() : void {
-    let stat = new StatParameters(new Date(
+    let stat = new StatParameters(new Date( 
       "01.11.2017 00:00:00"), new Date("14.12.2017 00:00:00") )
     this.statsService
     .getFrontierStats(stat)
     .subscribe(
       data => {
-        this.rawFrontierData = data;
-        let _lineChartData:Array<any> = new Array(5);
-        let _lineChartLabels:Array<any> = new Array(5);
-
-        let i = 0;
-        
-          data.forEach(element => {  _lineChartLabels[i] = this.datepipe.transform(element.statDate, 'dd.MM.yyyy'); i++ });
-
-          _lineChartData[0] = {data: new Array(5), label: "9x13", id: new Array(data.length)};
-          _lineChartData[1] = {data: new Array(5), label: "10x15", id: new Array(data.length)};
-          _lineChartData[2] = {data: new Array(5), label: "13x18", id: new Array(data.length)};
-          _lineChartData[3] = {data: new Array(5), label: "15x21", id: new Array(data.length)};
-          _lineChartData[4] = {data: new Array(5), label: "21x30", id: new Array(data.length)};
-          i = 0;
-
-          _lineChartData[0].data[0] = 15;
-          _lineChartData[0].data[1] = 96;
-          _lineChartData[0].data[2] = 34;
-          _lineChartData[0].data[3] = 34;
-          _lineChartData[0].data[4] = 17;
-
-          _lineChartData[1].data[0] = 0;
-          _lineChartData[1].data[1] = 9;
-          _lineChartData[1].data[2] = 75;
-          _lineChartData[1].data[3] = 22;
-          _lineChartData[1].data[4] = 2;
-
-          _lineChartData[2].data[0] = 75;
-          _lineChartData[2].data[1] = 34;
-          _lineChartData[2].data[2] = 33;
-          _lineChartData[2].data[3] = 96;
-          _lineChartData[2].data[4] = 75;
-
-          _lineChartData[3].data[0] = 22;
-          _lineChartData[3].data[1] = 23;
-          _lineChartData[3].data[2] = 64;
-          _lineChartData[3].data[3] = 0;
-          _lineChartData[3].data[4] = 111;
-
-          _lineChartData[4].data[0] = 64;
-          _lineChartData[4].data[1] = 53;
-          _lineChartData[4].data[2] = 12;
-          _lineChartData[4].data[3] = 21;
-          _lineChartData[4].data[4] = 123;
-          // data.forEach(element => { 
-          //   console.log(element);
-          //   if(element.formatId == 1) { _lineChartData[0].data[i] = element.quantity;  _lineChartData[0].id[i] = element.id; i++; }
-          //   if(element.formatId == 2) { _lineChartData[1].data[i] = element.quantity;  _lineChartData[1].id[i] = element.id; i++; }
-          //   if(element.formatId == 3) { _lineChartData[2].data[i] = element.quantity;  _lineChartData[2].id[i] = element.id; i++; }
-          //   if(element.formatId == 4) { _lineChartData[3].data[i] = element.quantity;  _lineChartData[3].id[i] = element.id; i++; }
-          //   if(element.formatId == 5) { _lineChartData[4].data[i] = element.quantity;  _lineChartData[4].id[i] = element.id; i++; }
-          // });
-          this.frontierLabels = _lineChartLabels;
+          this.frontierLabels = data.labels;
+          let i;
+         for(i = 0; i < this.frontierLabels.length; i++) this.frontierLabels[i] = this.datepipe.transform(this.frontierLabels[i], 'dd.MM.yyyy');
           
-          setTimeout(() => {this.frontierData = _lineChartData;}, 50);
-
-          console.log(this.frontierLabels);
-          console.log(this.frontierData);
-        
-        },
+         for(i = 0; i < data.datas.length; i++) data.datas[i].label = this.getFormatNamebyId(data.datas[i].label);
+         
+         
+         setTimeout(() => { this.frontierData = data.datas }, 50);
+     },
       error => (this.errorMessage = error)
     );
   }
+  getFormats() {
+    this.fileService
+      .getFormats()
+      .subscribe(
+        data => (this.fileService.formats = data),
+        error => (this.errorMessage = error)
+      );
+  }
+  getFormatNamebyId(id : number){
+    return this.fileService.formats.find(x => x.id == id).name;
+  }
+    // events
+    public chartClicked(e:any):void {
+      console.log(e);
+    }
+   
+    public chartHovered(e:any):void {
+      console.log(e);
+    }
 }

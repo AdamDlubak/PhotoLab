@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Server.Helpers{
 
  public static class JwtConstants
@@ -6,13 +8,14 @@ namespace Server.Helpers{
         {
             public static class JwtClaimIdentifiers
             {
-                public const string Rol = "rol", Id = "id";
+                public const string RolAdmin = "roladmin", RolUser = "roluser", Id = "id";
             }
 
             public static class JwtClaims
             {
-                public const string ApiAccess = "api_access";
-            }
+                public const string Admin = "admin";
+                public const string User = "user";
+      }
         }
     }
 

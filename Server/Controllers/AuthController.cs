@@ -24,8 +24,8 @@ namespace Server.Controllers
   public class AuthController : Controller
   {
     private readonly PhotoLabContext _context;
-    private readonly UserManager<Models.User> _userManager;
-    private readonly PasswordHasher<Models.User> _passwordHasher;
+    private readonly UserManager<User> _userManager;
+    private readonly PasswordHasher<User> _passwordHasher;
     private readonly IMapper _mapper;
     private readonly JsonSerializerSettings _serializerSettings;
     private readonly IJwtFactory _jwtFactory;
@@ -119,6 +119,18 @@ namespace Server.Controllers
     //    }
 
 
+    [HttpPost("setadmin/{id}")]
+    public async Task<IActionResult> SetAdmin(string id)
+    {
+      var user = await _userManager.FindByIdAsync(id);
+      if (user == null) return new BadRequestResult();
+      if (!await _userManager.IsInRoleAsync(user, "Admin"))
+      {
+        await _userManager.AddToRoleAsync(user, "Admin");
+      }
+
+      return new OkResult();
+    }
 
     [HttpGet("users/{page:int}/{pageSize:int}")]
     [Produces(typeof(List<UsersViewModel>))]
@@ -193,7 +205,7 @@ namespace Server.Controllers
           // check the credentials  
           if (await _userManager.CheckPasswordAsync(userToVerify, password))
           {
-            return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(email, userToVerify.Id));
+            return await await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(email, userToVerify, _userManager));
           }
         }
       }

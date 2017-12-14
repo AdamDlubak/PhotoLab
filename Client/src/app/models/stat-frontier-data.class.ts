@@ -1,9 +1,12 @@
 export class StatFrontierData {
     constructor (
-       public id : number,
-       public statDate : Date,
-       public submitDate : Date,
-       public formatId : number,
-       public quantity : number
+        public datas : Array<FrontierResultData>,
+        public labels : Array<Date>
     ){ }
+}
+
+export class FrontierResultData
+{
+   data : Array<number>;
+   label : any;
 }

@@ -9,19 +9,23 @@ import { HomeComponent } from "./home/home.component";
 import { UserEditComponent } from "./user-edit/user-edit.component";
 import { UsersComponent } from "./users/users.component";
 
-import { AuthGuard } from "../../auth.guard";
+import { AuthGuardService as AuthGuard  } from "../../auth.guard";
+import { RoleGuardService as RoleGuard  } from "../../auth.guard";
 import { StatisticsComponent } from './statistics/statistics.component';
 
 export const Routing: ModuleWithProviders = RouterModule.forChild([
   {
     path: "",
     component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
+    
     
     children: [
       { path: "", redirectTo: 'home', pathMatch: 'full'},
-      { path: "home", component: HomeComponent},
-      { path: "user", component: UserEditComponent},
+      { path: "home", component: HomeComponent, canActivate: [RoleGuard], 
+      data: { 
+        expectedRole: 'roladmin'
+      } },
+      { path: "user", component: UserEditComponent, canActivate: [AuthGuard]},
       { path: "users", component: UsersComponent},
       { path: "orders", component : OrderComponent},
       { path: "order-details/:id", component : OrderDetailsComponent},

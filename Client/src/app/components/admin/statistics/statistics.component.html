@@ -95,8 +95,8 @@
       <div class="row">
           
         <div class="col-md-12">
-          <div style="display: block;" *ngIf="frontierData">
-            <canvas baseChart height="50" [datasets]="frontierData" [labels]="frontierLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+          <div style="display: block;" *ngIf="frontierData && fileService.formats">
+            <canvas baseChart height="100" [datasets]="frontierData" [labels]="frontierLabels" [options]="lineChartOptions" [colors]="lineChartColors"
               [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
           </div>
         </div>
@@ -111,18 +111,14 @@
               <thead>
                 <tr>
                   <th>Data</th>
-                  <th >9x13</th>
-                  <th >10x15</th>
-                  <th >13x18</th>
-                  <th >15x21</th>
-                  <th >21x30</th>
-                  <th >Akcje</th>
+                  <th *ngFor="let title of frontierData">{{ title.label }}</th>
+                  <th>Akcje</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let label of frontierLabels; let j=index">
                   <td>{{ label }}</td>
-                  <td *ngFor="let datas of frontierData; let l=index"> {{ frontierData[j].data[l] }}</td>
+                  <td *ngFor="let datas of frontierData; let l=index"> {{ datas.data[j] }}</td>
                   <td>
                     <button type="button" class="btn btn-info btn-sm" style="margin-right: 5px;" (click)="selectToday(datas.id[j])"
                       data-toggle="modal" data-target="#editDefaultModal">

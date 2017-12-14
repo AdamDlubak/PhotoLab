@@ -14,7 +14,7 @@ import { UserEditComponent } from "./user-edit/user-edit.component";
 import { UsersComponent } from "./users/users.component";
 import { HomeComponent } from "./home/home.component";
 import { Routing } from "./admin.routing";
-import { AuthGuard } from "../../auth.guard";
+import { RoleGuardService, AuthGuardService } from "../../auth.guard";
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { FileService } from "../../services/file.service";
 import { ToastrModule } from 'ngx-toastr';
@@ -42,6 +42,6 @@ import { DatePipe } from '@angular/common'
     StatisticsComponent
 ],
   exports: [],
-  providers: [AuthGuard, UserService, FileService, StatsService, DatePipe]
+  providers: [AuthGuardService, RoleGuardService, UserService, FileService, StatsService, DatePipe]
 })
 export class AdminModule {}

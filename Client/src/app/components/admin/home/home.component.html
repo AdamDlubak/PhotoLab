@@ -36,39 +36,13 @@
 					<div class="row">
 							
 						<div class="col-md-12">
-							<div style="display: block;" *ngIf="frontierData">
+							<div style="display: block;" *ngIf="frontierData && fileService.formats">
 								<canvas baseChart height="100" [datasets]="frontierData" [labels]="frontierLabels" [options]="lineChartOptions" [colors]="lineChartColors"
 									[legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12" style="margin-bottom: 10px">
-							<div class="table-responsive table-padding stat-table">
-		
-		
-		
-								<table class="table  table-striped table-bordered table-hover">
-									<thead>
-										<tr>
-											<th>Data</th>
-											<th >9x13</th>
-											<th >10x15</th>
-											<th >13x18</th>
-											<th >15x21</th>
-											<th >21x30</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let label of frontierLabels; let j=index">
-											<td>{{ label }}</td>
-											<td *ngFor="let datas of frontierData; let l=index"> {{ frontierData[j].data[l] }}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+
 	
 				</div>
 	

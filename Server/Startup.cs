@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,10 +10,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Server.Models;
@@ -60,7 +63,8 @@ namespace Server
 
       services.AddAuthorization(options =>
       {
-        options.AddPolicy("Admin", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.Rol, JwtConstants.Strings.JwtClaims.ApiAccess));
+        options.AddPolicy("Admin", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.RolAdmin, JwtConstants.Strings.JwtClaims.Admin));
+        options.AddPolicy("User", policy => policy.RequireClaim(JwtConstants.Strings.JwtClaimIdentifiers.RolUser, JwtConstants.Strings.JwtClaims.User));
       });
 
       services.AddIdentity<User, IdentityRole>
@@ -122,11 +126,11 @@ namespace Server
       services.AddAutoMapper();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
     {
       loggerFactory.AddConsole();
 
-
+      SetupRoles(serviceProvider).Wait();
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -144,6 +148,31 @@ namespace Server
           name: "spa-fallback",
           defaults: new { controller = "Home", action = "Index" });
       });
+    }
+
+    public async Task<IActionResult> SetupRoles(IServiceProvider serviceProvider)
+    {
+      var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+      var adminRole = await roleManager.FindByNameAsync("Admin");
+      if (adminRole == null)
+      {
+        adminRole = new IdentityRole("Admin");
+        await roleManager.CreateAsync(adminRole);
+
+        await roleManager.AddClaimAsync(adminRole, new Claim(JwtConstants.Strings.JwtClaimIdentifiers.RolAdmin, JwtConstants.Strings.JwtClaims.Admin));
+      }
+
+
+      var accountManagerRole = await roleManager.FindByNameAsync("User");
+
+      if (accountManagerRole == null)
+      {
+        accountManagerRole = new IdentityRole("User");
+        await roleManager.CreateAsync(accountManagerRole);
+
+        await roleManager.AddClaimAsync(accountManagerRole, new Claim(JwtConstants.Strings.JwtClaimIdentifiers.RolUser, JwtConstants.Strings.JwtClaims.User));
+      }
+      return new OkResult();
     }
   }
 }
